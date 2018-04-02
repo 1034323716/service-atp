@@ -6,6 +6,8 @@ import org.helium.framework.annotations.ServiceImplementation;
 import org.mahatma.atp.common.db.bean.TaskResult;
 import org.mahatma.atp.common.db.dao.TaskResultDao;
 import org.mahatma.atp.common.db.daoImpl.TaskResultDaoImpl;
+import org.mahatma.atp.conf.AtpResultCodeManager;
+import org.mahatma.atp.conf.ResultCodeParam;
 import org.mahatma.atp.conf.util.RunShellUtil;
 import org.mahatma.atp.service.ControlTaskService;
 import org.slf4j.Logger;
@@ -29,22 +31,22 @@ public class ControlTaskImpl implements ControlTaskService {
     public void stop(Long taskResultId) {
         int processId = runProcessMap.get(taskResultId);
         killProcessTree(processId);
-        LOGGER.info("stop task success , task result id is {}", taskResultId);
+        LOGGER.info("stop task success, task result id:{}", taskResultId);
         TaskResultDao taskResultDao = new TaskResultDaoImpl(atpDB);
         TaskResult taskResult = new TaskResult();
         taskResult.setId(taskResultId);
-        taskResult.setDesc("taks halfway stop");
-        taskResult.setState(1);
-        taskResult.setCode("321");
+        taskResult.setDesc(AtpResultCodeManager.getReturnCodeDoc(ResultCodeParam.HALFWAYSTOP).getDoc());
+        taskResult.setState(1); // 1代表的已结束
+        taskResult.setCode(String.valueOf(AtpResultCodeManager.getReturnCodeDoc(ResultCodeParam.HALFWAYSTOP).getCode()));
         taskResultDao.updateTaskResult(taskResult);
     }
 
     private static void killProcessTree(int processId) {
         try {
-            LOGGER.info("pid is {}", processId);
+            LOGGER.info("pid:{}", processId);
             RunShellUtil.runShell(getKillProcessTreeCmd(processId));
         } catch (Exception e) {
-            LOGGER.error("killProcess exception : \n{}", e);
+            LOGGER.error("killProcess exception:\n{}", e);
         }
     }
 

@@ -6,6 +6,7 @@ import org.helium.framework.annotations.ServiceImplementation;
 import org.helium.framework.configuration.ConfigProvider;
 import org.helium.framework.tag.Initializer;
 import org.mahatma.atp.conf.AtpEnvConfiguration;
+import org.mahatma.atp.conf.AtpResultCodeManager;
 import org.mahatma.atp.conf.InitSerice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,8 @@ public class InitServiceImpl implements InitSerice {
 
     @FieldSetter("${ATP-ENV}")
     private String atpEnvPath;
+    @FieldSetter("${RESULT-CODE}")
+    private String resultCode;
 
     @Initializer
     public void initAllTheWorld() {
@@ -23,5 +26,8 @@ public class InitServiceImpl implements InitSerice {
         LOGGER.info("init AtpEnvConfiguration");
         AtpEnvConfiguration envConfiguration = provider.loadXml(atpEnvPath, AtpEnvConfiguration.class);
         AtpEnvConfiguration.initAtpConfiguration(envConfiguration);
+        LOGGER.info("init AtpResultCodeManager");
+        AtpResultCodeManager atpResultCodeManager = provider.loadXml(resultCode, AtpResultCodeManager.class);
+        AtpResultCodeManager.initResultCodeManager(atpResultCodeManager);
     }
 }

@@ -1,0 +1,18 @@
+<resultCode>
+    <resultCodeDocs>
+        <SUCCESS>
+            <code>200</code>
+            <doc>测试结果为成功</doc>
+        </SUCCESS>
+
+        <FAIL>
+            <code>400</code>
+            <doc>测试结果为失败</doc>
+        </FAIL>
+
+        <HALFWAYSTOP>
+            <code>321</code>
+            <doc>执行过程中被停止</doc>
+        </HALFWAYSTOP>
+    </resultCodeDocs>
+</resultCode>
