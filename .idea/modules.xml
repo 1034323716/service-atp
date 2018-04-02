@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-main.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-main.iml" group="service-atp-main" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-main/service-atp-main_main.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-main/service-atp-main_main.iml" group="service-atp-main" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-main/service-atp-main_test.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-main/service-atp-main_test.iml" group="service-atp-main" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-service.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-service.iml" group="service-atp-service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-service-api.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-service-api.iml" group="service-atp-service-api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-service-api/service-atp-service-api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-service-api/service-atp-service-api_main.iml" group="service-atp-service-api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-service-api/service-atp-service-api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-service-api/service-atp-service-api_test.iml" group="service-atp-service-api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-service/service-atp-service_main.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-service/service-atp-service_main.iml" group="service-atp-service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-service/service-atp-service_test.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-service/service-atp-service_test.iml" group="service-atp-service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-servlet.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-servlet.iml" group="service-atp-servlet" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-servlet/service-atp-servlet_main.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-servlet/service-atp-servlet_main.iml" group="service-atp-servlet" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-servlet/service-atp-servlet_test.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-servlet/service-atp-servlet_test.iml" group="service-atp-servlet" />
+    </modules>
+  </component>
+</project>

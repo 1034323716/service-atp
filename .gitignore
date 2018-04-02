@@ -1,0 +1,11 @@
+.gradle
+.idea
+/build
+/gradle/
+*/build
+*.iml
+.*
+*.pid
+!.gitignore
+gradlew
+gradlew.bat

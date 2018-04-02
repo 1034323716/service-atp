@@ -1,0 +1,78 @@
+buildscript {
+    project.ext {
+        if (!project.hasProperty("nexusUser")) {
+            nexusUser = 'deployment'
+        }
+        if (!project.hasProperty("nexusPass")) {
+            nexusPass = 'deployment123'
+        }
+        nexusBaseUrl = 'http://repo.feinno.com/nexus/content'
+        privateRepo = { return { url "${nexusBaseUrl}/groups/public/" } }
+        uploadRepo = { project ->
+            return {
+                url "$nexusBaseUrl/repositories/${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}"
+                credentials { username nexusUser; password nexusPass }
+            }
+        }
+        repoClosure = {
+            maven privateRepo()
+            mavenCentral()
+            mavenLocal()
+        }
+    }
+
+    repositories project.repoClosure
+
+    dependencies {
+        classpath "com.feinno.gradle:tsp-gradle-plugin:1.0-SNAPSHOT"
+    }
+}
+
+
+allprojects { project ->
+
+    apply plugin: 'maven-publish'
+
+    project.repositories rootProject.repoClosure
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '2.12'
+    }
+
+    group = 'com.feinno'
+    version = "1.0.0.${(new Date().format('yyMMddHHmm'))}"
+
+    publishing {
+        repositories {
+            maven rootProject.uploadRepo(project)
+        }
+    }
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'osgi'
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = 1.8
+        options.encoding = "UTF-8"
+    }
+    tasks.withType(Test) {
+        defaultCharacterEncoding = "UTF-8"
+    }
+
+    dependencies {
+        testCompile "junit:junit:$junit_version"
+    }
+
+    task sourceJar(type: Jar) {
+        from sourceSets.main.allJava
+    }
+}
+
+apply plugin: 'com.feinno.tsp.release'
+
+tspRelease {
+    packageRootJar = false
+}

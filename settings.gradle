@@ -1,0 +1,5 @@
+rootProject.name = 'service-atp'
+include 'service-atp-main'
+include 'service-atp-servlet'
+include 'service-atp-service'
+include 'service-atp-service-api'

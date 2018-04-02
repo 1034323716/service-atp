@@ -1,0 +1,21 @@
+<bundle name="AutoTest">
+    <configImports>
+    </configImports>
+    <beans>
+        <bean class="org.mahatma.atp.impl.TaskLogStoreImpl"/>
+        <bean class="org.mahatma.atp.impl.TaskStoreImpl"/>
+        <bean class="org.mahatma.atp.plan.ActionImpl"/>
+        <bean class="org.mahatma.atp.plan.RunPlanImpl"/>
+        <bean class="org.mahatma.atp.server.TaskControlServer"/>
+        <bean class="org.mahatma.atp.stop.ControlTaskImpl"/>
+
+        <bean class="org.mahatma.atp.servlet.DeletePackageServlet" stacks="${HTTP_STACK}"/>
+        <bean class="org.mahatma.atp.servlet.UploadPackageServlet" stacks="${HTTP_STACK}"/>
+        <bean class="org.mahatma.atp.servlet.RunTaskServlet" stacks="${HTTP_STACK}"/>
+        <bean class="org.mahatma.atp.servlet.RunPlanServlet" stacks="${HTTP_STACK}"/>
+        <bean class="org.mahatma.atp.servlet.VerifyCronServlet" stacks="${HTTP_STACK}"/>
+
+        <!--存放一些初始化的配置-->
+        <bean class="org.mahatma.atp.conf.impl.InitServiceImpl"/>
+    </beans>
+</bundle>
