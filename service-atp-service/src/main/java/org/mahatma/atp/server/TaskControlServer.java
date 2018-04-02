@@ -3,6 +3,7 @@ package org.mahatma.atp.server;
 import org.helium.framework.annotations.ServiceImplementation;
 import org.helium.framework.annotations.ServiceSetter;
 import org.helium.framework.tag.Initializer;
+import org.mahatma.atp.conf.AtpEnvConfiguration;
 import org.mahatma.atp.service.ControlTaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class TaskControlServer implements ITaskControlServer {
     public void initControlServer() throws IOException {
         LOGGER.info("task control server init start");
         // 监听指定的端口
-        int port = 6688;
+        int port = AtpEnvConfiguration.getInstance().getServerSocketPort();
         ServerSocket server = new ServerSocket(port);
         // server将一直等待连接的到来
         LOGGER.info("server将一直等待连接的到来");
@@ -45,7 +46,7 @@ public class TaskControlServer implements ITaskControlServer {
                         sb.append(new String(bytes, 0, len, "UTF-8"));
                     }
                     LOGGER.info("get message from client: " + sb);
-
+                    // client传来的字符串为taskResultId:processId
                     String[] split = sb.toString().split(":");
                     String taskResultId = split[0];
                     String processId = split[1];

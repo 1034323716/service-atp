@@ -1,4 +1,4 @@
-<bundle name="AutoTest">
+<bundle name="service-atp">
     <configImports>
     </configImports>
     <beans>
@@ -6,16 +6,18 @@
         <bean class="org.mahatma.atp.impl.TaskStoreImpl"/>
         <bean class="org.mahatma.atp.plan.ActionImpl"/>
         <bean class="org.mahatma.atp.plan.RunPlanImpl"/>
-        <bean class="org.mahatma.atp.server.TaskControlServer"/>
-        <bean class="org.mahatma.atp.stop.ControlTaskImpl"/>
+        <bean class="org.mahatma.atp.service.impl.ControlTaskImpl"/>
 
-        <bean class="org.mahatma.atp.servlet.DeletePackageServlet" stacks="${HTTP_STACK}"/>
+        <bean class="org.mahatma.atp.servlet.StopTaskServlet" stacks="${HTTP_STACK}"/>
         <bean class="org.mahatma.atp.servlet.UploadPackageServlet" stacks="${HTTP_STACK}"/>
+        <bean class="org.mahatma.atp.servlet.DeletePackageServlet" stacks="${HTTP_STACK}"/>
         <bean class="org.mahatma.atp.servlet.RunTaskServlet" stacks="${HTTP_STACK}"/>
         <bean class="org.mahatma.atp.servlet.RunPlanServlet" stacks="${HTTP_STACK}"/>
         <bean class="org.mahatma.atp.servlet.VerifyCronServlet" stacks="${HTTP_STACK}"/>
 
-        <!--存放一些初始化的配置-->
+        <!--存放一些初始化的配置,初始化方法是有顺序的,先上后下-->
         <bean class="org.mahatma.atp.conf.impl.InitServiceImpl"/>
+        <!--tcp server 用于接收client的信息,并控制client-->
+        <bean class="org.mahatma.atp.server.TaskControlServer"/>
     </beans>
 </bundle>

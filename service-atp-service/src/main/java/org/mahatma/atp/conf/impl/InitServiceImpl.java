@@ -15,13 +15,13 @@ public class InitServiceImpl implements InitSerice {
     private static final Logger LOGGER = LoggerFactory.getLogger(InitServiceImpl.class);
 
     @FieldSetter("${ATP-ENV}")
-    private String stpEnvPath;
+    private String atpEnvPath;
 
     @Initializer
     public void initAllTheWorld() {
         ConfigProvider provider = BeanContext.getContextService().getService(ConfigProvider.class);
         LOGGER.info("init AtpEnvConfiguration");
-        AtpEnvConfiguration envConfiguration = provider.loadXml(stpEnvPath, AtpEnvConfiguration.class);
-        AtpEnvConfiguration.initRegConfiguration(envConfiguration);
+        AtpEnvConfiguration envConfiguration = provider.loadXml(atpEnvPath, AtpEnvConfiguration.class);
+        AtpEnvConfiguration.initAtpConfiguration(envConfiguration);
     }
 }

@@ -1,4 +1,4 @@
-package org.mahatma.atp.stop;
+package org.mahatma.atp.service.impl;
 
 import org.helium.database.Database;
 import org.helium.framework.annotations.FieldSetter;

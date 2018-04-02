@@ -1,3 +1,4 @@
 <atpEnvConfig>
     <tempFolder>/home/atp/AutoTestFiles/</tempFolder>
+    <serverSocketPort>6688</serverSocketPort>
 </atpEnvConfig>

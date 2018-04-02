@@ -13,7 +13,7 @@ public class AtpEnvConfiguration extends SuperPojo {
      *
      * @param config
      */
-    public static void initRegConfiguration(AtpEnvConfiguration config) {
+    public static void initAtpConfiguration(AtpEnvConfiguration config) {
         INSTANCE = config;
     }
 
@@ -23,6 +23,16 @@ public class AtpEnvConfiguration extends SuperPojo {
 
     @Field(id = 1)
     private String tempFolder;
+    @Field(id = 2)
+    private int serverSocketPort;
+
+    public int getServerSocketPort() {
+        return serverSocketPort;
+    }
+
+    public void setServerSocketPort(int serverSocketPort) {
+        this.serverSocketPort = serverSocketPort;
+    }
 
     public String getTempFolder() {
         return tempFolder;
