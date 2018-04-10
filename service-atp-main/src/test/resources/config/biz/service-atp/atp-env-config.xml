@@ -1,4 +1,5 @@
 <atpEnvConfig>
     <tempFolder>/home/atp/AutoTestFiles/</tempFolder>
     <serverSocketPort>6688</serverSocketPort>
+    <capturePkg>true</capturePkg>
 </atpEnvConfig>

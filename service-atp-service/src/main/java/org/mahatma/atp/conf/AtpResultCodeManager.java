@@ -5,6 +5,7 @@ import com.feinno.superpojo.annotation.Childs;
 import com.feinno.superpojo.annotation.Entity;
 import com.feinno.superpojo.annotation.Field;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Entity(name = "resultCode")
@@ -47,7 +48,7 @@ public class AtpResultCodeManager extends SuperPojo {
             return code;
         }
 
-        private void setCode(int code) {
+        public void setCode(int code) {
             this.code = code;
         }
 
@@ -55,8 +56,19 @@ public class AtpResultCodeManager extends SuperPojo {
             return doc;
         }
 
-        private void setDoc(String doc) {
+        public void setDoc(String doc) {
             this.doc = doc;
         }
+    }
+
+    public static void main(String[] args) {
+        AtpResultCodeManager atpResultCodeManager = new AtpResultCodeManager();
+        Map<String, ResultCode> test = new HashMap();
+        ResultCode resultCode = new ResultCode();
+        resultCode.setCode(100);
+        resultCode.setDoc("123");
+        test.put("test", resultCode);
+        atpResultCodeManager.setResultCodeDocMap(test);
+        System.out.println(atpResultCodeManager.toXmlString());
     }
 }

@@ -25,6 +25,16 @@ public class AtpEnvConfiguration extends SuperPojo {
     private String tempFolder;
     @Field(id = 2)
     private int serverSocketPort;
+    @Field(id = 3)
+    private boolean capturePkg;
+
+    public boolean isCapturePkg() {
+        return capturePkg;
+    }
+
+    public void setCapturePkg(boolean capturePkg) {
+        this.capturePkg = capturePkg;
+    }
 
     public int getServerSocketPort() {
         return serverSocketPort;
