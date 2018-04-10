@@ -27,6 +27,16 @@ public class AtpEnvConfiguration extends SuperPojo {
     private int serverSocketPort;
     @Field(id = 3)
     private boolean capturePkg;
+    @Field(id = 4)
+    private boolean localStart;
+
+    public boolean isLocalStart() {
+        return localStart;
+    }
+
+    public void setLocalStart(boolean localStart) {
+        this.localStart = localStart;
+    }
 
     public boolean isCapturePkg() {
         return capturePkg;

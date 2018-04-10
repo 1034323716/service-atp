@@ -79,7 +79,7 @@ public class TaskLogStoreImpl implements TaskLogStore {
     @Override
     public void insertLogFromFile(String logFilePath, long taskResultId) throws AutoTestRuntimeException {
 
-        if(taskResultDao == null){
+        if (taskResultDao == null) {
             taskResultDao = new TaskResultDaoImpl(atpDB);
         }
 
@@ -112,14 +112,14 @@ public class TaskLogStoreImpl implements TaskLogStore {
                 tmp = fileBufferedReader.readLine();
                 lines++;
                 if (tmp != null) {
-                    if(StringUtils.isNullOrEmpty(tmp)){
+                    if (StringUtils.isNullOrEmpty(tmp)) {
                         continue;
                     }
                     stringBuilder.append(tmp).append("\n");
                     if (lines == 5) {
                         lines = 0;
                         String logStr = stringBuilder.toString();
-                        if (!isHandledLogStr(logStr,log,logDao)){
+                        if (!isHandledLogStr(logStr, log, logDao)) {
                             insertLogToDB(stringBuilder.toString(), log, logDao);
                         }
                         stringBuilder = new StringBuilder();
@@ -128,7 +128,7 @@ public class TaskLogStoreImpl implements TaskLogStore {
                     lines = 0;
                     if (!taskIdReadFileSwitch.get(taskResultId)) {
                         if (!StringUtils.isNullOrEmpty(stringBuilder.toString())) {
-                            if(!isHandledLogStr(stringBuilder.toString(),log,logDao)) {
+                            if (!isHandledLogStr(stringBuilder.toString(), log, logDao)) {
                                 insertLogToDB(stringBuilder.toString(), log, logDao);
                             }
                         }
@@ -136,8 +136,8 @@ public class TaskLogStoreImpl implements TaskLogStore {
                         fileReader.close();
                         break;
                     } else {
-                        if(!isHandledLogStr(stringBuilder.toString(),log,logDao)) {
-                            if(!StringUtils.isNullOrEmpty(stringBuilder.toString())) {
+                        if (!isHandledLogStr(stringBuilder.toString(), log, logDao)) {
+                            if (!StringUtils.isNullOrEmpty(stringBuilder.toString())) {
                                 insertLogToDB(stringBuilder.toString(), log, logDao);
                             }
                         }
@@ -147,7 +147,7 @@ public class TaskLogStoreImpl implements TaskLogStore {
                 Thread.sleep(200);
             }
 
-            taskResultDao.updateTaskResultState(taskResultId,1);
+            taskResultDao.updateTaskResultState(taskResultId, 1);
             LOGGER.info("taskResultId:{} get log end!", taskResultId);
         } catch (Exception e) {
             throw new AutoTestRuntimeException(e.getMessage());
@@ -171,8 +171,10 @@ public class TaskLogStoreImpl implements TaskLogStore {
     }
 
     private void insertLogToDB(String tmp, RunTimeLog log, LogDao logDao) {
-        log.setLog(tmp);
-        logDao.insertLog(log);
+        if (!StringUtils.isNullOrEmpty(tmp)) {
+            log.setLog(tmp);
+            logDao.insertLog(log);
+        }
     }
 
     private boolean isHandledLogStr(String logStr, RunTimeLog log, LogDao logDao) {

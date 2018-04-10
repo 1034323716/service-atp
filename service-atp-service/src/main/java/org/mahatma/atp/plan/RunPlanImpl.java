@@ -23,6 +23,7 @@ import org.mahatma.atp.common.db.daoImpl.PlanDaoImpl;
 import org.mahatma.atp.common.db.daoImpl.TaskDaoImpl;
 import org.mahatma.atp.common.db.daoImpl.TcsDaoImpl;
 import org.mahatma.atp.common.util.FormatUtil;
+import org.mahatma.atp.conf.AtpEnvConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -158,15 +159,17 @@ public class RunPlanImpl implements RunPlan {
         String lastRunTime = "";
     }
 
-    //每次系统重启都从数据库中搂state是1,2的记录进list中执行
+    //若是线上服务运行，则每次系统重启都从数据库中搂state是1,2的记录进list中执行，若是本地运行服务则不走这一步
     private void startActionPlan() {
-        List<Plan> actionPlans = planDao.getActionPlan();
-        for (Plan plan : actionPlans) {
-            try {
-                PlanBean planBean = new PlanBean(plan, action);
-                registerPlan(planBean);
-            } catch (ParseException e) {
-                LOGGER.error("start action plan error" + e);
+        if (!AtpEnvConfiguration.getInstance().isLocalStart()) {
+            List<Plan> actionPlans = planDao.getActionPlan();
+            for (Plan plan : actionPlans) {
+                try {
+                    PlanBean planBean = new PlanBean(plan, action);
+                    registerPlan(planBean);
+                } catch (ParseException e) {
+                    LOGGER.error("start action plan error" + e);
+                }
             }
         }
     }
