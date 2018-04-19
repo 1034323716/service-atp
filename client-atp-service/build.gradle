@@ -1,0 +1,20 @@
+dependencies {
+    compile group: 'org.helium', name: 'helium-logging', version: helium_version
+    compile group: 'com.feinno', name: 'common-util', version: '1.0.0-SNAPSHOT'
+    compile group: 'com.feinno', name: 'urcs-framework', version: urcs_framework_version
+
+//    mqtt client dependency
+    compile 'org.fusesource.mqtt-client:mqtt-client:1.15'
+    compile 'org.fusesource.hawtdispatch:hawtdispatch:1.22'
+    compile 'org.fusesource.hawtbuf:hawtbuf:1.11'
+    compile 'org.fusesource.hawtdispatch:hawtdispatch-transport:1.21'
+    compile 'org.autotest:mqtt-stack:1.0.0'
+    compile 'org.autotest:mqtt-proxy-service:1.0.0'
+
+//    email
+    compile 'javax.mail:javax.mail-api:1.5.3'
+    compile 'com.sun.mail:javax.mail:1.5.3'
+
+//    weixin
+    compile 'org.json:json:20140107'
+}

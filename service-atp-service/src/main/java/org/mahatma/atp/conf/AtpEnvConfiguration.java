@@ -29,6 +29,16 @@ public class AtpEnvConfiguration extends SuperPojo {
     private boolean capturePkg;
     @Field(id = 4)
     private boolean localStart;
+    @Field(id = 5)
+    private boolean retest;
+
+    public boolean isRetest() {
+        return retest;
+    }
+
+    public void setRetest(boolean retest) {
+        this.retest = retest;
+    }
 
     public boolean isLocalStart() {
         return localStart;

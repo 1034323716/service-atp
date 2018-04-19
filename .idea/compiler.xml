@@ -4,6 +4,10 @@
     <bytecodeTargetLevel>
       <module name="client-atp-api_main" target="1.8" />
       <module name="client-atp-api_test" target="1.8" />
+      <module name="client-atp-main_main" target="1.8" />
+      <module name="client-atp-main_test" target="1.8" />
+      <module name="client-atp-service_main" target="1.8" />
+      <module name="client-atp-service_test" target="1.8" />
       <module name="service-atp-main_main" target="1.8" />
       <module name="service-atp-main_test" target="1.8" />
       <module name="service-atp-service-api_main" target="1.8" />

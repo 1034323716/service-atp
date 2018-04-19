@@ -3,3 +3,6 @@ include 'service-atp-main'
 include 'service-atp-servlet'
 include 'service-atp-service'
 include 'service-atp-service-api'
+include 'client-atp-main'
+include 'client-atp-service'
+
