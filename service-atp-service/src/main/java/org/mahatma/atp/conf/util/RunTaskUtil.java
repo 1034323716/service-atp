@@ -3,6 +3,7 @@ package org.mahatma.atp.conf.util;
 import org.helium.database.Database;
 import org.mahatma.atp.common.db.bean.TaskResult;
 import org.mahatma.atp.common.util.FormatUtil;
+import org.mahatma.atp.conf.AtpEnvConfiguration;
 import org.mahatma.atp.dao.TaskLogStore;
 import org.mahatma.atp.entity.RunType;
 import org.mahatma.atp.service.ControlTaskService;
@@ -28,9 +29,18 @@ public class RunTaskUtil {
         }
         SelectClassPathUtils selectClassPathUtils = new SelectClassPathUtils(atpDB);
         String addClassPath = selectClassPathUtils.getClassPathsByTaskId(taskId);
+
+        int retest;
+        if(AtpEnvConfiguration.getInstance().isRetest()) {
+            retest = 1;
+        } else {
+            retest = 0;
+        }
+
         String runShell = "sh " + FormatUtil.shellDir + FormatUtil.shellName
                 + " '-taskId " + taskId
                 + " -taskResultId " + taskResultId
+                + " -retest " + retest
                 + " -runType " + runType.intValue() + "' '" + addClassPath + "' >"
                 + FormatUtil.logPath(taskResultId) + " 2>&1";
         CapturePkgBean capturePkgBean = new CapturePkgBean(taskResultId);
