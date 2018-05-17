@@ -24,6 +24,7 @@ import org.mahatma.atp.common.db.daoImpl.TaskDaoImpl;
 import org.mahatma.atp.common.db.daoImpl.TcsDaoImpl;
 import org.mahatma.atp.common.util.FormatUtil;
 import org.mahatma.atp.conf.AtpEnvConfiguration;
+import org.mahatma.atp.service.ControlTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +53,8 @@ public class RunPlanImpl implements RunPlan {
     private Database atpDB;
     @ServiceSetter
     private Action action;
+    @ServiceSetter
+    private ControlTest controlTest;
 
     @Initializer
     public void init() {
@@ -89,6 +92,11 @@ public class RunPlanImpl implements RunPlan {
 
     public void removePlans(List<PlanArgs> willRemove) {
         synchronized (atpPlans) {
+            for (PlanArgs planArgs : willRemove) {
+                Long id = planArgs.planBean.getPlan().getId();
+                controlTest.stopPlan(id);
+
+            }
             atpPlans.removeAll(willRemove);
         }
     }
@@ -226,7 +234,9 @@ public class RunPlanImpl implements RunPlan {
 
     private void runPlan(PlanBean planBean) throws Exception {
         try {
-            executor.execute(() -> planBean.getAction().process(planBean));
+            if (!controlTest.planIsRun(planBean.getPlan().getId())) {
+                executor.execute(() -> planBean.getAction().process(planBean, controlTest));
+            }
         } catch (Exception e) {
             throw new Exception(e);
         }

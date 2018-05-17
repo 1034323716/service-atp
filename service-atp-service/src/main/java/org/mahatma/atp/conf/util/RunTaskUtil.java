@@ -5,7 +5,7 @@ import org.mahatma.atp.common.db.bean.TaskResult;
 import org.mahatma.atp.conf.AtpEnvConfiguration;
 import org.mahatma.atp.dao.TaskLogStore;
 import org.mahatma.atp.entity.RunType;
-import org.mahatma.atp.service.ControlTaskService;
+import org.mahatma.atp.service.ControlTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +17,9 @@ import java.util.Date;
 public class RunTaskUtil {
     private static Logger LOGGER = LoggerFactory.getLogger(RunTaskUtil.class);
 
-    public static void run(Long taskId, TaskLogStore taskLogStore, Long taskResultId,
-                           ControlTaskService controlTaskService, Database atpDB, RunType runType) {
+    // 若执行的不是定时任务则planId为0
+    public static void run(Long taskId, long planId, TaskLogStore taskLogStore, Long taskResultId,
+                           ControlTest controlTest, Database atpDB, RunType runType) {
         String logPath = FilePathUtil.logPath(taskResultId);
         boolean createLogResult = FilePathUtil.checkFileAndCreate(logPath);
         if (!createLogResult) {
@@ -30,13 +31,14 @@ public class RunTaskUtil {
 
         String runShell = "sh " + AtpEnvConfiguration.getInstance().getRunShPath()
                 + " '-taskId " + taskId
+                + " '-planId " + planId
                 + " -taskResultId " + taskResultId
                 + " -retest " + isRetest()
                 + " -runType " + runType.intValue() + "' '" + addClassPath + "' >"
                 + logPath + " 2>&1";
         CapturePkgBean capturePkgBean = new CapturePkgBean(taskResultId);
         capturePkgBean.start();
-        RunShellUtil.runShellAndStore(runShell, taskLogStore, taskResultId, controlTaskService);
+        RunShellUtil.runShellAndStore(runShell, taskLogStore, taskResultId, controlTest);
         capturePkgBean.stop();
     }
 

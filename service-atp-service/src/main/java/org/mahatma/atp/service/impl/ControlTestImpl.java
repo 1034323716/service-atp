@@ -6,30 +6,34 @@ import org.helium.framework.annotations.ServiceImplementation;
 import org.mahatma.atp.common.db.bean.TaskResult;
 import org.mahatma.atp.common.db.dao.TaskResultDao;
 import org.mahatma.atp.common.db.daoImpl.TaskResultDaoImpl;
+import org.mahatma.atp.common.util.entity.ControlPkg;
 import org.mahatma.atp.conf.AtpResultCodeManager;
 import org.mahatma.atp.conf.ResultCodeParam;
 import org.mahatma.atp.conf.util.RunShellUtil;
-import org.mahatma.atp.service.ControlTaskService;
+import org.mahatma.atp.service.ControlTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by JiYunfei on 17-11-16.
  */
 @ServiceImplementation
-public class ControlTaskImpl implements ControlTaskService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ControlTaskImpl.class);
-    private static Map<Long, Integer> runProcessMap = new HashMap<>();
+public class ControlTestImpl implements ControlTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ControlTestImpl.class);
+    private static Map<Long, ControlPkg> runProcessMap = new HashMap<>();
 
     @FieldSetter("URCS_ATPDB")
     private Database atpDB;
 
     @Override
-    public void stop(Long taskResultId) {
-        int processId = runProcessMap.get(taskResultId);
+    public void stop(long taskResultId) {
+        ControlPkg controlPkg = runProcessMap.get(taskResultId);
+        int processId = controlPkg.getPid();
         killProcessTree(processId);
         LOGGER.info("stop task success, task result id:{}", taskResultId);
         TaskResultDao taskResultDao = new TaskResultDaoImpl(atpDB);
@@ -55,17 +59,51 @@ public class ControlTaskImpl implements ControlTaskService {
     }
 
     @Override
-    public void add(Long taskResultId, int processId) {
-        runProcessMap.put(taskResultId, processId);
+    public void add(long taskResultId, ControlPkg controlPkg) {
+        runProcessMap.put(taskResultId, controlPkg);
     }
 
     @Override
-    public void remove(Long taskResultId) {
+    public void remove(long taskResultId) {
         runProcessMap.remove(taskResultId);
     }
 
     @Override
-    public boolean exist(Long taskResultId) {
+    public boolean exist(long taskResultId) {
         return runProcessMap.containsKey(taskResultId);
+    }
+
+    @Override
+    public boolean planIsRun(long planId) {
+        List<Long> taskResultIdList = planRuningId(planId);
+
+        if (taskResultIdList.size() != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public List<Long> planRuningId(long planId) {
+        List<Long> taskResultIdList = new ArrayList<>();
+
+        for (Map.Entry<Long, ControlPkg> longControlPkgEntry : runProcessMap.entrySet()) {
+            ControlPkg value = longControlPkgEntry.getValue();
+            if (value.getPlanId() == planId && value.getPlanId() != -1L) {
+                Long taskResultId = longControlPkgEntry.getKey();
+                taskResultIdList.add(taskResultId);
+            }
+        }
+
+        return taskResultIdList;
+    }
+
+    @Override
+    public void stopPlan(long planId) {
+        List<Long> taskResultIdList = planRuningId(planId);
+        for (Long taskResultId : taskResultIdList) {
+            stop(taskResultId);
+        }
     }
 }

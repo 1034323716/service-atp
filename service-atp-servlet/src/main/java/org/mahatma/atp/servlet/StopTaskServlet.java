@@ -5,7 +5,7 @@ import org.helium.framework.annotations.ServletImplementation;
 import org.helium.http.servlet.HttpMappings;
 import org.helium.http.servlet.HttpServlet;
 import org.helium.http.servlet.HttpServletContext;
-import org.mahatma.atp.service.ControlTaskService;
+import org.mahatma.atp.service.ControlTest;
 import org.mahatma.atp.util.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public class StopTaskServlet extends HttpServlet {
     private static Logger LOGGER = LoggerFactory.getLogger(StopTaskServlet.class);
 
     @ServiceSetter
-    private ControlTaskService controlTaskService;
+    private ControlTest controlTest;
 
     @Override
     public void process(HttpServletContext ctx) throws Exception {
@@ -31,12 +31,12 @@ public class StopTaskServlet extends HttpServlet {
 
         String taskResultIdStr = request.getParameter("id");
         Long taskResultId = Long.valueOf(taskResultIdStr);
-        if (taskResultId == null || "".equals(taskResultId) || !controlTaskService.exist(taskResultId)) {
+        if (taskResultId == null || "".equals(taskResultId) || !controlTest.exist(taskResultId)) {
             HttpUtil.sendResponse("404", "BAD_REQUEST", "", response);
             return;
         }
         try {
-            controlTaskService.stop(taskResultId);
+            controlTest.stop(taskResultId);
         } catch (Exception e) {
             LOGGER.error("stop task error , task result id is {} , exception is {}", taskResultId, e);
             HttpUtil.sendResponse("500", "INNER_SERVER_ERROR", "", response);

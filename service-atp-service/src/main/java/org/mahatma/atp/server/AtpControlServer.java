@@ -1,13 +1,16 @@
 package org.mahatma.atp.server;
 
+import com.feinno.superpojo.SuperPojoManager;
 import org.helium.framework.annotations.ServiceImplementation;
 import org.helium.framework.annotations.ServiceSetter;
 import org.helium.framework.tag.Initializer;
+import org.mahatma.atp.common.util.entity.ControlPkg;
 import org.mahatma.atp.conf.AtpEnvConfiguration;
-import org.mahatma.atp.service.ControlTaskService;
+import org.mahatma.atp.service.ControlTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -17,11 +20,11 @@ import java.net.Socket;
  * Created by JiYunfei on 18-3-23.
  */
 @ServiceImplementation
-public class TaskControlServer implements ITaskControlServer {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TaskControlServer.class);
+public class AtpControlServer implements IAtpControlServer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AtpControlServer.class);
 
     @ServiceSetter
-    private ControlTaskService controlTaskService;
+    private ControlTest controlTest;
 
     @Initializer
     public void initControlServer() throws IOException {
@@ -37,24 +40,26 @@ public class TaskControlServer implements ITaskControlServer {
                     Socket socket = server.accept();
                     // 建立好连接后，从socket中获取输入流，并建立缓冲区进行读取
                     InputStream inputStream = socket.getInputStream();
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     byte[] bytes = new byte[1024];
                     int len;
-                    StringBuilder sb = new StringBuilder();
                     //只有当客户端关闭它的输出流的时候，服务端才能取得结尾的-1
                     while ((len = inputStream.read(bytes)) != -1) {
                         // 注意指定编码格式，发送方和接收方一定要统一，建议使用UTF-8
-                        sb.append(new String(bytes, 0, len, "UTF-8"));
+                        byteArrayOutputStream.write(bytes, 0, len);
                     }
-                    LOGGER.info("get message from client: " + sb);
-                    // client传来的字符串为taskResultId:processId
-                    String[] split = sb.toString().split(":");
-                    String taskResultId = split[0];
-                    String processId = split[1];
-                    controlTaskService.add(Long.valueOf(taskResultId), Integer.parseInt(processId));
+                    byte[] pkgBytes = byteArrayOutputStream.toByteArray();
+                    ControlPkg controlPkg = SuperPojoManager.parsePbFrom(pkgBytes, ControlPkg.class);
+                    LOGGER.info("收到控制信息:{}", controlPkg);
+                    if (controlPkg.getStatus() == 1) {
+                        controlTest.add(controlPkg.getTaskResultId(), controlPkg);
+                    } else if (controlPkg.getStatus() == 0) {
+                        controlTest.remove(controlPkg.getTaskResultId());
+                    }
 
                     inputStream.close();
                 } catch (Exception e) {
-                    LOGGER.error("TaskControlServer Exception", e);
+                    LOGGER.error("AtpControlServer Exception", e);
                 }
             }
         }).start();

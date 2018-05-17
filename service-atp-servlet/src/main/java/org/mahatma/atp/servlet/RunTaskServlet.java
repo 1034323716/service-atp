@@ -11,7 +11,7 @@ import org.mahatma.atp.conf.util.RunTaskUtil;
 import org.mahatma.atp.dao.TaskLogStore;
 import org.mahatma.atp.dao.TaskStore;
 import org.mahatma.atp.entity.RunType;
-import org.mahatma.atp.service.ControlTaskService;
+import org.mahatma.atp.service.ControlTest;
 import org.mahatma.atp.util.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class RunTaskServlet extends HttpServlet {
     @ServiceSetter
     private TaskStore taskStore;
     @ServiceSetter
-    private ControlTaskService controlTaskService;
+    private ControlTest controlTest;
     @FieldSetter("URCS_ATPDB")
     private Database atpDB;
 
@@ -48,7 +48,7 @@ public class RunTaskServlet extends HttpServlet {
         } else {
             long taskResultId = RunTaskUtil.prepare(taskId, taskLogStore, null);
             HttpUtil.sendResponse("202", "ACCEPT", String.valueOf(taskResultId), response);
-            RunTaskUtil.run(taskId, taskLogStore, taskResultId, controlTaskService, atpDB, RunType.RunTask);
+            RunTaskUtil.run(taskId, 0L, taskLogStore, taskResultId, controlTest, atpDB, RunType.RunTask);
         }
     }
 }

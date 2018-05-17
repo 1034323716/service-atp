@@ -1,9 +1,8 @@
 package org.mahatma.atp.conf.util;
 
 import org.mahatma.atp.common.exception.AutoTestRuntimeException;
-import org.mahatma.atp.common.util.FormatUtil;
 import org.mahatma.atp.dao.TaskLogStore;
-import org.mahatma.atp.service.ControlTaskService;
+import org.mahatma.atp.service.ControlTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +51,7 @@ public class RunShellUtil {
         exec.destroy();
     }
 
-    public static void runShellAndStore(String command, TaskLogStore taskLogStore, Long taskResultId, ControlTaskService controlTaskService) {
+    public static void runShellAndStore(String command, TaskLogStore taskLogStore, Long taskResultId, ControlTest controlTest) {
         try {
             LOGGER.info("run shell and store log start, command:{}", command);
             Process exec = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", command});
@@ -84,8 +83,8 @@ public class RunShellUtil {
             exec.destroy();
             taskLogStore.closeLogFile(taskResultId);
 
-            if (controlTaskService != null) {
-                controlTaskService.remove(taskResultId);
+            if (controlTest != null) {
+                controlTest.remove(taskResultId);
             }
 
         } catch (Throwable e) {

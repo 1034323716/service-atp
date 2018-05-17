@@ -7,6 +7,7 @@ import org.helium.framework.annotations.ServiceSetter;
 import org.mahatma.atp.conf.util.RunTaskUtil;
 import org.mahatma.atp.dao.TaskLogStore;
 import org.mahatma.atp.entity.RunType;
+import org.mahatma.atp.service.ControlTest;
 
 /**
  * Created by JiYunfei on 17-9-19.
@@ -20,9 +21,10 @@ public class ActionImpl implements Action {
     private Database atpDB;
 
     @Override
-    public void process(PlanBean planBean) {
+    public void process(PlanBean planBean, ControlTest controlTest) {
         Long taskId = planBean.getPlan().getTaskId();
+        long planId = planBean.getPlan().getId();
         Long taskResultId = RunTaskUtil.prepare(taskId, taskLogStore, planBean.getPlan().getId());
-        RunTaskUtil.run(taskId, taskLogStore, taskResultId, null, atpDB, RunType.RunPlan);
+        RunTaskUtil.run(taskId, planId, taskLogStore, taskResultId, controlTest, atpDB, RunType.RunPlan);
     }
 }

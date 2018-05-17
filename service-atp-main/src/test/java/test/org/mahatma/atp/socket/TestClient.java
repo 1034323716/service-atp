@@ -1,7 +1,7 @@
 package test.org.mahatma.atp.socket;
 
 import org.mahatma.atp.common.util.ProcessUtil;
-import org.mahatma.atp.common.util.TaskControlClient;
+import org.mahatma.atp.common.util.AtpControlClient;
 
 import java.io.IOException;
 
@@ -10,8 +10,8 @@ import java.io.IOException;
  */
 public class TestClient {
     public static void main(String[] args) throws IOException {
-        TaskControlClient taskControlClient = new TaskControlClient();
-        taskControlClient.connection("10.10.12.185", 6688);
-        taskControlClient.send(123 + ":" + ProcessUtil.getProcessID());
+        AtpControlClient atpControlClient = new AtpControlClient();
+        atpControlClient.connection("10.10.12.185", 6688);
+        atpControlClient.send(123 + ":" + ProcessUtil.getProcessID());
     }
 }

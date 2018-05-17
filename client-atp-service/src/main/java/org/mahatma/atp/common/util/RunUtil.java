@@ -23,6 +23,7 @@ import org.mahatma.atp.common.engine.AutoTestEngine;
 import org.mahatma.atp.common.engine.ModuleSummary;
 import org.mahatma.atp.common.engine.spi.AnnotationResolver;
 import org.mahatma.atp.common.param.StartupOptionEnum;
+import org.mahatma.atp.common.util.entity.ControlPkg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +47,7 @@ public class RunUtil {
     private AutoTestEngine autoTestEngine;
     private boolean isSuccess;
     private Long taskId;
+    private long planId;
     private Long taskResultId;
     private Task task;
     private int runType;
@@ -55,12 +57,13 @@ public class RunUtil {
         this.autoTestEngine = autoTestEngine;
         isSuccess = true;
         taskId = Long.parseLong(StartupOptionEnum.TASKID.getArgs().get(0));
+        planId = Long.parseLong(StartupOptionEnum.PLANID.getArgs().get(0));
         taskResultId = Long.parseLong(StartupOptionEnum.TASKRESULTID.getArgs().get(0));
         runType = Integer.parseInt(StartupOptionEnum.RUNTYPE.getArgs().get(0));
         try {
-            notifyATP();
+            notifyATPStart();
         } catch (IOException e) {
-            LOGGER.error("Notify ATP error", e);
+            LOGGER.error("Notify ATP start error", e);
         }
 
         // 从taskId中读取到所有的和这次任务有关的pkg，把源jar和jar中jar放入
@@ -68,11 +71,37 @@ public class RunUtil {
 //        ExtClasspathLoader.loadClasspath(selectClassPathUtil.getClassPathsByTaskId(taskId));
     }
 
-    private void notifyATP() throws IOException {
-        LOGGER.info("Connect ATP");
-        TaskControlClient taskControlClient = new TaskControlClient();
-        taskControlClient.connection("localhost", 6688);
-        taskControlClient.send(taskResultId + ":" + ProcessUtil.getProcessID());
+    private void notifyATPStart() throws IOException {
+        LOGGER.info("Connect ATP for start");
+        AtpControlClient atpControlClient = new AtpControlClient();
+        atpControlClient.connection("localhost", 6688);
+
+        ControlPkg controlPkg = new ControlPkg();
+        controlPkg.setPid(ProcessUtil.getProcessID());
+        controlPkg.setStatus(1);
+        controlPkg.setTaskResultId(taskResultId);
+
+        controlPkg.setTaskId(taskId);
+        controlPkg.setPlanId(planId);
+
+        atpControlClient.send(controlPkg.toPbByteArray());
+        atpControlClient.disconnect();
+    }
+
+    private void notifyATPStop() throws IOException {
+        LOGGER.info("Connect ATP for stop");
+        AtpControlClient atpControlClient = new AtpControlClient();
+        atpControlClient.connection("localhost", 6688);
+
+        ControlPkg controlPkg = new ControlPkg();
+        controlPkg.setPid(ProcessUtil.getProcessID());
+        controlPkg.setStatus(0);
+        controlPkg.setTaskResultId(taskResultId);
+        controlPkg.setTaskId(taskId);
+        controlPkg.setPlanId(planId);
+
+        atpControlClient.send(controlPkg.toPbByteArray());
+        atpControlClient.disconnect();
     }
 
     // 将ATP_task的summarys字段中的summary放到List中并便利，一次传到下个方法中
@@ -115,6 +144,11 @@ public class RunUtil {
         } else {
             taskResult.setCode(FormatUtil.TASK_RESULT_FAIL);
             taskResult.setDesc(FormatUtil.TASK_RESULT_FAIL_TEXT);
+        }
+        try {
+            notifyATPStop();
+        } catch (IOException e) {
+            LOGGER.error("Notify ATP stop error", e);
         }
         taskResultDao.updateTaskResult(taskResult);
     }
