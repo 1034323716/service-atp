@@ -1,6 +1,6 @@
 <bootstrap id="service-atp">
     <environments imports="env.xml,biz/service-atp/env.xml">
-        <variable key="PRIVATE_IP" value="10.10.12.185"/>
+        <variable key="PRIVATE_IP" value="0.0.0.0"/>
         <variable key="HTTP_PORT" value="8301"/>
         <variable key="HTTP_STACK" value="http"/>
     </environments>

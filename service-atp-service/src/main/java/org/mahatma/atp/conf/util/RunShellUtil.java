@@ -60,7 +60,7 @@ public class RunShellUtil {
 
             new Thread(() -> {
                 try {
-                    taskLogStore.insertLogFromFile(FormatUtil.logPath(taskResultId), taskResultId);
+                    taskLogStore.insertLogFromFile(FilePathUtil.logPath(taskResultId), taskResultId);
                 } catch (AutoTestRuntimeException e) {
                     LOGGER.error(e.getMessage());
                 }

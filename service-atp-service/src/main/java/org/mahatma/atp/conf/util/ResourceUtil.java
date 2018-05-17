@@ -146,13 +146,13 @@ public class ResourceUtil {
      * package表中的name就是xml文件中的name
      */
     public void moveSourceAndDeCompress() {
-        FilePathUtil.checkDirAndCreate(FormatUtil.generatePkgDir(packageSetting.getName(), packageSetting.getVersion()));
+        FilePathUtil.checkPathAndCreate(FormatUtil.generatePkgDir(packageSetting.getName(), packageSetting.getVersion()));
         String finalPath = FormatUtil.generatePkgDir(packageSetting.getName(), packageSetting.getVersion())
                 + File.separator;
         sourcePath = finalPath + FormatUtil.libName + File.separator + sourceName;
         libPath = finalPath + FormatUtil.libName + File.separator;
         decompressionPath = finalPath + FormatUtil.decompressionName + File.separator;
-        FilePathUtil.checkDirAndCreate(libPath);
+        FilePathUtil.checkPathAndCreate(libPath);
 //        String commandMove = "cp" + " " + location + " " + libPath;
         String commandMove = "mv" + " " + location + " " + libPath;
         RunShellUtil.runShell(commandMove);

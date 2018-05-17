@@ -19,10 +19,9 @@ public class FormatUtil {
     public static final String PKGCFGKEY = "name";
     public static final String PKGCFGVALUE = "value";
 
-    public static final String saveJarRoot = "/data/atp/pkg/";
+    public static final String saveJarRoot = "/atp/pkg/";
     public static final String libName = "lib";
     public static final String decompressionName = "decompression";
-    public static final String sourcePostfix = ".jar";
 
     public static final String dbPropertiesName = "URCS_ATPDB";
 
@@ -31,28 +30,13 @@ public class FormatUtil {
     public static final String TASK_RESULT_SUCCESS_TEXT = "SUCCESS";
     public static final String TASK_RESULT_FAIL_TEXT = "FAIL";
 
-    public static String temporaryDir = "/home/atp/AutoTestFiles/";
     public static String configFileName = "env.properties";
-
-    public static String shellDir = "/data/atp/required/";
-    public static String shellName = "run.sh";
-
-    public static String logName = "log";
 
     public static int runMark = 1;
     public static int pauseMark = 2;
 
-    public static String generatePkgSourcePath(Pkg pkg) {
-        return saveJarRoot + pkg.getName() + File.separator + pkg.getVersion()
-                + File.separator + libName + File.separator + pkg.getName() + sourcePostfix;
-    }
-
     public static String generatePkgDir(Pkg pkg) {
         return saveJarRoot + pkg.getName() + File.separator + pkg.getVersion() + File.separator;
-    }
-
-    public static String logPath(Long taskResultId) {
-        return shellDir + logName + File.separator + taskResultId + ".log";
     }
 
     public static String generateDeletePackageCommand(Pkg pkg) {

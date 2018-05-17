@@ -2,51 +2,53 @@ package org.mahatma.atp.conf.util;
 
 import org.helium.database.Database;
 import org.mahatma.atp.common.db.bean.TaskResult;
-import org.mahatma.atp.common.util.FormatUtil;
 import org.mahatma.atp.conf.AtpEnvConfiguration;
 import org.mahatma.atp.dao.TaskLogStore;
 import org.mahatma.atp.entity.RunType;
 import org.mahatma.atp.service.ControlTaskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 
 /**
  * Created by JiYunfei on 17-11-3.
  */
 public class RunTaskUtil {
+    private static Logger LOGGER = LoggerFactory.getLogger(RunTaskUtil.class);
 
     public static void run(Long taskId, TaskLogStore taskLogStore, Long taskResultId,
                            ControlTaskService controlTaskService, Database atpDB, RunType runType) {
-        File file = new File(FormatUtil.logPath(taskResultId));
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        String logPath = FilePathUtil.logPath(taskResultId);
+        boolean createLogResult = FilePathUtil.checkFileAndCreate(logPath);
+        if (!createLogResult) {
+            LOGGER.error("create log fail, log path:{}", logPath);
+            return;
         }
         SelectClassPathUtils selectClassPathUtils = new SelectClassPathUtils(atpDB);
         String addClassPath = selectClassPathUtils.getClassPathsByTaskId(taskId);
 
-        int retest;
-        if(AtpEnvConfiguration.getInstance().isRetest()) {
-            retest = 1;
-        } else {
-            retest = 0;
-        }
-
-        String runShell = "sh " + FormatUtil.shellDir + FormatUtil.shellName
+        String runShell = "sh " + AtpEnvConfiguration.getInstance().getRunShPath()
                 + " '-taskId " + taskId
                 + " -taskResultId " + taskResultId
-                + " -retest " + retest
+                + " -retest " + isRetest()
                 + " -runType " + runType.intValue() + "' '" + addClassPath + "' >"
-                + FormatUtil.logPath(taskResultId) + " 2>&1";
+                + logPath + " 2>&1";
         CapturePkgBean capturePkgBean = new CapturePkgBean(taskResultId);
         capturePkgBean.start();
         RunShellUtil.runShellAndStore(runShell, taskLogStore, taskResultId, controlTaskService);
         capturePkgBean.stop();
+    }
+
+    // 返回1代表要失败时重测，但会0代表不重测
+    private static int isRetest() {
+        int retest;
+        if (AtpEnvConfiguration.getInstance().isRetest()) {
+            retest = 1;
+        } else {
+            retest = 0;
+        }
+        return retest;
     }
 
     public static Long prepare(Long taskId, TaskLogStore taskLogStore, Long planId) {

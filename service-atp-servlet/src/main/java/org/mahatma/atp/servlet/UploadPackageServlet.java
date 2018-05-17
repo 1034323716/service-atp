@@ -32,7 +32,7 @@ public class UploadPackageServlet extends HttpServlet {
         String filePath = AtpEnvConfiguration.getInstance().getTempFolder() + request.getParameter("location");;
 
         ResourceUtil resourceUtils = new ResourceUtil(filePath);
-        if (!FilePathUtil.checkFileExist(filePath)) {
+        if (!FilePathUtil.checkPathExist(filePath)) {
             HttpUtil.sendResponse("404", "FileNotFound", "", response);
             return;
         } else {

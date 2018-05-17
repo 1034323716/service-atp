@@ -28,9 +28,39 @@ public class AtpEnvConfiguration extends SuperPojo {
     @Field(id = 3)
     private boolean capturePkg;
     @Field(id = 4)
-    private boolean localStart;
+    private String capturePkgPath;
     @Field(id = 5)
+    private boolean localStart;
+    @Field(id = 6)
     private boolean retest;
+    @Field(id = 7)
+    private String runShPath;
+    @Field(id = 8)
+    private String logPath;
+
+    public String getLogPath() {
+        return logPath;
+    }
+
+    public void setLogPath(String logPath) {
+        this.logPath = logPath;
+    }
+
+    public String getRunShPath() {
+        return runShPath;
+    }
+
+    public void setRunShPath(String runShPath) {
+        this.runShPath = runShPath;
+    }
+
+    public String getCapturePkgPath() {
+        return capturePkgPath;
+    }
+
+    public void setCapturePkgPath(String capturePkgPath) {
+        this.capturePkgPath = capturePkgPath;
+    }
 
     public boolean isRetest() {
         return retest;
