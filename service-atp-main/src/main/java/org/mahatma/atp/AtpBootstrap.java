@@ -13,7 +13,7 @@ public class AtpBootstrap {
 
         Bootstrap.INSTANCE.addPath(AtpBootstrap.class.getClassLoader().getResource("config").getPath());
         Bootstrap.INSTANCE.addPath(AtpBootstrap.class.getClassLoader().getResource("config").getPath() + "/../");
-        org.helium.framework.spi.Bootstrap.INSTANCE.initialize("bootstrap.xml");
+        Bootstrap.INSTANCE.initialize("bootstrap.xml");
 
         System.out.println("============ AtpBootstrap BOOTSTRAP START OK =================");
     }
