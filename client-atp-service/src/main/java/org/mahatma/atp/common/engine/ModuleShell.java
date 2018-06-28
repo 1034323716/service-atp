@@ -117,7 +117,7 @@ public class ModuleShell {
         if (result == null) {
             result = session.createResult();
         }
-        if (result.getCode() > FormatUtil.MAXSUCCESSCODE) {
+        if (result.getCode() > FormatUtil.MAXSUCCESSCODE || result.getCode() < FormatUtil.MINSUCCESSCODE) {
             isSuccess = false;
         }
 

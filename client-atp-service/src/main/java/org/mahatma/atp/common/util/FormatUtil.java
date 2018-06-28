@@ -15,7 +15,8 @@ public class FormatUtil {
     public static final long RUN_TC_TIMEOUT = 1000 * 60 * 5;
 
     public static final String ENV = "env";
-    public static final int MAXSUCCESSCODE = 200;
+    public static final int MAXSUCCESSCODE = 299;
+    public static final int MINSUCCESSCODE = 200;
     public static final String PKGCFGKEY = "name";
     public static final String PKGCFGVALUE = "value";
 
