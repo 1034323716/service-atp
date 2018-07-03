@@ -79,7 +79,7 @@ public class ModuleShell {
                     result = session.createResult();
                 }
                 result.setCode(501);
-                result.setDesc(summary.getClassName() + "用例发生未捕获的异常");
+                result.setDesc(summary.getClassName() + "用例发生未捕获的异常" + e.getMessage());
                 result.putStep("exception", getErrorInfoFromException(e));
 
                 isSuccess = false;
