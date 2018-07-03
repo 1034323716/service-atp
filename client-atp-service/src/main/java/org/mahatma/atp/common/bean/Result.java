@@ -42,14 +42,18 @@ public class Result {
     }
 
     public void putStep(int i, String request, String response) {
-        if (request == null)
+        putStep.incrementAndGet();
+        if (request == null) {
             request = "";
-        if (response == null)
+        }
+        if (response == null) {
             response = "";
+        }
         putStep(i, request.getBytes(), response.getBytes());
     }
 
     public void putStep(int i, byte[] request, byte[] response) {
+        putStep.incrementAndGet();
         Combo3<Integer, byte[], byte[]> combo3 = new Combo3<>(i, request, response);
         watch.into(combo3);
         stepData.add(combo3);
@@ -62,10 +66,12 @@ public class Result {
     }
 
     public void putStep(String request, String response) {
-        if (request == null)
+        if (request == null) {
             request = "";
-        if (response == null)
+        }
+        if (response == null) {
             response = "";
+        }
         putStep(putStep.incrementAndGet(), request.getBytes(), response.getBytes());
     }
 

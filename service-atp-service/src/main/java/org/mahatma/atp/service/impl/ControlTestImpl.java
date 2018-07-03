@@ -27,6 +27,10 @@ public class ControlTestImpl implements ControlTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(ControlTestImpl.class);
     private static Map<Long, ControlPkg> runProcessMap = new HashMap<>();
 
+    public static Map<Long, ControlPkg> getRunProcessMap() {
+        return runProcessMap;
+    }
+
     @FieldSetter("URCS_ATPDB")
     private Database atpDB;
 
@@ -43,6 +47,7 @@ public class ControlTestImpl implements ControlTest {
         taskResult.setState(1); // 1代表的已结束
         taskResult.setCode(String.valueOf(AtpResultCodeManager.getReturnCodeDoc(ResultCodeParam.HALFWAYSTOP).getCode()));
         taskResultDao.updateTaskResult(taskResult);
+        remove(taskResultId);
     }
 
     private static void killProcessTree(int processId) {

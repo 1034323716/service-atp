@@ -7,6 +7,7 @@
         <!--tcp server 用于接收client的信息,并控制client-->
         <bean class="org.mahatma.atp.service.impl.ControlTestImpl"/>
         <bean class="org.mahatma.atp.server.AtpControlServer"/>
+        <bean class="org.mahatma.atp.task.MonitoringClientTask"/>
 
         <bean class="org.mahatma.atp.impl.TaskLogStoreImpl"/>
         <bean class="org.mahatma.atp.impl.TaskStoreImpl"/>

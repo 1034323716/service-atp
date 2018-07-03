@@ -6,7 +6,7 @@ import org.mahatma.atp.service.ControlTest;
 /**
  * Created by lyfx on 17-9-11.
  */
-@ServiceInterface(id = "plan:Action")
+@ServiceInterface(id = "atp:Action")
 public interface Action {
 
     /**

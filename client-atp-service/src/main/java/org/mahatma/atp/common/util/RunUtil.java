@@ -83,6 +83,7 @@ public class RunUtil {
 
         controlPkg.setTaskId(taskId);
         controlPkg.setPlanId(planId);
+        controlPkg.setOperationTime(System.currentTimeMillis());
 
         atpControlClient.send(controlPkg.toPbByteArray());
         atpControlClient.disconnect();
@@ -99,6 +100,7 @@ public class RunUtil {
         controlPkg.setTaskResultId(taskResultId);
         controlPkg.setTaskId(taskId);
         controlPkg.setPlanId(planId);
+        controlPkg.setOperationTime(System.currentTimeMillis());
 
         atpControlClient.send(controlPkg.toPbByteArray());
         atpControlClient.disconnect();

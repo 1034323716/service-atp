@@ -16,6 +16,17 @@ public class ControlPkg extends SuperPojo {
     // 状态，为1时代表启动，为0是代表结束
     @Field(id = 5)
     private int status;
+    @Field(id = 6)
+    private long operationTime;
+
+    public long getOperationTime() {
+        return operationTime;
+    }
+
+    public void setOperationTime(long operationTime) {
+        this.operationTime = operationTime;
+
+    }
 
     public long getTaskResultId() {
         return taskResultId;

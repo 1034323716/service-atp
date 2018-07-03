@@ -10,7 +10,11 @@ import org.mahatma.atp.common.util.TestInjector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -57,61 +61,36 @@ public class ModuleShell {
         isSuccess = true;
         result = null;
 
-        CountDownLatch countDownLatch = new CountDownLatch(2);
-        final long startTime = System.currentTimeMillis();
-        Thread runTC = new Thread(() -> {
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+        new Thread(() -> {
             try {
                 if (test != null) {
                     LOGGER.info(test.getClass().getSimpleName() + " test begin");
                     result = test.process(session);
                     LOGGER.info(test.getClass().getSimpleName() + " test finish");
                 } else {
-                    result = null;
+                    result = session.createResult();
+                    result.setCode(500);
+                    result.setDesc(summary.getClassName() + "用例加载失败");
                 }
             } catch (Exception e) {
                 // 如果用例中发生了异常,则result不会正常返回,所以重新创建一个
                 if (result == null) {
                     result = session.createResult();
                 }
-                result.setCode(400);
-                result.setDesc("happen exception");
-                result.putStep("exception", e.getMessage());
+                result.setCode(501);
+                result.setDesc(summary.getClassName() + "用例发生未捕获的异常");
+                result.putStep("exception", getErrorInfoFromException(e));
 
                 isSuccess = false;
                 LOGGER.error(test.getClass().getSimpleName() + "run happen exception", e);
             }
             countDownLatch.countDown();
-        });
-        runTC.start();
-        // 此线程用于监视这次tc测试
-        new Thread(() -> {
-            while (true) {
-                if (countDownLatch.getCount() == 1) {
-                    // 说明用例执行完了countDownLatch.countDown();会使主线程不再等待
-                    countDownLatch.countDown();
-                    break;
-                } else if ((System.currentTimeMillis() - startTime) > FormatUtil.RUN_TC_TIMEOUT) {
-                    // 这时没有运行完但超时了
-                    countDownLatch.countDown();
-                    countDownLatch.countDown();
-                    runTC.interrupt();
-                    isSuccess = false;
-                    result = session.createResult();
-                    result.setDesc("run test case : " + test.getClass().getName() + " time out");
-                    result.setCode(400);
-                    break;
-                }
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    LOGGER.error("此线程用于监视这次tc测试 sleep exception", e);
-                }
-            }
         }).start();
         try {
-            countDownLatch.await();
+            countDownLatch.await(10, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
-            LOGGER.error("countDownLatch.await(); error : {}", e);
+            LOGGER.error("countDownLatch.await(10, TimeUnit.MINUTES); error : {}", e);
         }
 
         if (result == null) {
@@ -122,5 +101,24 @@ public class ModuleShell {
         }
 
         return new Combo2<>(isSuccess, result);
+    }
+
+    public String getErrorInfoFromException(Exception e) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        try {
+            e.printStackTrace(pw);
+            return sw.toString();
+        } catch (Exception exception) {
+            return "ErrorInfoFromException";
+        } finally {
+            try {
+                sw.close();
+                pw.close();
+            } catch (IOException ioe) {
+                return "ErrorInfoFromException";
+            }
+        }
+
     }
 }

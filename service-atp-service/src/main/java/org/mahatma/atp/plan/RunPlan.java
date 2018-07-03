@@ -5,7 +5,7 @@ import org.helium.framework.annotations.ServiceInterface;
 /**
  * Created by JiYunfei on 17-10-18.
  */
-@ServiceInterface(id = "plan:RunPlan")
+@ServiceInterface(id = "atp:RunPlan")
 public interface RunPlan {
     void registerPlan(PlanBean planBean);
 
