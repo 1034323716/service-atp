@@ -3,12 +3,14 @@ package org.mahatma.atp.task;
 import org.helium.framework.annotations.ScheduledTaskImplementation;
 import org.helium.framework.annotations.ServiceSetter;
 import org.helium.framework.task.ScheduledTask;
+import org.mahatma.atp.common.alarm.weixin.WeiXinAlarm;
 import org.mahatma.atp.common.util.entity.ControlPkg;
 import org.mahatma.atp.service.ControlTest;
 import org.mahatma.atp.service.impl.ControlTestImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -30,11 +32,19 @@ public class MonitoringClientTask implements ScheduledTask {
         Iterator<Map.Entry<Long, ControlPkg>> iterator = ControlTestImpl.getRunProcessMap().entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<Long, ControlPkg> next = iterator.next();
-            long operationTime = next.getValue().getOperationTime();
+            ControlPkg controlPkg = next.getValue();
+            long operationTime = controlPkg.getOperationTime();
             long currentTimeMillis = System.currentTimeMillis();
             if ((currentTimeMillis - operationTime) > (60 * 60 * 1000)) {
                 Long taskResultId = next.getKey();
                 LOGGER.error("runing time too long, stop taskResultId:{}", taskResultId);
+                try {
+                    String content = "测试任务运行时间过长，强行停止该任务。taskResultId：" + taskResultId +
+                            "任务信息：" + controlPkg.toJsonObject().toString();
+                    WeiXinAlarm.send(content);
+                } catch (IOException e) {
+                    LOGGER.error("MonitoringClientTask WeiXinAlarm.send error", e);
+                }
                 controlTest.stop(taskResultId);
             }
         }
