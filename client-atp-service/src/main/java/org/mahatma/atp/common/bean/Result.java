@@ -46,7 +46,7 @@ public class Result {
 
     public void putStep(int i, String request, String response) {
         try {
-            request = "Time:" + ThreadLocalResultDateUtil.formatDate(new Date()) + request;
+            request = "【Time:" + ThreadLocalResultDateUtil.formatDate(new Date()) + "】" + request;
         } catch (ParseException e) {
             e.printStackTrace();
 
@@ -76,7 +76,7 @@ public class Result {
 
     public void putStep(String request, String response) {
         try {
-            request = "Time:" + ThreadLocalResultDateUtil.formatDate(new Date()) + request;
+            request = "【Time:" + ThreadLocalResultDateUtil.formatDate(new Date()) + "】" + request;
         } catch (ParseException e) {
             e.printStackTrace();
 
