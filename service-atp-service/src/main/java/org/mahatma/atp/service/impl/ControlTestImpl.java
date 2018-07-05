@@ -70,6 +70,10 @@ public class ControlTestImpl implements ControlTest {
 
     @Override
     public void remove(long taskResultId) {
+        TaskResultDao taskResultDao = new TaskResultDaoImpl(atpDB);
+        taskResultDao.updateTaskResultState(taskResultId, 1);
+        LOGGER.info("taskResultId:{} get log end!", taskResultId);
+
         runProcessMap.remove(taskResultId);
     }
 

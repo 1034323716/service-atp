@@ -146,9 +146,6 @@ public class TaskLogStoreImpl implements TaskLogStore {
                 }
                 Thread.sleep(200);
             }
-
-            taskResultDao.updateTaskResultState(taskResultId, 1);
-            LOGGER.info("taskResultId:{} get log end!", taskResultId);
         } catch (Exception e) {
             throw new AutoTestRuntimeException(e.getMessage());
         }
