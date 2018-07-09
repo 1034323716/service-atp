@@ -1,0 +1,15 @@
+{%- set perfdb_url = salt['pillar.get']( namespace+':perfdb:url', 'jdbc:mysql://127.0.0.1:9306/MonDB') -%}
+{%- set perfdb_username = salt['pillar.get']( namespace+':perfdb:username', 'admin') -%}
+{%- set perfdb_password = salt['pillar.get']( namespace+':perfdb:password', 'admin') -%}
+<perfmon>
+    <database>
+        <jdbcUrl>{{perfdb_url}}</jdbcUrl>
+        <user>{{perfdb_username}}</user>
+        <password>{{perfdb_password}}</password>
+    </database>
+    <counters>
+        <counter name="http-servlet" interval="60"/>
+        <counter name="database" interval="60"/>
+        <counter name="redis" interval="60"/>
+    </counters>
+</perfmon>

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+ulimit -c unlimited
+ulimit -n 32768
+
+source /etc/profile
+
+SERVICE_HOME="{{ service_home }}"
+
+SERVICE_LIBS="$SERVICE_HOME/lib"
+
+SERVICE_MAIN="org.mahatma.atp.AtpBootstrap"
+
+{%- if java_args is defined %}
+declare -a JAVA_ARGS
+{%- for arg in java_args %}
+JAVA_ARGS[{{loop.index0}}]="{{arg}}"
+{%- endfor %}
+{%- endif %}
+
+exec $JAVA_HOME/bin/java -Duser.dir=$SERVICE_HOME ${JAVA_ARGS[@]} -classpath $SERVICE_HOME:$SERVICE_LIBS/* $SERVICE_MAIN

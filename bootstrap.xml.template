@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bootstrap id="{{service_id}}">
+    <environments imports="env.xml,biz/service-atp/env.xml">
+      <variable key="HTTP_STACK" value="http"/>
+      <variable key="HTTP_DASH_STACK" value="dash_http"/>
+      <variable key="HTTP_DASH_PORT" value="{{ port.http_dash }}"/>
+      <variable key="HTTP_PORT" value="{{ port.http }}"/>
+    </environments>
+    <stacks>
+        <stack id="${HTTP_STACK}" class="org.helium.http.servlet.HttpServletStack">
+           <setters>
+               <setter field="host">${PRIVATE_IP}</setter>
+               <setter field="port">${HTTP_PORT}</setter>
+           </setters>
+        </stack>
+       <stack id="${HTTP_DASH_STACK}" class="org.helium.http.servlet.HttpServletStack">
+           <setters>
+               <setter field="host">${PRIVATE_IP}</setter>
+               <setter field="port">${HTTP_DASH_PORT}</setter>
+           </setters>
+       </stack>
+    </stacks>
+
+    <bundles>
+        <bundle path="service-atp-main~.jar"/>
+        <bundle path="helium-dashboard~.jar"/>
+    </bundles>
+</bootstrap>
