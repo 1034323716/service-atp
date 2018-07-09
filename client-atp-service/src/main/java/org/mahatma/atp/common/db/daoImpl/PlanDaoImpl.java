@@ -58,6 +58,7 @@ public class PlanDaoImpl implements PlanDao {
                 plan.setCronExpression(row.getString("cronExpression"));
                 plan.setTaskId(row.getLong("taskId"));
                 plan.setState(row.getInt("state"));
+                plan.setAlarm(row.getBoolean("isAlarm"));
                 return plan;
             }
         } catch (Exception ex) {
@@ -83,6 +84,7 @@ public class PlanDaoImpl implements PlanDao {
                     plan.setCronExpression(row.getString("cronExpression"));
                     plan.setTaskId(row.getLong("taskId"));
                     plan.setState(row.getInt("state"));
+                    plan.setAlarm(row.getBoolean("isAlarm"));
                     plans.add(plan);
                 }
             }

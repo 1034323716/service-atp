@@ -38,6 +38,16 @@ public class Plan {
     private String cronExpression;
     private Long taskId;
     private int state;
+    private boolean alarm;
+
+    public boolean isAlarm() {
+        return alarm;
+    }
+
+    public void setAlarm(boolean alarm) {
+        this.alarm = alarm;
+
+    }
 
     public Long getId() {
         return id;

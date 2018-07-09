@@ -51,6 +51,7 @@ public class RunUtil {
     private Long taskResultId;
     private Task task;
     private int runType;
+    private Plan plan;
 
     public RunUtil(Database database, AutoTestEngine autoTestEngine) {
         this.database = database;
@@ -60,6 +61,8 @@ public class RunUtil {
         planId = Long.parseLong(StartupOptionEnum.PLANID.getArgs().get(0));
         taskResultId = Long.parseLong(StartupOptionEnum.TASKRESULTID.getArgs().get(0));
         runType = Integer.parseInt(StartupOptionEnum.RUNTYPE.getArgs().get(0));
+        PlanDao planDao = new PlanDaoImpl(database);
+        plan = planDao.get(planId);
         try {
             notifyATPStart();
         } catch (IOException e) {
@@ -239,7 +242,7 @@ public class RunUtil {
         if (resultCombo2.getV1() == false) {
             // 若运行失败
             // step1.发送报警邮件
-            AlarmTool.sendErrorEmail(database, resultCombo2.getV2(), tc, task, taskResultDetail, 1, runType);
+            AlarmTool.sendErrorEmail(database, resultCombo2.getV2(), tc, task, taskResultDetail, 1, runType, plan);
             if (Integer.parseInt(StartupOptionEnum.RETEST.getArgs().get(0)) == 1) {
                 // step2.再次测试
                 LOGGER.error("线上运行失败，再次测试该用例。用例昵称{" + tc.getNickname() + "}，用例类名{" + tc.getClassPath() + "}");
@@ -252,9 +255,9 @@ public class RunUtil {
                 autoTestEngine.getReportManager().input(resultCombo2.getV2(), taskResultDetailId);
                 if (resultCombo2.getV1() == false) {
                     // 若再次测试还是失败,发送报警邮件
-                    AlarmTool.sendErrorEmail(database, resultCombo2.getV2(), tc, task, taskResultDetail, 2, runType);
+                    AlarmTool.sendErrorEmail(database, resultCombo2.getV2(), tc, task, taskResultDetail, 2, runType, plan);
                 } else {
-                    AlarmTool.sendRecoveryEmail(database, resultCombo2.getV2(), tc, task, taskResultDetail, 2, runType);
+                    AlarmTool.sendRecoveryEmail(database, resultCombo2.getV2(), tc, task, taskResultDetail, 2, runType, plan);
                 }
             }
         }
