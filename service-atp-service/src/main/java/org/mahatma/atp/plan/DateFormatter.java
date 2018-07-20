@@ -6,7 +6,6 @@ import java.util.Date;
 /**
  * Created by lyfx on 17-9-11.
  */
-
 public class DateFormatter {
 
     public static String scheduleFormat = "yyyy-MM-dd HH:mm:ss";

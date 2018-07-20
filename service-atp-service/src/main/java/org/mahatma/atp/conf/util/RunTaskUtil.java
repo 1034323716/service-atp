@@ -17,7 +17,7 @@ import java.util.Date;
 public class RunTaskUtil {
     private static Logger LOGGER = LoggerFactory.getLogger(RunTaskUtil.class);
 
-    // 若执行的不是定时任务则planId为0
+    /**若执行的不是定时任务则planId为0**/
     public static void run(Long taskId, long planId, TaskLogStore taskLogStore, Long taskResultId,
                            ControlTest controlTest, Database atpDB, RunType runType) {
         String logPath = FilePathUtil.logPath(taskResultId);
@@ -42,7 +42,7 @@ public class RunTaskUtil {
         capturePkgBean.stop();
     }
 
-    // 返回1代表要失败时重测，但会0代表不重测
+    /**返回1代表要失败时重测，但会0代表不重测**/
     private static int isRetest() {
         int retest;
         if (AtpEnvConfiguration.getInstance().isRetest()) {

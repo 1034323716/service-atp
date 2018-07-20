@@ -5,7 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by JiYunfei on 18-3-28.
+ * @author JiYunfei
+ * @date 18-3-28
  */
 public class CapturePkgBean {
     private static Logger LOGGER = LoggerFactory.getLogger(CapturePkgBean.class);
