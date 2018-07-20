@@ -4,6 +4,7 @@ import com.feinno.util.Combo2;
 import org.mahatma.atp.common.Test;
 import org.mahatma.atp.common.bean.Result;
 import org.mahatma.atp.common.bean.Session;
+import org.mahatma.atp.common.engine.spi.AtpThreadFactory;
 import org.mahatma.atp.common.param.StartupOptionEnum;
 import org.mahatma.atp.common.util.FormatUtil;
 import org.mahatma.atp.common.util.TestInjector;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 
@@ -62,7 +65,10 @@ public class ModuleShell {
         result = null;
 
         CountDownLatch countDownLatch = new CountDownLatch(1);
-        new Thread(() -> {
+
+        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 1,
+                0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), new AtpThreadFactory());
+        threadPool.execute(() -> {
             try {
                 if (test != null) {
                     LOGGER.info(test.getClass().getSimpleName() + " test begin");
@@ -86,7 +92,8 @@ public class ModuleShell {
                 LOGGER.error(test.getClass().getSimpleName() + "run happen exception", e);
             }
             countDownLatch.countDown();
-        }).start();
+        });
+
         try {
             countDownLatch.await(10, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
