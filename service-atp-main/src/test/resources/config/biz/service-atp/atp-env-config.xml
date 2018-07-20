@@ -6,13 +6,13 @@
     <!--在任务的运行过程中，抓网络包的开关，这里有个隐患就是若是手工停止任务时抓包会不会停止的问题，不确定-->
     <capturePkg>true</capturePkg>
     <!--抓包存放路径-->
-    <capturePkgPath>/atp/atpPkg/</capturePkgPath>
+    <capturePkgPath>/data/atp/netpkg/</capturePkgPath>
     <!--如果是本地启动的话不会去db搂激活的plan加入到定时任务中，而在平台上是需要重启自动搂取激活plan的-->
     <localStart>true</localStart>
     <!--控制单个用例失败时重试的开关-->
-    <retest>true</retest>
+    <retest>false</retest>
     <!--使用shell脚本启动测试任务，脚本所在路径-->
-    <runShPath>/atp/required/run.sh</runShPath>
+    <runShPath>/data/atp/run.sh</runShPath>
     <!--存放测试日志的路径-->
-    <logPath>/atp/required/log/</logPath>
+    <logPath>/data/atp/log/</logPath>
 </atpEnvConfig>
