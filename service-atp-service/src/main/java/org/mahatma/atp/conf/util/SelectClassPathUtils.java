@@ -51,6 +51,8 @@ public class SelectClassPathUtils {
                 String libPath = FormatUtil.libPath(pkg);
                 stringBuilder.append(":" + decompressionPath);
                 stringBuilder.append(":" + libPath);
+                // todo 动态生成
+                stringBuilder.append(":" + "/home/urcs/service-atp/lib/*");
             }
         }
         return stringBuilder.toString();
