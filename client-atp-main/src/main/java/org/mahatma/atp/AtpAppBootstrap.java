@@ -19,7 +19,7 @@ public class AtpAppBootstrap {
     public static void main(String[] args) {
         SelectParam selectParam = new SelectParam();
         selectParam.assignOpts(args);
-        INSTANCE.addPropertiesPath("URCS_ATPDB.properties");
+        INSTANCE.addPropertiesPath("config/db/URCS_ATPDB.properties");
         INSTANCE.setResourcesManager(new ResourcesManagerImpl());
         try {
             INSTANCE.runTask();
