@@ -31,7 +31,7 @@ public class RunTaskUtil {
 
         String runShell = "sh " + AtpEnvConfiguration.getInstance().getRunShPath()
                 + " '-taskId " + taskId
-                + " '-planId " + planId
+                + " -planId " + planId
                 + " -taskResultId " + taskResultId
                 + " -retest " + isRetest()
                 + " -runType " + runType.intValue() + "' '" + addClassPath + "' >"
