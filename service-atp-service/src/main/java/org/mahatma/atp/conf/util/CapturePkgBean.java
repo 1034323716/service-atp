@@ -20,7 +20,7 @@ public class CapturePkgBean {
     public void start() {
         if (AtpEnvConfiguration.getInstance().isCapturePkg()) {
             try {
-                String command = "tcpdump -i eth0 -w " + AtpEnvConfiguration.getInstance().getCapturePkgPath()
+                String command = "tcpdump -i any -w " + AtpEnvConfiguration.getInstance().getCapturePkgPath()
                         + taskResultId + ".pcap";
                 LOGGER.info("capture package start, command:{}, task result id:{}", command, taskResultId);
                 exec = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", command});
