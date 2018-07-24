@@ -67,7 +67,8 @@ public class ModuleShell {
         CountDownLatch countDownLatch = new CountDownLatch(1);
 
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 1,
-                0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), new AtpThreadFactory());
+                0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(),
+                new AtpThreadFactory("ATP-Client"));
         threadPool.execute(() -> {
             try {
                 if (test != null) {

@@ -4,6 +4,7 @@ import com.feinno.superpojo.SuperPojoManager;
 import org.helium.framework.annotations.ServiceImplementation;
 import org.helium.framework.annotations.ServiceSetter;
 import org.helium.framework.tag.Initializer;
+import org.mahatma.atp.common.engine.spi.AtpThreadFactory;
 import org.mahatma.atp.common.util.entity.ControlPkg;
 import org.mahatma.atp.conf.AtpEnvConfiguration;
 import org.mahatma.atp.service.ControlTest;
@@ -15,9 +16,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Created by JiYunfei on 18-3-23.
+ * @author JiYunfei
+ * @date 18-3-23
  */
 @ServiceImplementation
 public class AtpControlServer implements IAtpControlServer {
@@ -34,7 +39,10 @@ public class AtpControlServer implements IAtpControlServer {
         ServerSocket server = new ServerSocket(port);
         // server将一直等待连接的到来
         LOGGER.info("server将一直等待连接的到来");
-        new Thread(() -> {
+        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1, 1,
+                0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(),
+                new AtpThreadFactory("ATP-AtpControlServer"));
+        threadPool.execute(() -> {
             while (true) {
                 try {
                     Socket socket = server.accept();
@@ -62,6 +70,6 @@ public class AtpControlServer implements IAtpControlServer {
                     LOGGER.error("AtpControlServer Exception", e);
                 }
             }
-        }).start();
+        });
     }
 }

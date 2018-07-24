@@ -19,7 +19,10 @@ public interface ControlTest {
     boolean exist(long taskResultId);
 
     boolean planIsRun(long planId);
-    // 这个计划正在运行着的taskResultId
+
+    /**
+     * 这个计划正在运行着的taskResultId
+     **/
     List<Long> planRuningId(long planId);
 
     void stopPlan(long planId);

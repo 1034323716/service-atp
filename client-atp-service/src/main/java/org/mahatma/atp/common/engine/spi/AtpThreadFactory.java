@@ -9,9 +9,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AtpThreadFactory implements ThreadFactory {
     private AtomicInteger count = new AtomicInteger(0);
+    private String threadName;
+
+    public AtpThreadFactory(String threadName) {
+        this.threadName = threadName;
+    }
 
     @Override
     public Thread newThread(Runnable r) {
-        return new Thread(r, "ATP-" + count.incrementAndGet());
+        return new Thread(r, threadName + "-" + count.incrementAndGet());
     }
 }

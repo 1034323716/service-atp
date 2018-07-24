@@ -15,9 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author JiYunfei
@@ -26,7 +26,7 @@ import java.util.Map;
 @ServiceImplementation
 public class ControlTestImpl implements ControlTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(ControlTestImpl.class);
-    private static Map<Long, ControlPkg> runProcessMap = new HashMap<>();
+    private static Map<Long, ControlPkg> runProcessMap = new ConcurrentHashMap<>();
 
     public static Map<Long, ControlPkg> getRunProcessMap() {
         return runProcessMap;
