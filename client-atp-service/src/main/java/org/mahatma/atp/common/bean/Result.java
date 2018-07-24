@@ -19,7 +19,7 @@ public class Result {
     /**
      * 结果返回码
      */
-    private int code;
+    private int code = 4004;
 
     /**
      * 中间值存储表
@@ -29,7 +29,7 @@ public class Result {
     /**
      * 结果描述
      */
-    private String desc = "no set desc";
+    private String desc = "默认描述，用例中未添加描述";
 
     private RuntimeWatch watch;
 
