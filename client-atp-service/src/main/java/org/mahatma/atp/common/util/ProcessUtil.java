@@ -4,12 +4,12 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 
 /**
- * Created by JiYunfei on 18-3-23.
+ * @author JiYunfei
+ * @date 18-3-23
  */
 public class ProcessUtil {
     public static final int getProcessID() {
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
-        return Integer.valueOf(runtimeMXBean.getName().split("@")[0])
-                .intValue();
+        return Integer.valueOf(runtimeMXBean.getName().split("@")[0]);
     }
 }

@@ -105,7 +105,7 @@ public class ClassHelper {
             Enumeration<JarEntry> jarEntries = jarFile.entries();
             while (jarEntries.hasMoreElements()) {
                 JarEntry jarEntry = jarEntries.nextElement();
-                String jarEntryName = jarEntry.getName(); // 类似：sun/security/internal/interfaces/TlsMasterSecret.class
+                String jarEntryName = jarEntry.getName();
                 String clazzName = jarEntryName.replace("/", ".");
                 int endIndex = clazzName.lastIndexOf(".");
                 String prefix = null;
@@ -175,16 +175,8 @@ public class ClassHelper {
                 LOGGER.debug("add Class:" + clazzName);
                 clazz = classLoader.loadClass(clazzName);
             } catch (Throwable e) {
-//                LOGGER.error("", e);
+                LOGGER.error("", e);
             }
-//            String basePath = System.getProperty("user.dir");
-//            String path = basePath + File.separator;
-//            try {
-//                path = path.substring(1).replace(File.separator, ".");
-//                clazz = classLoader.loadClass(path + clazzName);
-//            } catch (ClassNotFoundException e1) {
-//                LOGGER.error("basePath + clazzName = {}", path + clazzName, e1);
-//            }
             if (clazz != null) {
                 clazzList.add(clazz);
                 LOGGER.debug("add annotation:" + clazz);

@@ -31,19 +31,6 @@ enum TestFieldType {
             return Enum.valueOf((Class<Enum>) toClazz, s);
         }
     },
-// TODO support Date & DateTime
-//	DATE(Date.class) {
-//		@Override
-//		public Object convertFrom(Class<?> toClazz, SetterNode node) {
-//			return DateFormat.F
-//		}
-//	},
-//	DATETIME(DateTime.class) {
-//		@Override
-//		public Object convertFrom(Class<?> toClazz, SetterNode node) {
-//			return null;
-//		}
-//	},
     ;
 
     private Class<?>[] supportTypes;
