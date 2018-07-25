@@ -1,5 +1,6 @@
 package org.mahatma.atp.common.alarm.email;
 
+import com.feinno.util.Combo3;
 import org.helium.database.Database;
 import org.mahatma.atp.common.alarm.weixin.WeiXinAlarm;
 import org.mahatma.atp.common.bean.Result;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -54,6 +56,7 @@ public class AlarmTool {
                 content.append("结果信息：\n");
                 content.append("      结果码：" + result.getCode() + "\n");
                 content.append("      结果描述：" + result.getDesc() + "\n");
+                content.append("      错误步骤：\n" + getFailStep(result));
 
                 ErrorEMail.send(receives.toString(), emailMessageSubject.toString(), content.toString());
                 try {
@@ -99,6 +102,7 @@ public class AlarmTool {
                 content.append("结果信息：\n");
                 content.append("      结果码：" + result.getCode() + "\n");
                 content.append("      结果描述：" + result.getDesc() + "\n");
+                content.append("      错误步骤：\n" + getFailStep(result));
 
                 ErrorEMail.send(receives.toString(), emailMessageSubject.toString(), content.toString());
                 try {
@@ -109,5 +113,22 @@ public class AlarmTool {
                 LOGGER.info("send success");
             }
         }
+    }
+
+    private static String getFailStep(Result result) {
+        StringBuffer stringBuffer = new StringBuffer();
+        List<Combo3<Integer, byte[], byte[]>> stepData = result.getStepData();
+        Iterator<Combo3<Integer, byte[], byte[]>> iterator = stepData.iterator();
+        while(iterator.hasNext()) {
+            Combo3<Integer, byte[], byte[]> date = iterator.next();
+            String request = new String(date.getV2()).toLowerCase();
+            String response = new String(date.getV3()).toLowerCase();
+            if(request.contains("失败") || response.contains("失败")
+                    || request.contains("fail") || response.contains("fail")
+                    || request.contains("error") || response.contains("error")) {
+                stringBuffer.append(Result.formatStep(date));
+            }
+        }
+        return stringBuffer.toString();
     }
 }

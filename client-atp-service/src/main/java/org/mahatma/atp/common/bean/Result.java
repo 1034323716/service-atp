@@ -1,6 +1,5 @@
 package org.mahatma.atp.common.bean;
 
-
 import com.feinno.util.Combo3;
 import org.mahatma.atp.common.engine.spi.RuntimeWatch;
 import org.mahatma.atp.common.util.ThreadLocalResultDateUtil;
@@ -115,20 +114,30 @@ public class Result {
         return code;
     }
 
+    public List<Combo3<Integer, byte[], byte[]>> getStepData() {
+        return stepData;
+    }
+
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuffer stringBuffer = new StringBuffer();
         for (Combo3<Integer, byte[], byte[]> data : stepData) {
-            stringBuilder.append("    " + data.getV1() + ":");
-            stringBuilder.append(new String(data.getV2()) + ":");
-            stringBuilder.append(new String(data.getV3()));
-            stringBuilder.append("\n");
+            stringBuffer.append("    " + formatStep(data));
         }
         return "Result{" + "\n" +
                 "  code=" + code + "\n" +
                 "  desc='" + desc + "\n" +
                 "  stepData:" + "\n" +
-                stringBuilder.toString() +
+                stringBuffer.toString() +
                 "}";
+    }
+
+    public static String formatStep(Combo3<Integer, byte[], byte[]> data) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(data.getV1() + ":");
+        stringBuffer.append(new String(data.getV2()) + ":");
+        stringBuffer.append(new String(data.getV3()));
+        stringBuffer.append("\n");
+        return stringBuffer.toString();
     }
 }
