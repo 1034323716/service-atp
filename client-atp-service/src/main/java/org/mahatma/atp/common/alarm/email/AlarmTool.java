@@ -126,7 +126,11 @@ public class AlarmTool {
             String request = new String(date.getV2()).toLowerCase();
             String response = new String(date.getV3()).toLowerCase();
             if (biuAlarmToken(request, response)) {
-                stringBuffer.append(Result.formatStep(date));
+                String s = Result.formatStep(date);
+                if (s.length() > 300) {
+                    s = s.substring(0, 300);
+                }
+                stringBuffer.append(s);
             }
         }
         return stringBuffer.toString();
