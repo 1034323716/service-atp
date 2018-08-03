@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class AlarmTool {
     private static final Logger LOGGER = LoggerFactory.getLogger(AutoTestEngine.class);
     private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final List<String> alarmTokens = Arrays.asList("失败", "fail", "error", "exception");
 
     public static void sendErrorEmail(Database atpDatabase, Result result, Tc tc, Task task,
                                       TaskResultDetail taskResultDetail, int time, int runType, Plan plan) {
@@ -119,16 +121,25 @@ public class AlarmTool {
         StringBuffer stringBuffer = new StringBuffer();
         List<Combo3<Integer, byte[], byte[]>> stepData = result.getStepData();
         Iterator<Combo3<Integer, byte[], byte[]>> iterator = stepData.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             Combo3<Integer, byte[], byte[]> date = iterator.next();
             String request = new String(date.getV2()).toLowerCase();
             String response = new String(date.getV3()).toLowerCase();
-            if(request.contains("失败") || response.contains("失败")
-                    || request.contains("fail") || response.contains("fail")
-                    || request.contains("error") || response.contains("error")) {
+            if (biuAlarmToken(request, response)) {
                 stringBuffer.append(Result.formatStep(date));
             }
         }
         return stringBuffer.toString();
+    }
+
+    private static boolean biuAlarmToken(String... strs) {
+        for (String alarmToken : alarmTokens) {
+            for (String str : strs) {
+                if (str.contains(alarmToken)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
