@@ -61,9 +61,9 @@ public class RunPlanImpl implements RunPlan {
         planDao = new PlanDaoImpl(atpDB);
         atpPlans = new ArrayList<>();
         startActionPlan();
-        executor = (FixedObservableExecutor) ExecutorFactory.newFixedExecutor("atp-plan", TASK_EXECUTOR_SIZE, TASK_EXECUTOR_SIZE * 64);
+        executor = (FixedObservableExecutor) ExecutorFactory.newFixedExecutor("Plan-Executor", TASK_EXECUTOR_SIZE, TASK_EXECUTOR_SIZE * 64);
         AtpPlanConsumer atpPlanConsumer = new AtpPlanConsumer();
-        Thread thread = new Thread(atpPlanConsumer);
+        Thread thread = new Thread(atpPlanConsumer, "Select-Plan");
         thread.setDaemon(true);
         thread.start();
     }
@@ -129,7 +129,6 @@ public class RunPlanImpl implements RunPlan {
                 e.printStackTrace();
             }
             summarys = summarysBuilder.getData();
-//            summarys.parseXmlFrom(summarysString);
             for (Summary summary : summarys.getSummary()) {
                 List<PkgCfgArgs> pkgCfgArgsList = null;
                 if (summary.getType() == 1) {
@@ -144,7 +143,6 @@ public class RunPlanImpl implements RunPlan {
                             e.printStackTrace();
                         }
                         summary1 = summaryBuilder.getData();
-//                        summary1.parseXmlFrom(tcs.getSummary());
                         pkgCfgArgsList = summary1.getPkgCfgArgsList();
                     }
                 } else if (summary.getType() == 0) {
@@ -210,7 +208,6 @@ public class RunPlanImpl implements RunPlan {
                                             runPlan(planBean);
                                         }
                                     } else if (planArgs.planBean.getPlan().getState() == FormatUtil.pauseMark) {
-
                                     } else {
                                         willRemove.add(planArgs);
                                     }

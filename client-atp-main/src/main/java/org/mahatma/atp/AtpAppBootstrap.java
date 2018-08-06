@@ -7,6 +7,9 @@ import org.mahatma.atp.plugin.ResourcesManagerImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author JiYunfei
+ */
 public class AtpAppBootstrap {
     private static final Logger LOGGER = LoggerFactory.getLogger(AtpAppBootstrap.class);
     static AutoTestEngine INSTANCE = AutoTestEngine.INSTANCE;

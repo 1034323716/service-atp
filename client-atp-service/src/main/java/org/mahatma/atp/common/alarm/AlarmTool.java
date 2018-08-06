@@ -19,7 +19,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by JiYunfei on 18-2-5.
+ * @author JiYunfei
+ * @date 18-2-5
  */
 public class AlarmTool {
     private static final Logger LOGGER = LoggerFactory.getLogger(AutoTestEngine.class);
@@ -53,9 +54,7 @@ public class AlarmTool {
                 content.append("\n用例信息：\n");
                 content.append("      昵称：" + tc.getNickname() + "\n");
                 content.append("      类名：" + tc.getName() + "\n");
-                content.append("用例所在任务信息：\n");
-                content.append("      名称：" + task.getName() + "\n");
-                content.append("      描述：" + task.getDesc() + "\n");
+                content.append("用例所在任务名：" + task.getName() + "\n");
                 content.append("结果信息：\n");
                 content.append("      结果码：" + result.getCode() + "\n");
                 content.append("      结果描述：" + result.getDesc() + "\n");
@@ -99,9 +98,7 @@ public class AlarmTool {
                 content.append("\n用例信息：\n");
                 content.append("      昵称：" + tc.getNickname() + "\n");
                 content.append("      类名：" + tc.getName() + "\n");
-                content.append("用例所在任务信息：\n");
-                content.append("      名称：" + task.getName() + "\n");
-                content.append("      描述：" + task.getDesc() + "\n");
+                content.append("用例所在任务名：" + task.getName() + "\n");
                 content.append("结果信息：\n");
                 content.append("      结果码：" + result.getCode() + "\n");
                 content.append("      结果描述：" + result.getDesc() + "\n");
@@ -128,9 +125,6 @@ public class AlarmTool {
             String response = new String(date.getV3()).toLowerCase();
             if (biuAlarmToken(request, response)) {
                 String s = Result.formatStep(date);
-//                if (s.length() > 300) {
-//                    s = s.substring(0, 300);
-//                }
                 stringBuffer.append(s);
             }
         }
