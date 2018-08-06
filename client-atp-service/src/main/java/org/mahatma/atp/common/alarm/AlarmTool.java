@@ -1,7 +1,8 @@
-package org.mahatma.atp.common.alarm.email;
+package org.mahatma.atp.common.alarm;
 
 import com.feinno.util.Combo3;
 import org.helium.database.Database;
+import org.mahatma.atp.common.alarm.email.ErrorEMail;
 import org.mahatma.atp.common.alarm.weixin.WeiXinAlarm;
 import org.mahatma.atp.common.bean.Result;
 import org.mahatma.atp.common.db.bean.*;
@@ -127,9 +128,9 @@ public class AlarmTool {
             String response = new String(date.getV3()).toLowerCase();
             if (biuAlarmToken(request, response)) {
                 String s = Result.formatStep(date);
-                if (s.length() > 300) {
-                    s = s.substring(0, 300);
-                }
+//                if (s.length() > 300) {
+//                    s = s.substring(0, 300);
+//                }
                 stringBuffer.append(s);
             }
         }

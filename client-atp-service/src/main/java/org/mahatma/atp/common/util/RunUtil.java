@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.helium.database.Database;
 import org.mahatma.atp.common.Test;
-import org.mahatma.atp.common.alarm.email.AlarmTool;
+import org.mahatma.atp.common.alarm.AlarmTool;
 import org.mahatma.atp.common.bean.PkgCfgArgs;
 import org.mahatma.atp.common.bean.Result;
 import org.mahatma.atp.common.bean.Summary;
