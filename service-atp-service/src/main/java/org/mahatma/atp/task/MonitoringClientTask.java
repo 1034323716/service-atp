@@ -17,10 +17,13 @@ import java.util.Map;
 /**
  * 定时扫描正在执行的测试任务，若执行时间过长就将其杀死
  *
+ * 半个小时一次，每次扫描运行时间超过40分钟的
+ *
  * @author JiYunfei
  * @date 18-7-3
  */
-@ScheduledTaskImplementation(id = "atp:MonitoringClientTask", cronExpression = "0 0 0/1 * * ? ")
+//@ScheduledTaskImplementation(id = "atp:MonitoringClientTask", cronExpression = "0 0 0/1 * * ? ")
+@ScheduledTaskImplementation(id = "atp:MonitoringClientTask", cronExpression = "0 0/30 * * * ? ")
 public class MonitoringClientTask implements ScheduledTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(MonitoringClientTask.class);
 
@@ -35,7 +38,7 @@ public class MonitoringClientTask implements ScheduledTask {
             ControlPkg controlPkg = next.getValue();
             long operationTime = controlPkg.getOperationTime();
             long currentTimeMillis = System.currentTimeMillis();
-            if ((currentTimeMillis - operationTime) > (60 * 60 * 1000)) {
+            if ((currentTimeMillis - operationTime) > (40 * 60 * 1000)) {
                 Long taskResultId = next.getKey();
                 LOGGER.error("runing time too long, stop taskResultId:{}", taskResultId);
                 try {
