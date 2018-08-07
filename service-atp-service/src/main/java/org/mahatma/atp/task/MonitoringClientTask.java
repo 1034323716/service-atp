@@ -3,7 +3,7 @@ package org.mahatma.atp.task;
 import org.helium.framework.annotations.ScheduledTaskImplementation;
 import org.helium.framework.annotations.ServiceSetter;
 import org.helium.framework.task.ScheduledTask;
-import org.mahatma.atp.common.alarm.weixin.WeiXinAlarm;
+import org.mahatma.atp.common.alarm.wechat.WeChatAlarm;
 import org.mahatma.atp.common.util.entity.ControlPkg;
 import org.mahatma.atp.service.ControlTest;
 import org.mahatma.atp.service.impl.ControlTestImpl;
@@ -44,9 +44,9 @@ public class MonitoringClientTask implements ScheduledTask {
                 try {
                     String content = "测试任务运行时间过长，强行停止该任务。taskResultId：" + taskResultId +
                             "任务信息：" + controlPkg.toJsonObject().toString();
-                    WeiXinAlarm.send(content);
+                    WeChatAlarm.send(content);
                 } catch (IOException e) {
-                    LOGGER.error("MonitoringClientTask WeiXinAlarm.send error", e);
+                    LOGGER.error("MonitoringClientTask WeChatAlarm.send error", e);
                 }
                 controlTest.stop(taskResultId);
             }

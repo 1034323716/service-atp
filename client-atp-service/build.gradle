@@ -15,6 +15,6 @@ dependencies {
     compile 'javax.mail:javax.mail-api:1.5.3'
     compile 'com.sun.mail:javax.mail:1.5.3'
 
-//    weixin
+//    wechat
     compile 'org.json:json:20140107'
 }

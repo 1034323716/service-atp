@@ -3,7 +3,7 @@ package org.mahatma.atp.common.alarm;
 import com.feinno.util.Combo3;
 import org.helium.database.Database;
 import org.mahatma.atp.common.alarm.email.ErrorEMail;
-import org.mahatma.atp.common.alarm.weixin.WeiXinAlarm;
+import org.mahatma.atp.common.alarm.wechat.WeChatAlarm;
 import org.mahatma.atp.common.bean.Result;
 import org.mahatma.atp.common.db.bean.*;
 import org.mahatma.atp.common.db.dao.ATP_emailDao;
@@ -61,9 +61,9 @@ public class AlarmTool {
 
                 ErrorEMail.send(receives.toString(), emailMessageSubject.toString(), content.toString());
                 try {
-                    WeiXinAlarm.send(content.toString());
+                    WeChatAlarm.send(content.toString());
                 } catch (IOException e) {
-                    LOGGER.error("WeiXinAlarm Send Exception", e);
+                    LOGGER.error("WeChatAlarm Send Exception", e);
                 }
                 LOGGER.info("send success");
             }
@@ -104,9 +104,9 @@ public class AlarmTool {
 
                 ErrorEMail.send(receives.toString(), emailMessageSubject.toString(), content.toString());
                 try {
-                    WeiXinAlarm.send(content.toString());
+                    WeChatAlarm.send(content.toString());
                 } catch (IOException e) {
-                    LOGGER.error("WeiXinAlarm Send Exception", e);
+                    LOGGER.error("WeChatAlarm Send Exception", e);
                 }
                 LOGGER.info("send success");
             }

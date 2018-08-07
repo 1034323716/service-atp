@@ -1,4 +1,4 @@
-package org.mahatma.atp.common.alarm.weixin;
+package org.mahatma.atp.common.alarm.wechat;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,9 +16,9 @@ import java.util.Random;
  *
  * @author YONGJIAN DUAN
  */
-public class WeiXinAlarm {
-    private static WeiXinAlarm ewx = new WeiXinAlarm();
-    private static Logger LOGGER = LoggerFactory.getLogger(WeiXinAlarm.class);
+public class WeChatAlarm {
+    private static WeChatAlarm weChatAlarm = new WeChatAlarm();
+    private static Logger LOGGER = LoggerFactory.getLogger(WeChatAlarm.class);
 
     public String corpid = "ww8d775452251a7eae";
     public String corpsecret = "k0-tI0NdRQGTtii4ydU5LrkL8oahnKMCoG7luOdZ8uA";
@@ -28,18 +28,18 @@ public class WeiXinAlarm {
     private String access_token = null;
 
     public static void main(String[] args) throws IOException {
-//        WeiXinAlarm ewx = new WeiXinAlarm();
+//        WeChatAlarm weChatAlarm = new WeChatAlarm();
 //
-//        String token = ewx.getToken();
+//        String token = weChatAlarm.getToken();
 //        // System.out.println(token);
-//        // ewx.getAgentList(token, "拨测打卡告警");
-//        ewx.sendMessage(token, "weixin alarm test." + new Random().nextInt());
-        send("weixin alarm test." + new Random().nextInt());
+//        // weChatAlarm.getAgentList(token, "拨测打卡告警");
+//        weChatAlarm.sendMessage(token, "wechat alarm test." + new Random().nextInt());
+        send("wechat alarm test." + new Random().nextInt());
     }
 
     public static void send(String content) throws IOException {
-        String token = ewx.getToken();
-        ewx.sendMessage(token, content);
+        String token = weChatAlarm.getToken();
+        weChatAlarm.sendMessage(token, content);
     }
 
     public String getToken() throws IOException {
