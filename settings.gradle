@@ -5,4 +5,3 @@ include 'service-atp-service'
 include 'service-atp-service-api'
 include 'client-atp-main'
 include 'client-atp-service'
-
