@@ -12,3 +12,6 @@ nameserver 114.114.114.114
 nameserver 8.8.8.8
 
 5.使用salt部署service-atp服务；
+
+修改client-atp-开头的模块时，若想使修改应用到用例中，需要修改用例中依赖的client-atp-*包的版本，
+一般用例都放在Auto-Test-Module项目，且依赖的都是小版本
