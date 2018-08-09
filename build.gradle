@@ -70,12 +70,14 @@ subprojects {
         from sourceSets.main.allJava
     }
 
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                from components.java
-                artifact sourceJar {
-                    classifier "sources"
+    if (name.startsWith('client-atp-')) {
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    from components.java
+                    artifact sourceJar {
+                        classifier "sources"
+                    }
                 }
             }
         }
