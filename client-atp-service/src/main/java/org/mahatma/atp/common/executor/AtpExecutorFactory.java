@@ -7,43 +7,41 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.*;
 
 /**
- * Created by lyfx on 17-10-12.
+ * @author lyfx
+ * @date 17-10-12
  */
-
 public class AtpExecutorFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExecutorFactory.class);
 
-    private static Map<String, Executor> executors = new Hashtable<String, Executor>();
+    private static Map<String, Executor> executors = new Hashtable<>();
 
     static {
         int cupNumber = Runtime.getRuntime().availableProcessors();
-        newFixedExecutor("testCase",cupNumber * 2,cupNumber * 2 * 10);
+        newFixedExecutor("TestCase", cupNumber * 2, cupNumber * 2 * 10);
     }
 
-
     /**
-     *
      * 新增一个固定大小的线程池
+     *
      * @param name
-     * @param size 固定线程数
+     * @param size  固定线程数
      * @param limit 最大队列长度
      * @return
      */
     public synchronized static Executor newFixedExecutor(final String name, int size, int limit) {
-        if(executors.get(name) == null) {
-            Executor innerExecutor = Executors.newFixedThreadPool(size, new ThreadFactory() {
+        if (executors.get(name) == null) {
+            Executor innerExecutor = new ThreadPoolExecutor(size, size, 0L, TimeUnit.MILLISECONDS,
+                    new LinkedBlockingQueue<>(), new ThreadFactory() {
                 private int count = 0;
+
                 @Override
-                public Thread newThread(Runnable r)
-                {
+                public Thread newThread(Runnable r) {
                     Thread t = new Thread(r);
                     t.setDaemon(false);
-                    t.setName("p-" + name + "-" + count);
+                    t.setName(name + "-" + count);
                     count++;
                     return t;
                 }
@@ -56,8 +54,8 @@ public class AtpExecutorFactory {
     }
 
     /**
-     *
      * 通过名字获取一个已经创建的线程池
+     *
      * @param name
      * @return
      */
@@ -66,8 +64,7 @@ public class AtpExecutorFactory {
     }
 
     public static Executor getDefaultExecutor(){
-        return executors.get("testCase");
+        return executors.get("TestCase");
     }
-
 
 }
