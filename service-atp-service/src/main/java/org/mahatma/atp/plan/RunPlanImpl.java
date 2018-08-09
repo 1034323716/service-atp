@@ -35,7 +35,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by JiYunfei on 17-10-18.
+ * @author JiYunfei
+ * @date 17-10-18
  */
 @ServiceImplementation
 public class RunPlanImpl implements RunPlan {
@@ -192,7 +193,8 @@ public class RunPlanImpl implements RunPlan {
 
                     Date nowDate = new Date();
                     String nowText = DateFormatter.getScheduleDate(nowDate);
-                    synchronized (atpPlans) {
+                    synchronized (RunPlanImpl.class) {
+                        startActionPlan();
                         for (PlanArgs planArgs : atpPlans) {
                             if (nowText.equals(planArgs.lastRunTime)) {
                                 continue;
@@ -222,7 +224,7 @@ public class RunPlanImpl implements RunPlan {
                         }
                         removePlans(willRemove);
                     }
-                    Thread.sleep(200);
+                    Thread.sleep(500);
                 }
             } catch (Throwable e) {
                 LOGGER.error("AtpPlanConsumer run error!", e);
