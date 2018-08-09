@@ -165,7 +165,9 @@ public class RunPlanImpl implements RunPlan {
         String lastRunTime = "";
     }
 
-    //若是线上服务运行，则每次系统重启都从数据库中搂state是1,2的记录进list中执行，若是本地运行服务则不走这一步
+    /**
+     * 若是线上服务运行，则每次系统重启都从数据库中搂state是1,2的记录进list中执行，若是本地运行服务则不走这一步
+     */
     private void startActionPlan() {
         if (!AtpEnvConfiguration.getInstance().isLocalStart()) {
             List<Plan> actionPlans = planDao.getActionPlan();
