@@ -124,7 +124,7 @@ public class ModuleShell {
                 sw.close();
                 pw.close();
             } catch (IOException ioe) {
-                return "ErrorInfoFromException";
+
             }
         }
 

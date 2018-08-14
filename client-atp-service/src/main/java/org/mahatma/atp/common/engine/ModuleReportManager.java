@@ -12,9 +12,10 @@ import java.util.Date;
 
 /**
  * 用例结果管理
+ * @author JiYunfei
  */
 public class ModuleReportManager {
-    private Logger LOGGER = LoggerFactory.getLogger(ModuleReportManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ModuleReportManager.class);
     private AutoTestEngine engine;
 
     public ModuleReportManager(AutoTestEngine engine) {

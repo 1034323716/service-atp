@@ -152,8 +152,9 @@ public class TestInjector {
 
     public static Combo3<String, String, String> getCombo3ByFirstString(String fisrt, List<Combo3<String, String, String>> combo3List) {
         for (Combo3<String, String, String> combo3 : combo3List) {
-            if (combo3.getV1().equals(fisrt))
+            if (combo3.getV1().equals(fisrt)) {
                 return combo3;
+            }
         }
         return null;
     }

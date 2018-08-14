@@ -125,7 +125,8 @@ public class ErrorEMail {
         emailArgs.setEmailSender("jiyunfei@feinno.com");
         emailArgs.setEmailPassword("Zxcv321");
         emailArgs.setEmailReceives(receives);
-        emailArgs.setEmailMessageType("GB2312");// UTF-8
+        // UTF-8
+        emailArgs.setEmailMessageType("GB2312");
 
         ErrorEMail email = new ErrorEMail(emailArgs);
         email.sendEMail(emailMessageSubject, content);
@@ -141,6 +142,7 @@ class MyAuthenticator extends Authenticator {
         this.password = password;
     }
 
+    @Override
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(userName, password);
     }

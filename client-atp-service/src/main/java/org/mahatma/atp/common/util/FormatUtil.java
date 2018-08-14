@@ -20,11 +20,11 @@ public class FormatUtil {
     public static final String PKGCFGKEY = "name";
     public static final String PKGCFGVALUE = "value";
 
-    public static final String saveJarRoot = "/atp/pkg/";
-    public static final String libName = "lib";
-    public static final String decompressionName = "decompression";
+    public static final String SAVE_JAR_ROOT = "/atp/pkg/";
+    public static final String LIB_NAME = "lib";
+    public static final String DECOMPRESSION_NAME = "decompression";
 
-    public static final String dbPropertiesName = "URCS_ATPDB";
+    public static final String DB_PROPERTIES_NAME = "URCS_ATPDB";
 
     public static final String TASK_RESULT_SUCCESS = "200";
     public static final String TASK_RESULT_FAIL = "400";
@@ -37,7 +37,7 @@ public class FormatUtil {
     public static int pauseMark = 2;
 
     public static String generatePkgDir(Pkg pkg) {
-        return saveJarRoot + pkg.getName() + File.separator + pkg.getVersion() + File.separator;
+        return SAVE_JAR_ROOT + pkg.getName() + File.separator + pkg.getVersion() + File.separator;
     }
 
     public static String generateDeletePackageCommand(Pkg pkg) {
@@ -45,7 +45,7 @@ public class FormatUtil {
     }
 
     public static String generatePkgDir(String name, String version) {
-        return saveJarRoot + name + File.separator + version;
+        return SAVE_JAR_ROOT + name + File.separator + version;
     }
 
     public static String stringToJsonArrayString(Properties properties) {
@@ -68,12 +68,12 @@ public class FormatUtil {
     }
 
     public static String decompressionPath(Pkg pkg) {
-        return saveJarRoot + pkg.getName() + File.separator + pkg.getVersion() +
-                File.separator + decompressionName + File.separator + "*";
+        return SAVE_JAR_ROOT + pkg.getName() + File.separator + pkg.getVersion() +
+                File.separator + DECOMPRESSION_NAME + File.separator + "*";
     }
 
     public static String libPath(Pkg pkg) {
-        return saveJarRoot + pkg.getName() + File.separator + pkg.getVersion() +
-                File.separator + libName + File.separator + "*";
+        return SAVE_JAR_ROOT + pkg.getName() + File.separator + pkg.getVersion() +
+                File.separator + LIB_NAME + File.separator + "*";
     }
 }

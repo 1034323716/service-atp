@@ -1,11 +1,9 @@
 package org.mahatma.atp.common.stack.spi;
 
-
 import com.feinno.sip.provider.SipProvider;
 import com.feinno.superpojo.util.StringUtils;
 import com.feinno.urcs.sip.SipConnector;
 import org.mahatma.atp.common.annotations.TestStack;
-import org.mahatma.atp.common.engine.ModuleReportManager;
 import org.mahatma.atp.common.stack.ModuleStack;
 import org.mahatma.atp.common.type.StackTypec;
 import org.mahatma.atp.common.util.SysFreePort;
@@ -17,15 +15,11 @@ import java.net.InetAddress;
 
 @TestStack(id = StackTypec.SIP)
 public class SipStack implements ModuleStack {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SipStack.class);
 
     private SipProvider sipProvider;
-
     private String proto = SipProvider.PROTO_TCP;
-
-    private Logger LOGGER = LoggerFactory.getLogger(ModuleReportManager.class);
-
     private String localIp;
-
     private SipConnector connector;
     private int port;
 

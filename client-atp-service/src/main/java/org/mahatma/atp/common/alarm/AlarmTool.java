@@ -25,18 +25,18 @@ import java.util.List;
 public class AlarmTool {
     private static final Logger LOGGER = LoggerFactory.getLogger(AutoTestEngine.class);
     private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private static final List<String> alarmTokens = Arrays.asList("失败", "fail", "error", "exception");
+    private static final List<String> ALARM_TOKENS = Arrays.asList("失败", "fail", "error", "exception");
 
     public static void sendErrorEmail(Database atpDatabase, Result result, Tc tc, Task task,
                                       TaskResultDetail taskResultDetail, int time, int runType, Plan plan) {
         if (runType == 1) {
             if (plan.isAlarm()) {
-                ATP_emailDao atp_emailDao = new ATP_emailDaoImpl(atpDatabase);
-                List<ATP_email> atp_emails = atp_emailDao.listReceive();
+                ATP_emailDao atpEmailDao = new ATP_emailDaoImpl(atpDatabase);
+                List<ATP_email> atpEmails = atpEmailDao.listReceive();
                 StringBuffer receives = new StringBuffer();
-                for (int i = 0; i < atp_emails.size(); i++) {
-                    receives.append(atp_emails.get(i).getEmailAddress());
-                    if (i != (atp_emails.size() - 1)) {
+                for (int i = 0; i < atpEmails.size(); i++) {
+                    receives.append(atpEmails.get(i).getEmailAddress());
+                    if (i != (atpEmails.size() - 1)) {
                         receives.append(",");
                     }
                 }
@@ -74,12 +74,12 @@ public class AlarmTool {
                                          TaskResultDetail taskResultDetail, int time, int runType, Plan plan) {
         if (runType == 1) {
             if (plan.isAlarm()) {
-                ATP_emailDao atp_emailDao = new ATP_emailDaoImpl(atpDatabase);
-                List<ATP_email> atp_emails = atp_emailDao.listReceive();
+                ATP_emailDao atpEmailDao = new ATP_emailDaoImpl(atpDatabase);
+                List<ATP_email> atpEmails = atpEmailDao.listReceive();
                 StringBuffer receives = new StringBuffer();
-                for (int i = 0; i < atp_emails.size(); i++) {
-                    receives.append(atp_emails.get(i).getEmailAddress());
-                    if (i != (atp_emails.size() - 1)) {
+                for (int i = 0; i < atpEmails.size(); i++) {
+                    receives.append(atpEmails.get(i).getEmailAddress());
+                    if (i != (atpEmails.size() - 1)) {
                         receives.append(",");
                     }
                 }
@@ -130,7 +130,7 @@ public class AlarmTool {
     }
 
     private static boolean biuAlarmToken(String... strs) {
-        for (String alarmToken : alarmTokens) {
+        for (String alarmToken : ALARM_TOKENS) {
             for (String str : strs) {
                 if (str.contains(alarmToken)) {
                     return true;

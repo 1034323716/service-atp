@@ -109,27 +109,27 @@ public class ClassHelper {
                 String clazzName = jarEntryName.replace("/", ".");
                 int endIndex = clazzName.lastIndexOf(".");
                 String prefix = null;
-                String prefix_name = null;
+                String prefixName = null;
                 if (endIndex > 0) {
-                    prefix_name = clazzName.substring(0, endIndex);
-                    endIndex = prefix_name.lastIndexOf(".");
+                    prefixName = clazzName.substring(0, endIndex);
+                    endIndex = prefixName.lastIndexOf(".");
                     if (endIndex > 0) {
-                        prefix = prefix_name.substring(0, endIndex);
+                        prefix = prefixName.substring(0, endIndex);
                     }
                 }
                 if (jarEntryName.endsWith(".class")) {
                     if(prefix != null) {
                         if (prefix.equals(pkgName)) {
                             LOGGER.debug("jar entryName:" + jarEntryName);
-                            addClassName(loader, clazzList, prefix_name);
+                            addClassName(loader, clazzList, prefixName);
                         } else if (prefix.startsWith(pkgName)) {
                             // 遍历子包名：子类
                             LOGGER.debug("jar entryName:" + jarEntryName);
-                            addClassName(loader, clazzList, prefix_name);
+                            addClassName(loader, clazzList, prefixName);
                         }
                     }else{
                         LOGGER.debug("jar entryName:" + jarEntryName);
-                        addClassName(loader, clazzList, prefix_name);
+                        addClassName(loader, clazzList, prefixName);
                     }
                 }
             }

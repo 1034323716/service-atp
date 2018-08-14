@@ -4,10 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by JiYunfei on 17-10-11.
+ * @author JiYunfei
+ * @date 17-10-11
  */
 public enum StartupOptionEnum {
-    RETEST, TASKID, TASKRESULTID, RUNTYPE, PLANID;
+    /**
+     * 失败时重试
+     */
+    RETEST,
+    /**
+     * 任务ID
+     */
+    TASKID,
+    /**
+     * 任务结果ID
+     */
+    TASKRESULTID,
+    /**
+     * 运行类型:手动执行任务；自动执行计划
+     */
+    RUNTYPE,
+    /**
+     * 计划ID
+     */
+    PLANID;
 
     /**
      * 是否开启当前操作
@@ -17,7 +37,7 @@ public enum StartupOptionEnum {
     /**
      * 当前操作参数
      */
-    private List<String> args = new ArrayList<String>();
+    private List<String> args = new ArrayList<>();
 
     public void setEnable(boolean isEnable) {
         this.isEnable = isEnable;

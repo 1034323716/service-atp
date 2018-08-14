@@ -25,19 +25,19 @@ public class ATP_emailDaoImpl implements ATP_emailDao {
     @Override
     public List<ATP_email> listReceive() {
         try {
-            List<ATP_email> atp_emails = new ArrayList<>();
+            List<ATP_email> atpEmails = new ArrayList<>();
             String sql = "SELECT emailAddress,receiveState FROM ATP_email where `receiveState` = ?";
             DataTable dataTable = atpDatabase.executeTable(sql, 1);
             for (DataRow dataRow : dataTable.getRows()) {
                 String emailAddress = dataRow.getString("emailAddress");
                 int receiveState = dataRow.getInt("receiveState");
-                ATP_email atp_email = new ATP_email();
-                atp_email.setEmailAddress(emailAddress);
-                atp_email.setReceiveState(receiveState);
-                atp_emails.add(atp_email);
+                ATP_email atpEmail = new ATP_email();
+                atpEmail.setEmailAddress(emailAddress);
+                atpEmail.setReceiveState(receiveState);
+                atpEmails.add(atpEmail);
             }
             LOGGER.info("list success");
-            return atp_emails;
+            return atpEmails;
         } catch (Exception ex) {
             LOGGER.error("list receive exception" + ex.getMessage());
         }

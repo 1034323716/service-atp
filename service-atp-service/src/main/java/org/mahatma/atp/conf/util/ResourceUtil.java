@@ -73,8 +73,9 @@ public class ResourceUtil {
                 null, loader, "class");
         File file = new File(decompressionPath);
         for (File jar : file.listFiles()) {
-            if (jar.getName().endsWith(".jar"))
+            if (jar.getName().endsWith(".jar")) {
                 moduleSummaryManager.addPathClazz("", loader, "jar", jar.getAbsolutePath());
+            }
         }
         moduleSummaryManager.addPathClazz("", loader, "jar", sourcePath);
 
@@ -149,9 +150,9 @@ public class ResourceUtil {
         FilePathUtil.checkPathAndCreate(FormatUtil.generatePkgDir(packageSetting.getName(), packageSetting.getVersion()));
         String finalPath = FormatUtil.generatePkgDir(packageSetting.getName(), packageSetting.getVersion())
                 + File.separator;
-        sourcePath = finalPath + FormatUtil.libName + File.separator + sourceName;
-        libPath = finalPath + FormatUtil.libName + File.separator;
-        decompressionPath = finalPath + FormatUtil.decompressionName + File.separator;
+        sourcePath = finalPath + FormatUtil.LIB_NAME + File.separator + sourceName;
+        libPath = finalPath + FormatUtil.LIB_NAME + File.separator;
+        decompressionPath = finalPath + FormatUtil.DECOMPRESSION_NAME + File.separator;
         FilePathUtil.checkPathAndCreate(libPath);
 //        String commandMove = "cp" + " " + location + " " + libPath;
         String commandMove = "mv" + " " + location + " " + libPath;

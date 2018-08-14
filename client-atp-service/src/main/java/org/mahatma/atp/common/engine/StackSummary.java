@@ -62,6 +62,7 @@ public class StackSummary extends ModuleSummary implements ModuleStack {
         }
     }
 
+    @Override
     public Class<?> getClazz() {
         return clazz;
     }

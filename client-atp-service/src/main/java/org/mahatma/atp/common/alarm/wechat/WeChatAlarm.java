@@ -24,7 +24,7 @@ public class WeChatAlarm {
     public String corpsecret = "k0-tI0NdRQGTtii4ydU5LrkL8oahnKMCoG7luOdZ8uA";
     public int agentId = 1000002;
 
-    private long token_expiresTime = 0;
+    private long tokenExpiresTime = 0;
     private String access_token = null;
 
     public static void main(String[] args) throws IOException {
@@ -44,7 +44,7 @@ public class WeChatAlarm {
 
     public String getToken() throws IOException {
         Calendar nowDate = Calendar.getInstance();
-        if (nowDate.getTime().getTime() < token_expiresTime - 60000) {
+        if (nowDate.getTime().getTime() < tokenExpiresTime - 60000) {
             if (access_token != null) {
                 return access_token;
             }
@@ -60,7 +60,7 @@ public class WeChatAlarm {
             }
             if (!jsonarrayBody.getJSONObject(0).isNull("expires_in")) {
                 int expires_in = jsonarrayBody.getJSONObject(0).getInt("expires_in");
-                token_expiresTime = getTokenDate.getTime().getTime() + expires_in * 1000;
+                tokenExpiresTime = getTokenDate.getTime().getTime() + expires_in * 1000;
             }
         } else {
             LOGGER.error("ErrorWeiXin getToken() is failed.");
@@ -122,7 +122,7 @@ public class WeChatAlarm {
         if (!jsonarrayBody.getJSONObject(0).isNull("errmsg")) {
             errmsg = jsonarrayBody.getJSONObject(0).getString("errmsg");
         }
-        if (!errmsg.equals("ok")) {
+        if (!"ok".equals(errmsg)) {
             return false;
         }
         return true;

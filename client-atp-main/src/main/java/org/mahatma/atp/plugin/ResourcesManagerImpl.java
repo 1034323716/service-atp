@@ -27,7 +27,7 @@ public class ResourcesManagerImpl implements ResourcesManager {
 
     @Override
     public Database getDatabaseBydbPro() {
-        Properties db = configProvider.getConfig(FormatUtil.dbPropertiesName);
+        Properties db = configProvider.getConfig(FormatUtil.DB_PROPERTIES_NAME);
         DatabaseManager instance = DatabaseManager.INSTANCE;
         database = instance.getDatabase("", ConnectionString.fromProperties(db));
         return database;

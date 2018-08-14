@@ -6,10 +6,11 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 
 /**
- * Created by JiYunfei on 17-10-11.
+ * @author JiYunfei
+ * @date 17-10-11
  */
 public class SelectParam {
-    private Logger LOGGER = LoggerFactory.getLogger(SelectParam.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SelectParam.class);
     /**
      * 分配与装载启动参数
      *
