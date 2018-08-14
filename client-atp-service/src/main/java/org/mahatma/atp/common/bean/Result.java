@@ -4,7 +4,6 @@ import com.feinno.util.Combo3;
 import org.mahatma.atp.common.engine.spi.RuntimeWatch;
 import org.mahatma.atp.common.util.ThreadLocalResultDateUtil;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,12 +43,7 @@ public class Result {
     }
 
     public void putStep(int i, String request, String response) {
-        try {
-            request = "【Time:" + ThreadLocalResultDateUtil.formatDate(new Date()) + "】" + request;
-        } catch (ParseException e) {
-            e.printStackTrace();
-
-        }
+        request = "【Time:" + ThreadLocalResultDateUtil.formatDate(new Date()) + "】" + request;
         putStep.incrementAndGet();
         if (request == null) {
             request = "";
@@ -74,12 +68,7 @@ public class Result {
     }
 
     public void putStep(String request, String response) {
-        try {
-            request = "【Time:" + ThreadLocalResultDateUtil.formatDate(new Date()) + "】" + request;
-        } catch (ParseException e) {
-            e.printStackTrace();
-
-        }
+        request = "【Time:" + ThreadLocalResultDateUtil.formatDate(new Date()) + "】" + request;
         if (request == null) {
             request = "";
         }
