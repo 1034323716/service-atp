@@ -8,7 +8,7 @@ import org.helium.http.servlet.HttpMappings;
 import org.helium.http.servlet.HttpServlet;
 import org.helium.http.servlet.HttpServletContext;
 import org.mahatma.atp.common.db.dao.PlanDao;
-import org.mahatma.atp.common.db.daoImpl.PlanDaoImpl;
+import org.mahatma.atp.common.db.impl.PlanDaoImpl;
 import org.mahatma.atp.conf.util.SendResponseUtil;
 import org.mahatma.atp.plan.Action;
 import org.mahatma.atp.plan.PlanBean;

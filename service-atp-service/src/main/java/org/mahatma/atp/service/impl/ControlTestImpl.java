@@ -5,7 +5,7 @@ import org.helium.framework.annotations.FieldSetter;
 import org.helium.framework.annotations.ServiceImplementation;
 import org.mahatma.atp.common.db.bean.TaskResult;
 import org.mahatma.atp.common.db.dao.TaskResultDao;
-import org.mahatma.atp.common.db.daoImpl.TaskResultDaoImpl;
+import org.mahatma.atp.common.db.impl.TaskResultDaoImpl;
 import org.mahatma.atp.common.util.entity.ControlPkg;
 import org.mahatma.atp.conf.AtpResultCodeManager;
 import org.mahatma.atp.conf.ResultCodeParam;

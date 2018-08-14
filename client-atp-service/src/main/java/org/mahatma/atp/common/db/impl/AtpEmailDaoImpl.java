@@ -1,4 +1,4 @@
-package org.mahatma.atp.common.db.daoImpl;
+package org.mahatma.atp.common.db.impl;
 
 import org.helium.database.DataRow;
 import org.helium.database.DataTable;
@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lyfx on 17-10-11.
+ * @author lyfx
+ * @date 17-10-11
  */
 public class AtpEmailDaoImpl implements AtpEmailDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskResultDaoImpl.class);

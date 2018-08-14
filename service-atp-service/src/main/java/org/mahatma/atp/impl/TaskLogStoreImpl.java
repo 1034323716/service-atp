@@ -8,11 +8,10 @@ import org.mahatma.atp.common.db.bean.RunTimeLog;
 import org.mahatma.atp.common.db.bean.TaskResult;
 import org.mahatma.atp.common.db.dao.LogDao;
 import org.mahatma.atp.common.db.dao.TaskResultDao;
-import org.mahatma.atp.common.db.daoImpl.LogDaoImpl;
-import org.mahatma.atp.common.db.daoImpl.TaskResultDaoImpl;
+import org.mahatma.atp.common.db.impl.LogDaoImpl;
+import org.mahatma.atp.common.db.impl.TaskResultDaoImpl;
 import org.mahatma.atp.common.exception.AutoTestRuntimeException;
 import org.mahatma.atp.dao.TaskLogStore;
-import org.omg.PortableInterceptor.INACTIVE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

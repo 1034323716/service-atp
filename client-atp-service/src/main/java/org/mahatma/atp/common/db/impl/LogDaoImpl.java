@@ -1,4 +1,4 @@
-package org.mahatma.atp.common.db.daoImpl;
+package org.mahatma.atp.common.db.impl;
 
 import org.helium.database.Database;
 import org.mahatma.atp.common.db.bean.RunTimeLog;

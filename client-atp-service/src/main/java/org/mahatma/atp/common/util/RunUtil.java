@@ -18,7 +18,7 @@ import org.mahatma.atp.common.bean.superClassBuilder.SummaryBuilder;
 import org.mahatma.atp.common.bean.superClassBuilder.SummarysBuilder;
 import org.mahatma.atp.common.db.bean.*;
 import org.mahatma.atp.common.db.dao.*;
-import org.mahatma.atp.common.db.daoImpl.*;
+import org.mahatma.atp.common.db.impl.*;
 import org.mahatma.atp.common.engine.AutoTestEngine;
 import org.mahatma.atp.common.engine.ModuleSummary;
 import org.mahatma.atp.common.engine.spi.AnnotationResolver;

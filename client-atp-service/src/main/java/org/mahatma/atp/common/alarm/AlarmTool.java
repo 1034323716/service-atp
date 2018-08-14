@@ -7,7 +7,7 @@ import org.mahatma.atp.common.alarm.wechat.WeChatAlarm;
 import org.mahatma.atp.common.bean.Result;
 import org.mahatma.atp.common.db.bean.*;
 import org.mahatma.atp.common.db.dao.AtpEmailDao;
-import org.mahatma.atp.common.db.daoImpl.AtpEmailDaoImpl;
+import org.mahatma.atp.common.db.impl.AtpEmailDaoImpl;
 import org.mahatma.atp.common.engine.AutoTestEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

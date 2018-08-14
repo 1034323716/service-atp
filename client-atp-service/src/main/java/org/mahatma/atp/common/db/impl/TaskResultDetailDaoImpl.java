@@ -1,4 +1,4 @@
-package org.mahatma.atp.common.db.daoImpl;
+package org.mahatma.atp.common.db.impl;
 
 import com.feinno.util.StringUtils;
 import org.helium.database.Database;

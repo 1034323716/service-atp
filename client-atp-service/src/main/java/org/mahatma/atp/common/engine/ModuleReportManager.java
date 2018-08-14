@@ -4,7 +4,7 @@ import org.helium.database.Database;
 import org.mahatma.atp.common.bean.Result;
 import org.mahatma.atp.common.db.bean.TaskResultDetail;
 import org.mahatma.atp.common.db.dao.TaskResultDetailDao;
-import org.mahatma.atp.common.db.daoImpl.TaskResultDetailDaoImpl;
+import org.mahatma.atp.common.db.impl.TaskResultDetailDaoImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
