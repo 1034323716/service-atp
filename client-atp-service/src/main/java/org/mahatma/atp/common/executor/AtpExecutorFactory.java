@@ -34,21 +34,26 @@ public class AtpExecutorFactory {
     public synchronized static Executor newFixedExecutor(final String name, int size, int limit) {
         if (executors.get(name) == null) {
             Executor innerExecutor = new ThreadPoolExecutor(size, size, 0L, TimeUnit.MILLISECONDS,
-                    new LinkedBlockingQueue<>(), new ThreadFactory() {
-                private int count = 0;
-
-                @Override
-                public Thread newThread(Runnable r) {
-                    Thread t = new Thread(r);
-                    t.setDaemon(false);
-                    t.setName(name + "-" + count);
-                    count++;
-                    return t;
-                }
-            });
+                    new LinkedBlockingQueue<>(), getThreadFactory(name));
             FixedObservableExecutor executor = new FixedObservableExecutor(name, innerExecutor, limit, size);
             executors.put(name, executor);
             LOGGER.info("Create FixedExecutor:" + name + " size = {} limit = {}", size, limit);
+        }
+        return getExecutor(name);
+    }
+
+    /**
+     * 新增一个一个线程的线程池
+     *
+     * @param name
+     * @return
+     */
+    public synchronized static Executor newSingleExecutor(final String name) {
+        if (executors.get(name) == null) {
+            Executor innerExecutor = new ThreadPoolExecutor(1, 1,
+                    0L, TimeUnit.MILLISECONDS,
+                    new LinkedBlockingQueue<>(), getThreadFactory(name));
+            executors.put(name, innerExecutor);
         }
         return getExecutor(name);
     }
@@ -63,8 +68,22 @@ public class AtpExecutorFactory {
         return executors.get(name);
     }
 
-    public static Executor getDefaultExecutor(){
+    public static Executor getDefaultExecutor() {
         return executors.get("TestCase");
     }
 
+    public static ThreadFactory getThreadFactory(String name) {
+        return new ThreadFactory() {
+            private int count = 0;
+
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread t = new Thread(r);
+                t.setDaemon(false);
+                t.setName(name + "-" + count);
+                count++;
+                return t;
+            }
+        };
+    }
 }

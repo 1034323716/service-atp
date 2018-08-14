@@ -4,10 +4,14 @@ import com.feinno.superpojo.SuperPojo;
 import com.feinno.superpojo.annotation.Childs;
 import com.feinno.superpojo.annotation.Entity;
 import com.feinno.superpojo.annotation.Field;
+import com.feinno.superpojo.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author JiYunfei
+ */
 @Entity(name = "resultCode")
 public class AtpResultCodeManager extends SuperPojo {
 
@@ -27,7 +31,7 @@ public class AtpResultCodeManager extends SuperPojo {
     }
 
     @Childs(id = 1, parent = "resultCodeDocs", useKeyName = true)
-    private Map<String, ResultCode> resultCodeDocMap;
+    private Map<String, ResultCode> resultCodeDocMap = new HashMap<>();
 
     public Map<String, ResultCode> getResultCodeDocMap() {
         return resultCodeDocMap;
@@ -42,7 +46,7 @@ public class AtpResultCodeManager extends SuperPojo {
         private int code;
 
         @Field(id = 2)
-        private String doc;
+        private String doc = StringUtils.EMPTY;
 
         public int getCode() {
             return code;
@@ -59,16 +63,5 @@ public class AtpResultCodeManager extends SuperPojo {
         public void setDoc(String doc) {
             this.doc = doc;
         }
-    }
-
-    public static void main(String[] args) {
-        AtpResultCodeManager atpResultCodeManager = new AtpResultCodeManager();
-        Map<String, ResultCode> test = new HashMap();
-        ResultCode resultCode = new ResultCode();
-        resultCode.setCode(100);
-        resultCode.setDoc("123");
-        test.put("test", resultCode);
-        atpResultCodeManager.setResultCodeDocMap(test);
-        System.out.println(atpResultCodeManager.toXmlString());
     }
 }

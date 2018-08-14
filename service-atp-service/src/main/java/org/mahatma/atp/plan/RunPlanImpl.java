@@ -1,8 +1,6 @@
 package org.mahatma.atp.plan;
 
 import com.feinno.superpojo.io.XmlInputStream;
-import com.feinno.threading.ExecutorFactory;
-import com.feinno.threading.FixedObservableExecutor;
 import org.helium.database.Database;
 import org.helium.framework.annotations.FieldSetter;
 import org.helium.framework.annotations.ServiceImplementation;
@@ -22,6 +20,7 @@ import org.mahatma.atp.common.db.dao.TcsDao;
 import org.mahatma.atp.common.db.daoImpl.PlanDaoImpl;
 import org.mahatma.atp.common.db.daoImpl.TaskDaoImpl;
 import org.mahatma.atp.common.db.daoImpl.TcsDaoImpl;
+import org.mahatma.atp.common.executor.AtpExecutorFactory;
 import org.mahatma.atp.common.util.FormatUtil;
 import org.mahatma.atp.conf.AtpEnvConfiguration;
 import org.mahatma.atp.service.ControlTest;
@@ -33,6 +32,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 /**
  * @author JiYunfei
@@ -40,14 +40,11 @@ import java.util.List;
  */
 @ServiceImplementation
 public class RunPlanImpl implements RunPlan {
-    public static Logger LOGGER = LoggerFactory.getLogger(RunPlanImpl.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(RunPlanImpl.class);
     private static final int TASK_EXECUTOR_SIZE = 16;
 
-    private static FixedObservableExecutor executor;
-
+    private static Executor executor;
     private static List<PlanArgs> atpPlans;
-
     private static PlanDao planDao;
 
     @FieldSetter("URCS_ATPDB")
@@ -62,11 +59,10 @@ public class RunPlanImpl implements RunPlan {
         planDao = new PlanDaoImpl(atpDB);
         atpPlans = new ArrayList<>();
         startActionPlan();
-        executor = (FixedObservableExecutor) ExecutorFactory.newFixedExecutor("Plan-Executor", TASK_EXECUTOR_SIZE, TASK_EXECUTOR_SIZE * 64);
+        executor = AtpExecutorFactory.newFixedExecutor("Plan-Executor", TASK_EXECUTOR_SIZE, TASK_EXECUTOR_SIZE * 64);
         AtpPlanConsumer atpPlanConsumer = new AtpPlanConsumer();
-        Thread thread = new Thread(atpPlanConsumer, "Select-Plan");
-        thread.setDaemon(true);
-        thread.start();
+        Executor executor = AtpExecutorFactory.newSingleExecutor("Select-Plan");
+        executor.execute(atpPlanConsumer);
     }
 
     @Override

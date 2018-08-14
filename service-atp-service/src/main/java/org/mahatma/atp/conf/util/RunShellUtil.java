@@ -1,6 +1,7 @@
 package org.mahatma.atp.conf.util;
 
 import org.mahatma.atp.common.exception.AutoTestRuntimeException;
+import org.mahatma.atp.common.executor.AtpExecutorFactory;
 import org.mahatma.atp.dao.TaskLogStore;
 import org.mahatma.atp.service.ControlTest;
 import org.slf4j.Logger;
@@ -11,12 +12,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.util.concurrent.Executor;
 
 /**
- * Created by JiYunfei on 17-9-27.
+ * @author JiYunfei
+ * @date 17-9-27
  */
 public class RunShellUtil {
-    private static Logger LOGGER = LoggerFactory.getLogger(RunShellUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RunShellUtil.class);
+    private static final int TASK_EXECUTOR_SIZE = 16;
+    private static Executor executor = AtpExecutorFactory.newFixedExecutor("Run-Shell-Executor", TASK_EXECUTOR_SIZE, TASK_EXECUTOR_SIZE * 64);
 
     public static void runShellAndRead(String command) {
         try {
@@ -57,14 +62,13 @@ public class RunShellUtil {
             Process exec = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", command});
             LOGGER.info("run shell and store log success, process id is:{}", getPid(exec));
 
-            new Thread(() -> {
+            executor.execute(() -> {
                 try {
                     taskLogStore.insertLogFromFile(FilePathUtil.logPath(taskResultId), taskResultId);
                 } catch (AutoTestRuntimeException e) {
                     LOGGER.error(e.getMessage());
                 }
-            }).start();
-
+            });
 
             InputStream errorStream = exec.getErrorStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(errorStream));

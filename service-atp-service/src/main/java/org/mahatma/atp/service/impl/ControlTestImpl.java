@@ -45,7 +45,8 @@ public class ControlTestImpl implements ControlTest {
         TaskResult taskResult = new TaskResult();
         taskResult.setId(taskResultId);
         taskResult.setDesc(AtpResultCodeManager.getReturnCodeDoc(ResultCodeParam.HALFWAYSTOP).getDoc());
-        taskResult.setState(1); // 1代表的已结束
+        // 1代表的已结束
+        taskResult.setState(1);
         taskResult.setCode(String.valueOf(AtpResultCodeManager.getReturnCodeDoc(ResultCodeParam.HALFWAYSTOP).getCode()));
         taskResultDao.updateTaskResult(taskResult);
         remove(taskResultId);
