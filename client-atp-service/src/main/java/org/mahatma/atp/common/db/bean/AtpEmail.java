@@ -3,7 +3,7 @@ package org.mahatma.atp.common.db.bean;
 /**
  * Created by JiYunfei on 18-2-7.
  */
-public class ATP_email {
+public class AtpEmail {
     private String emailAddress;
     private int receiveState;
 

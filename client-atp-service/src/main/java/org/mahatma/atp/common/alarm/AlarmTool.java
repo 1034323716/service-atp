@@ -6,8 +6,8 @@ import org.mahatma.atp.common.alarm.email.ErrorEMail;
 import org.mahatma.atp.common.alarm.wechat.WeChatAlarm;
 import org.mahatma.atp.common.bean.Result;
 import org.mahatma.atp.common.db.bean.*;
-import org.mahatma.atp.common.db.dao.ATP_emailDao;
-import org.mahatma.atp.common.db.daoImpl.ATP_emailDaoImpl;
+import org.mahatma.atp.common.db.dao.AtpEmailDao;
+import org.mahatma.atp.common.db.daoImpl.AtpEmailDaoImpl;
 import org.mahatma.atp.common.engine.AutoTestEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +31,8 @@ public class AlarmTool {
                                       TaskResultDetail taskResultDetail, int time, int runType, Plan plan) {
         if (runType == 1) {
             if (plan.isAlarm()) {
-                ATP_emailDao atpEmailDao = new ATP_emailDaoImpl(atpDatabase);
-                List<ATP_email> atpEmails = atpEmailDao.listReceive();
+                AtpEmailDao atpEmailDao = new AtpEmailDaoImpl(atpDatabase);
+                List<AtpEmail> atpEmails = atpEmailDao.listReceive();
                 StringBuffer receives = new StringBuffer();
                 for (int i = 0; i < atpEmails.size(); i++) {
                     receives.append(atpEmails.get(i).getEmailAddress());
@@ -74,8 +74,8 @@ public class AlarmTool {
                                          TaskResultDetail taskResultDetail, int time, int runType, Plan plan) {
         if (runType == 1) {
             if (plan.isAlarm()) {
-                ATP_emailDao atpEmailDao = new ATP_emailDaoImpl(atpDatabase);
-                List<ATP_email> atpEmails = atpEmailDao.listReceive();
+                AtpEmailDao atpEmailDao = new AtpEmailDaoImpl(atpDatabase);
+                List<AtpEmail> atpEmails = atpEmailDao.listReceive();
                 StringBuffer receives = new StringBuffer();
                 for (int i = 0; i < atpEmails.size(); i++) {
                     receives.append(atpEmails.get(i).getEmailAddress());
