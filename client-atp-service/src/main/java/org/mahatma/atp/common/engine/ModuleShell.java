@@ -6,14 +6,12 @@ import org.mahatma.atp.common.bean.Result;
 import org.mahatma.atp.common.bean.Session;
 import org.mahatma.atp.common.engine.spi.AtpThreadFactory;
 import org.mahatma.atp.common.param.StartupOptionEnum;
+import org.mahatma.atp.common.util.ExceptionUtil;
 import org.mahatma.atp.common.util.FormatUtil;
 import org.mahatma.atp.common.util.TestInjector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -87,7 +85,7 @@ public class ModuleShell {
                 }
                 result.setCode(501);
                 result.setDesc(summary.getClassName() + "用例发生未捕获的异常" + e.getMessage());
-                result.putStep("exception", getErrorInfoFromException(e));
+                result.putStep("exception", ExceptionUtil.getErrorInfoFromException(e));
 
                 isSuccess = false;
                 LOGGER.error(test.getClass().getSimpleName() + "run happen exception", e);
@@ -109,24 +107,5 @@ public class ModuleShell {
         }
 
         return new Combo2<>(isSuccess, result);
-    }
-
-    public String getErrorInfoFromException(Exception e) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        try {
-            e.printStackTrace(pw);
-            return sw.toString();
-        } catch (Exception exception) {
-            return "ErrorInfoFromException";
-        } finally {
-            try {
-                sw.close();
-                pw.close();
-            } catch (IOException ioe) {
-
-            }
-        }
-
     }
 }
