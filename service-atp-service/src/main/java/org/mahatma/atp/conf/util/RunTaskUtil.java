@@ -51,7 +51,7 @@ public class RunTaskUtil {
 //                + logPath + " 2>&1";
         CapturePkgBean capturePkgBean = new CapturePkgBean(taskResultId);
         capturePkgBean.start();
-        RunShellUtil.runShellNonStoreLog(runShell, taskResultId, controlTest);
+        RunShellUtil.runShellAndStoreLog(runShell, taskLogStore, taskResultId, controlTest);
         capturePkgBean.stop();
     }
 
