@@ -11,6 +11,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 测试结果输出
+ *
+ * @author JiYunfei
  */
 public class Result {
 
@@ -80,7 +82,9 @@ public class Result {
 
     public String getStepDataString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Combo3<Integer, byte[], byte[]> data : stepData) {
+        List<Combo3<Integer, byte[], byte[]>> temp = new ArrayList<>();
+        temp.addAll(stepData);
+        for (Combo3<Integer, byte[], byte[]> data : temp) {
             stringBuilder.append("◇步骤 : " + data.getV1());
             stringBuilder.append("\n\n");
             stringBuilder.append("\t>请求 : " + new String(data.getV2()));
@@ -110,7 +114,9 @@ public class Result {
     @Override
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
-        for (Combo3<Integer, byte[], byte[]> data : stepData) {
+        List<Combo3<Integer, byte[], byte[]>> temp = new ArrayList<>();
+        temp.addAll(stepData);
+        for (Combo3<Integer, byte[], byte[]> data : temp) {
             stringBuffer.append("    " + formatStep(data));
         }
         return "Result{" + "\n" +
