@@ -15,4 +15,6 @@
     <runShPath>/data/atp/run.sh</runShPath>
     <!--存放测试日志的路径-->
     <logPath>/data/atp/log/</logPath>
+    <!--运行任务的shell语句模板-->
+    <runTaskShellTemplate>sh {shPath} '-taskId {taskId} -planId {planId} -taskResultId {taskResultId} -retest {retest} -runType {runType}' '{addClassPath}' >{logPath} 2>&amp;1 &amp;</runTaskShellTemplate>
 </atpEnvConfig>

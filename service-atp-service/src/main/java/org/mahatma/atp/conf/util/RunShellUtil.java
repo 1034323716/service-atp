@@ -20,7 +20,7 @@ import java.util.concurrent.Executor;
  */
 public class RunShellUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(RunShellUtil.class);
-    private static final int TASK_EXECUTOR_SIZE = 16;
+    private static final int TASK_EXECUTOR_SIZE = 32;
     private static Executor executor = AtpExecutorFactory.newFixedExecutor("Run-Shell-Executor", TASK_EXECUTOR_SIZE, TASK_EXECUTOR_SIZE * 64);
 
     public static void runShellAndRead(String command) {
@@ -56,7 +56,7 @@ public class RunShellUtil {
         exec.destroy();
     }
 
-    public static void runShellAndStore(String command, TaskLogStore taskLogStore, Long taskResultId, ControlTest controlTest) {
+    public static void runShellAndStoreLog(String command, TaskLogStore taskLogStore, Long taskResultId, ControlTest controlTest) {
         try {
             LOGGER.info("run shell and store log start, command:{}", command);
             Process exec = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", command});
@@ -94,6 +94,23 @@ public class RunShellUtil {
         } catch (Throwable e) {
             LOGGER.error("run shell and store log fail", e);
         }
+    }
+
+    public static void runShellNonStoreLog(String command, long taskResultId, ControlTest controlTest) {
+        executor.execute(() -> {
+            try {
+                LOGGER.info("run shell and store log start, command:{}", command);
+                Process exec = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", command});
+                exec.waitFor();
+                exec.destroy();
+                if (controlTest != null) {
+                    controlTest.remove(taskResultId);
+                }
+                LOGGER.info("run shell and store log success, process id is:{}", getPid(exec));
+            } catch (Exception e) {
+                LOGGER.error("run shell non store log fail", e);
+            }
+        });
     }
 
     public static long getPid(Process process) throws Exception {

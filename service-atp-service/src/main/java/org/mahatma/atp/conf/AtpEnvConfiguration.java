@@ -37,6 +37,16 @@ public class AtpEnvConfiguration extends SuperPojo {
     private String runShPath;
     @Field(id = 8)
     private String logPath;
+    @Field(id = 9)
+    private String runTaskShellTemplate;
+
+    public String getRunTaskShellTemplate() {
+        return runTaskShellTemplate;
+    }
+
+    public void setRunTaskShellTemplate(String runTaskShellTemplate) {
+        this.runTaskShellTemplate = runTaskShellTemplate;
+    }
 
     public String getLogPath() {
         return logPath;
