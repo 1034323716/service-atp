@@ -97,20 +97,34 @@ public class RunShellUtil {
     }
 
     public static void runShellNonStoreLog(String command, long taskResultId, ControlTest controlTest) {
-        executor.execute(() -> {
-            try {
-                LOGGER.info("run shell and store log start, command:{}", command);
-                Process exec = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", command});
-                exec.waitFor();
-                exec.destroy();
-                if (controlTest != null) {
-                    controlTest.remove(taskResultId);
-                }
-                LOGGER.info("run shell and store log success, process id is:{}", getPid(exec));
-            } catch (Exception e) {
-                LOGGER.error("run shell non store log fail", e);
+        try {
+            LOGGER.info("run shell non store log start, command:{}", command);
+            Process exec = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", command});
+            LOGGER.info("run shell non store log success, process id is:{}", getPid(exec));
+
+            InputStream errorStream = exec.getErrorStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(errorStream));
+            String errorTmp;
+            while ((errorTmp = bufferedReader.readLine()) != null) {
+                LOGGER.error("errorStream:" + errorTmp);
             }
-        });
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(exec.getInputStream()));
+            while ((errorTmp = inputReader.readLine()) != null) {
+                LOGGER.info("inputStream:" + errorTmp);
+            }
+
+            exec.getInputStream().close();
+            exec.getErrorStream().close();
+            exec.waitFor();
+            exec.destroy();
+
+            if (controlTest != null) {
+                controlTest.remove(taskResultId);
+            }
+
+        } catch (Throwable e) {
+            LOGGER.error("run shell non store log fail", e);
+        }
     }
 
     public static long getPid(Process process) throws Exception {
