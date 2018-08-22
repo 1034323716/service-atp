@@ -175,6 +175,7 @@ public class ResourceUtil {
          * 本地调的时候用复制
          * String commandMove = "cp" + " " + location + " " + libPath;
          */
+//        String commandMove = "cp" + " " + location + " " + libPath;
         String commandMove = "mv" + " " + location + " " + libPath;
         RunShellUtil.runShell(commandMove);
 

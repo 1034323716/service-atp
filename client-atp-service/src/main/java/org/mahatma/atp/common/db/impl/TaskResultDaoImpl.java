@@ -11,7 +11,8 @@ import java.sql.SQLException;
 import java.util.Date;
 
 /**
- * Created by lyfx on 17-10-11.
+ * @author lyfx
+ * @date 17-10-11
  */
 public class TaskResultDaoImpl implements TaskResultDao {
 
@@ -48,10 +49,10 @@ public class TaskResultDaoImpl implements TaskResultDao {
     }
 
     @Override
-    public void updateTaskResultState(long taskResultId,int state) {
+    public void updateTaskResultState(long taskResultId, int state) {
         String sql = "UPDATE ATP_taskResult SET `state`=?,`finishTime`=? WHERE `id` = ?";
         try {
-            atpDatabase.executeUpdate(sql,state, new Date(),taskResultId);
+            atpDatabase.executeUpdate(sql, state, new Date(), taskResultId);
         } catch (SQLException e) {
             LOGGER.error("UPDATE ATP_taskResult error!", e);
         }
@@ -59,7 +60,7 @@ public class TaskResultDaoImpl implements TaskResultDao {
 
     @Override
     public boolean isExisted(long taskResultId) {
-        String sql = "select count(*) from ATP_taskResult where `id` = ?";
+        String sql = "select count(id) from ATP_taskResult where `id` = ?";
         int i = 0;
         try {
             DataTable dataTable = atpDatabase.executeTable(sql, taskResultId);
