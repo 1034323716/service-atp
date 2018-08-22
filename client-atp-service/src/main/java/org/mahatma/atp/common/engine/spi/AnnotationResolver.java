@@ -16,8 +16,8 @@ import java.lang.reflect.Field;
 /**
  * 传入ConfigProvider和clazz得到该类的ModuleSummary
  * <p>
- * <p>
  * 注释解析器
+ * @author JiYunfei
  */
 public class AnnotationResolver {
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationResolver.class);
@@ -41,9 +41,7 @@ public class AnnotationResolver {
                 moduleSummary.setNickname(module.cname());
                 moduleSummary.setClassType(ClassType.TestModule);
                 moduleSummary.setClazz(clazz);
-//                if (contextProvider != null && contextProvider.getConfig(FormatUtil.ENV) != null) {
                 resolveVar(clazz, moduleSummary, contextProvider);
-//                }
                 return moduleSummary;
             }
             TestStack stack = clazz.getAnnotation(TestStack.class);
@@ -52,9 +50,7 @@ public class AnnotationResolver {
                 stackSummary.setClassName(clazz.getName());
                 stackSummary.setClassSimpleName(clazz.getSimpleName());
                 stackSummary.setClassType(ClassType.TestStack);
-//                if (contextProvider != null && contextProvider.getConfig(FormatUtil.ENV) != null) {
                 resolveVar(clazz, stackSummary, contextProvider);
-//                }
                 return stackSummary;
             }
         }

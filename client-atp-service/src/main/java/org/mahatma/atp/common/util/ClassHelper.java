@@ -65,7 +65,8 @@ public class ClassHelper {
             return;
         }
 
-        File[] files = filterClassFiles(pkgPath);// 过滤出.class文件及文件夹
+        // 过滤出.class文件及文件夹
+        File[] files = filterClassFiles(pkgPath);
         LOGGER.debug("files:" + ((files == null) ? "null" : "length=" + files.length));
         if (files != null) {
             for (File f : files) {
@@ -118,7 +119,7 @@ public class ClassHelper {
                     }
                 }
                 if (jarEntryName.endsWith(".class")) {
-                    if(prefix != null) {
+                    if (prefix != null) {
                         if (prefix.equals(pkgName)) {
                             LOGGER.debug("jar entryName:" + jarEntryName);
                             addClassName(loader, clazzList, prefixName);
@@ -127,7 +128,7 @@ public class ClassHelper {
                             LOGGER.debug("jar entryName:" + jarEntryName);
                             addClassName(loader, clazzList, prefixName);
                         }
-                    }else{
+                    } else {
                         LOGGER.debug("jar entryName:" + jarEntryName);
                         addClassName(loader, clazzList, prefixName);
                     }
@@ -172,10 +173,10 @@ public class ClassHelper {
         if (clazzList != null && clazzName != null) {
             Class<?> clazz = null;
             try {
-                LOGGER.debug("add Class:" + clazzName);
                 clazz = classLoader.loadClass(clazzName);
-            } catch (Throwable e) {
-                LOGGER.error("", e);
+                LOGGER.debug("add Class:" + clazz.getName());
+            } catch (Exception e) {
+                LOGGER.error("addClassName", e);
             }
             if (clazz != null) {
                 clazzList.add(clazz);

@@ -22,25 +22,38 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
- * Created by JiYunfei on 17-9-11.
+ * @author JiYunfei
+ * @date 17-9-11
  */
 public class ResourceUtil {
     public static Logger LOGGER = LoggerFactory.getLogger(ResourceUtil.class);
 
-    //前端给的上传上来的文件的路径
+    /**
+     * 前端给的上传上来的文件的路径
+     */
     private String location;
 
     private PackageSetting packageSetting = new PackageSetting();
 
-    //源压缩包名称
+    /**
+     * 源压缩包名称
+     */
     private String sourceName;
-    //最终的源文件的路径
+    /**
+     * 最终的源文件的路径
+     */
     private String sourcePath;
-    //依赖的jar包最终位置
+    /**
+     * 依赖的jar包最终位置
+     */
     private String libPath;
     private String decompressionPath;
 
-    //设置location，并得到压缩包名称
+    /**
+     * 设置location，并得到压缩包名称
+     *
+     * @param location
+     */
     public ResourceUtil(String location) {
         this.location = location;
         String[] splits = location.split("/");
@@ -53,7 +66,9 @@ public class ResourceUtil {
         packageSetting.setVersion(DateUtil.getSystemCurrentDate("yyyyMMddHHmmss"));
     }
 
-    //其中几个方法的顺序不可变
+    /**
+     * 其中几个方法的顺序不可变
+     */
     public void init() {
         moveSourceAndDeCompress();
         packageSetting = createPackageSetting();
@@ -65,19 +80,19 @@ public class ResourceUtil {
         return packageSetting;
     }
 
-    //jarPath中解析出包裹params.properties的PackageSetting.Properties
+    /**
+     * jarPath中解析出包裹params.properties的PackageSetting.Properties
+     */
     public void analysisEntriesAndConfigName() {
-
         URLClassLoader loader = ClassLoaderUtil.createClassLoader(decompressionPath);
-        ModuleSummaryManager moduleSummaryManager = new ModuleSummaryManager("",
-                null, loader, "class");
-        File file = new File(decompressionPath);
-        for (File jar : file.listFiles()) {
-            if (jar.getName().endsWith(".jar")) {
-                moduleSummaryManager.addPathClazz("", loader, "jar", jar.getAbsolutePath());
-            }
-        }
-        moduleSummaryManager.addPathClazz("", loader, "jar", sourcePath);
+        ModuleSummaryManager moduleSummaryManager = new ModuleSummaryManager("", null, loader, "class");
+//        File file = new File(decompressionPath);
+//        for (File jar : file.listFiles()) {
+//            if (jar.getName().endsWith(".jar")) {
+//                moduleSummaryManager.addPathClazz("", loader, "jar", jar.getAbsolutePath());
+//            }
+//        }
+//        moduleSummaryManager.addPathClazz("", loader, "jar", sourcePath);
 
         moduleSummaryManager.assemble(true);
         Map<String, ModuleSummary> moduleSummaryMap = moduleSummaryManager.getMapping();
@@ -104,7 +119,9 @@ public class ResourceUtil {
         }
     }
 
-    // jarPath中解析出包裹params.properties的PackageSetting.Properties
+    /**
+     * jarPath中解析出包裹params.properties的PackageSetting.Properties
+     */
     public PackageSetting.Properties analysisProperties() {
         PackageSetting.Properties pksProperties = new PackageSetting.Properties();
         pksProperties.setName("默认");
@@ -154,7 +171,10 @@ public class ResourceUtil {
         libPath = finalPath + FormatUtil.LIB_NAME + File.separator;
         decompressionPath = finalPath + FormatUtil.DECOMPRESSION_NAME + File.separator;
         FilePathUtil.checkPathAndCreate(libPath);
-//        String commandMove = "cp" + " " + location + " " + libPath;
+        /**
+         * 本地调的时候用复制
+         * String commandMove = "cp" + " " + location + " " + libPath;
+         */
         String commandMove = "mv" + " " + location + " " + libPath;
         RunShellUtil.runShell(commandMove);
 

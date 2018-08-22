@@ -8,20 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by JiYunfei on 17-9-25.
+ * @author JiYunfei
+ * @date 17-9-25
  */
 public class ClassLoaderUtil {
-    public static URLClassLoader createClassLoader(String... paths) {
+    public static URLClassLoader createClassLoader(String decompressionPath) {
         List<URL> urlList = new ArrayList<>();
-        for (String path : paths) {
-            File file = new File(path);
-            try {
-                urlList.add(file.toURI().toURL());
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
+        File file = new File(decompressionPath);
+        putInLoader(urlList, file);
         URL[] urls = urlList.toArray(new URL[]{});
         return new URLClassLoader(urls);
+    }
+
+    private static void putInLoader(List<URL> urlList, File file) {
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File f : files) {
+                putInLoader(urlList, f);
+            }
+        }
+        try {
+            urlList.add(file.toURI().toURL());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 }
