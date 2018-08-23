@@ -42,16 +42,9 @@ public class RunTaskUtil {
                 .replace("{runType}", Integer.toString(runType.intValue()))
                 .replace("{addClassPath}", addClassPath)
                 .replace("{logPath}", logPath);
-//        String runShell = "sh " + AtpEnvConfiguration.getInstance().getRunShPath()
-//                + " '-taskId " + taskId
-//                + " -planId " + planId
-//                + " -taskResultId " + taskResultId
-//                + " -retest " + isRetest()
-//                + " -runType " + runType.intValue() + "' '" + addClassPath + "' >"
-//                + logPath + " 2>&1";
         CapturePkgBean capturePkgBean = new CapturePkgBean(taskResultId);
         capturePkgBean.start();
-        RunShellUtil.runShellAndStoreLog(runShell, taskLogStore, taskResultId, controlTest);
+        RunShellUtil.runShellNonStoreLog(runShell, taskResultId, controlTest);
         capturePkgBean.stop();
     }
 

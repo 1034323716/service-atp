@@ -102,26 +102,12 @@ public class RunShellUtil {
             Process exec = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", command});
             LOGGER.info("run shell non store log success, process id is:{}", getPid(exec));
 
-            InputStream errorStream = exec.getErrorStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(errorStream));
-            String errorTmp;
-            while ((errorTmp = bufferedReader.readLine()) != null) {
-                LOGGER.error("errorStream:" + errorTmp);
-            }
-            BufferedReader inputReader = new BufferedReader(new InputStreamReader(exec.getInputStream()));
-            while ((errorTmp = inputReader.readLine()) != null) {
-                LOGGER.info("inputStream:" + errorTmp);
-            }
-
-            exec.getInputStream().close();
-            exec.getErrorStream().close();
             exec.waitFor();
             exec.destroy();
 
             if (controlTest != null) {
                 controlTest.remove(taskResultId);
             }
-
         } catch (Throwable e) {
             LOGGER.error("run shell non store log fail", e);
         }
