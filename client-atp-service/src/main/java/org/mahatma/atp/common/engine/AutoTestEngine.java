@@ -1,6 +1,5 @@
 package org.mahatma.atp.common.engine;
 
-import com.feinno.util.Action;
 import com.feinno.util.Combo2;
 import org.helium.database.Database;
 import org.mahatma.atp.common.Test;
@@ -17,19 +16,29 @@ import java.util.Properties;
 
 /**
  * 自动化测试引擎,Main入口
+ *
+ * @author JiYunfei
  */
 public class AutoTestEngine {
     private static final Logger LOGGER = LoggerFactory.getLogger(AutoTestEngine.class);
     public static final AutoTestEngine INSTANCE = new AutoTestEngine();
 
     private String root;
-    //存放jar包中要运行的用例的集合
+    /**
+     * 存放jar包中要运行的用例的集合
+     */
     private ConfigProvider configProvider;
-    //jar包中全量的module
+    /**
+     * jar包中全量的module
+     */
     private ModuleSummaryManager moduleManager;
-    //运行之后的报告集合
+    /**
+     * 运行之后的报告集合
+     */
     private ModuleReportManager reportManager;
-    //协议栈集合
+    /**
+     * 协议栈集合
+     */
     private StackManager stackManager;
 
     private ResourcesManager resourcesManager;
