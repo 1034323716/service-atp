@@ -9,10 +9,10 @@ import org.helium.http.servlet.HttpServlet;
 import org.helium.http.servlet.HttpServletContext;
 import org.mahatma.atp.common.db.dao.PlanDao;
 import org.mahatma.atp.common.db.impl.PlanDaoImpl;
-import org.mahatma.atp.conf.util.SendResponseUtil;
 import org.mahatma.atp.plan.Action;
 import org.mahatma.atp.plan.PlanBean;
 import org.mahatma.atp.plan.RunPlan;
+import org.mahatma.atp.util.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,6 @@ import java.text.ParseException;
 
 /**
  * 执行计划任务，也就是执行定时任务
- * <p>
  * <p>
  * Created by JiYunfei on 17-9-11.
  */
@@ -47,15 +46,15 @@ public class RunPlanServlet extends HttpServlet {
         Long planId;
         planId = Long.parseLong(request.getParameter("id"));
         if (planId == null || planId < 1 || !planDao.isExisted(planId)) {
-            SendResponseUtil.sendResponse("400", "BAD_REQUEST", "", response);
+            HttpUtil.sendResponse("400", "BAD_REQUEST", "", response);
             return;
         } else {
             try {
                 runPlan.registerPlan(new PlanBean(planDao.get(planId), action));
-                SendResponseUtil.sendResponse("202", "ACCEPT", "", response);
+                HttpUtil.sendResponse("202", "ACCEPT", "", response);
                 return;
             } catch (ParseException e) {
-                SendResponseUtil.sendResponse("400", "CRON_ERROR", "", response);
+                HttpUtil.sendResponse("400", "CRON_ERROR", "", response);
                 return;
             }
         }

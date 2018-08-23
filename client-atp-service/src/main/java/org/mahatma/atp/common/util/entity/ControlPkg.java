@@ -8,12 +8,16 @@ public class ControlPkg extends SuperPojo {
     private long taskResultId;
     @Field(id = 2)
     private int pid;
-    // 若不是定时执行，这个id为0
+    /**
+     * 若不是定时执行，这个id为0
+     */
     @Field(id = 3)
     private long planId;
     @Field(id = 4)
     private long taskId;
-    // 状态，为1时代表启动，为0是代表结束
+    /**
+     * 状态，为1时代表启动，为0是代表结束
+     */
     @Field(id = 5)
     private int status;
     @Field(id = 6)

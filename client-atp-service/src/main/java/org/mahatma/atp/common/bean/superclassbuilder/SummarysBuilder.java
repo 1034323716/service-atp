@@ -3,10 +3,9 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.mahatma.atp.common.bean.superClassBuilder;
+package org.mahatma.atp.common.bean.superclassbuilder;
 
 import com.feinno.superpojo.Builder;
-import com.feinno.superpojo.SuperPojo;
 import com.feinno.superpojo.UnknownField;
 import com.feinno.superpojo.UnknownFieldSet;
 import com.feinno.superpojo.io.CodedInputStream;
@@ -14,13 +13,11 @@ import com.feinno.superpojo.io.CodedOutputStream;
 import com.feinno.superpojo.io.JsonInputStream;
 import com.feinno.superpojo.io.XmlInputStream;
 import com.feinno.superpojo.io.XmlOutputStream;
-import com.feinno.superpojo.util.SuperPojoUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.mahatma.atp.common.bean.Summary;
 import org.mahatma.atp.common.bean.Summarys;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;

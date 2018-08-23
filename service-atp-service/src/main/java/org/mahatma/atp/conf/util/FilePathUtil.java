@@ -8,12 +8,18 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by JiYunfei on 17-9-27.
+ * @author JiYunfei
+ * @date 17-9-27
  */
 public class FilePathUtil {
     private static Logger LOGGER = LoggerFactory.getLogger(FilePathUtil.class);
 
-    //检查path对应的路径是否存在，存在返回true，不存在返回false
+    /**
+     * 检查path对应的路径是否存在，存在返回true，不存在返回false
+     *
+     * @param path
+     * @return
+     */
     public static boolean checkPathExist(String path) {
         File file = new File(path);
         if (file.exists()) {
@@ -23,11 +29,15 @@ public class FilePathUtil {
         }
     }
 
-    //检查path对应的路径是否存在，不存在就创建
+    /**
+     * 检查path对应的路径是否存在，不存在就创建
+     *
+     * @param path
+     */
     public static void checkPathAndCreate(String path) {
         File appPath = new File(path);
         if (!appPath.exists()) {
-            //若父路径不存在也会创建比mkdir好使
+            // 若父路径不存在也会创建比mkdir好使
             appPath.mkdirs();
             LOGGER.info("dir:" + path + " doesn't exists,create!");
         } else {
@@ -35,7 +45,12 @@ public class FilePathUtil {
         }
     }
 
-    //检查path对应的路径是否存在，不存在就创建
+    /**
+     * 检查path对应的路径是否存在，不存在就创建
+     *
+     * @param file
+     * @return
+     */
     public static boolean checkFileAndCreate(String file) {
         File f = new File(file);
         if (!f.exists()) {

@@ -5,7 +5,6 @@ import org.helium.http.servlet.HttpMappings;
 import org.helium.http.servlet.HttpServlet;
 import org.helium.http.servlet.HttpServletContext;
 import org.mahatma.atp.conf.util.CronUtil;
-import org.mahatma.atp.conf.util.SendResponseUtil;
 import org.mahatma.atp.util.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -22,7 +22,6 @@ import java.util.Map;
  * @author JiYunfei
  * @date 18-7-3
  */
-//@ScheduledTaskImplementation(id = "atp:MonitoringClientTask", cronExpression = "0 0 0/1 * * ? ")
 @ScheduledTaskImplementation(id = "atp:MonitoringClientTask", cronExpression = "0 0/30 * * * ? ")
 public class MonitoringClientTask implements ScheduledTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(MonitoringClientTask.class);

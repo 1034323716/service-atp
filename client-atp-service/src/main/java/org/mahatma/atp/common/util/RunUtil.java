@@ -14,8 +14,8 @@ import org.mahatma.atp.common.bean.PkgCfgArgs;
 import org.mahatma.atp.common.bean.Result;
 import org.mahatma.atp.common.bean.Summary;
 import org.mahatma.atp.common.bean.Summarys;
-import org.mahatma.atp.common.bean.superClassBuilder.SummaryBuilder;
-import org.mahatma.atp.common.bean.superClassBuilder.SummarysBuilder;
+import org.mahatma.atp.common.bean.superclassbuilder.SummaryBuilder;
+import org.mahatma.atp.common.bean.superclassbuilder.SummarysBuilder;
 import org.mahatma.atp.common.db.bean.*;
 import org.mahatma.atp.common.db.dao.*;
 import org.mahatma.atp.common.db.impl.*;
@@ -109,7 +109,9 @@ public class RunUtil {
         atpControlClient.disconnect();
     }
 
-    // 将ATP_task的summarys字段中的summary放到List中并便利，一次传到下个方法中
+    /**
+     * 将ATP_task的summarys字段中的summary放到List中并便利，一次传到下个方法中
+     */
     public void startOnLine() {
         TaskDao taskDao = new TaskDaoImpl(database);
         task = taskDao.get(taskId);
@@ -158,7 +160,11 @@ public class RunUtil {
         taskResultDao.updateTaskResult(taskResult);
     }
 
-    // 将summary中的package那层抛出来传入下个方法
+    /**
+     * 将summary中的package那层抛出来传入下个方法
+     *
+     * @param summary
+     */
     private void startSummarys(Summary summary) {
         List<PkgCfgArgs> pkgCfgArgsList = null;
         TaskResultDetail taskResultDetail = new TaskResultDetail();
@@ -193,7 +199,12 @@ public class RunUtil {
         }
     }
 
-    // 将package中的<testCase id="28" config="18"/>遍历出来，一次传入下个方法
+    /**
+     * 将package中的<testCase id="28" config="18"/>遍历出来，一次传入下个方法
+     *
+     * @param pkgCfgArgs
+     * @param taskResultDetail
+     */
     private void startSummary(PkgCfgArgs pkgCfgArgs, TaskResultDetail taskResultDetail) {
         long cfgId = pkgCfgArgs.getCfgId();
         List<PkgCfgArgs.TestCaseCfgArgs> testCaseCfgArgs = pkgCfgArgs.getTestCaseCfgArgs();
@@ -205,7 +216,13 @@ public class RunUtil {
         }
     }
 
-    // 加一层，用于控制tc重复执行
+    /**
+     * 加一层，用于控制tc重复执行
+     *
+     * @param testCaseCfgArg
+     * @param taskResultDetail
+     * @param cfgId
+     */
     private void testTCWrap(PkgCfgArgs.TestCaseCfgArgs testCaseCfgArg, TaskResultDetail taskResultDetail, long cfgId) {
         PkgCfgDao pkgCfgDao = new PkgCfgDaoImpl(database);
         PkgCfg pkgCfg = pkgCfgDao.get(cfgId);
@@ -267,7 +284,12 @@ public class RunUtil {
         }
     }
 
-    // 运行一个<testCase id="28" config="18"/>
+    /**
+     * 运行一个<testCase id="28" config="18"/>
+     *
+     * @param clazz
+     * @return
+     */
     private Combo2<Boolean, Result> testTC(Class<? extends Test> clazz) {
         return start(clazz);
     }

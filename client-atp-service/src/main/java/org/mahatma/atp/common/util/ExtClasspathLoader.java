@@ -15,7 +15,9 @@ public final class ExtClasspathLoader {
 
     private static Method addURL = initAddMethod();
 
-    // 获取当前线程的classLoader
+    /**
+     * 获取当前线程的classLoader
+     */
     private static URLClassLoader classloader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
 
     /**

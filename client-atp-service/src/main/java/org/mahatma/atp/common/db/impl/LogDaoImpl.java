@@ -25,7 +25,6 @@ public class LogDaoImpl implements LogDao {
     public void insertLog(RunTimeLog runTimeLog) {
         String sql = "INSERT into ATP_log(`taskResultId`, `log`) VALUE (?,?)";
         try {
-//            LOGGER.info("runTimeLog.getLog() size is {}",runTimeLog.getLog().getBytes().length);
             atpDatabase.executeInsert(sql,runTimeLog.getTaskResultId(),runTimeLog.getLog());
         } catch (SQLException e) {
             LOGGER.error("INSERT into ATP_log error!runTimeLog resultId {} runTimeLog size {}",runTimeLog.getTaskResultId(),runTimeLog.getLog().length(),e);

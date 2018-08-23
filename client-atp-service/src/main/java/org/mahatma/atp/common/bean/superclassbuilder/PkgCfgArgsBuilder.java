@@ -3,10 +3,9 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.mahatma.atp.common.bean.superClassBuilder;
+package org.mahatma.atp.common.bean.superclassbuilder;
 
 import com.feinno.superpojo.Builder;
-import com.feinno.superpojo.SuperPojo;
 import com.feinno.superpojo.UnknownField;
 import com.feinno.superpojo.UnknownFieldSet;
 import com.feinno.superpojo.io.CodedInputStream;
@@ -14,22 +13,21 @@ import com.feinno.superpojo.io.CodedOutputStream;
 import com.feinno.superpojo.io.JsonInputStream;
 import com.feinno.superpojo.io.XmlInputStream;
 import com.feinno.superpojo.io.XmlOutputStream;
-import com.feinno.superpojo.util.SuperPojoUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import org.mahatma.atp.common.bean.PkgCfgArgs;
-import org.mahatma.atp.common.bean.Summary;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.xml.stream.XMLStreamException;
 
-public class SummaryBuilder extends Builder<Summary> {
+import org.mahatma.atp.common.bean.PkgCfgArgs;
+import org.mahatma.atp.common.bean.PkgCfgArgs.TestCaseCfgArgs;
+
+public class PkgCfgArgsBuilder extends Builder<PkgCfgArgs> {
     private int memoizedSerializedSize = -1;
 
-    public SummaryBuilder(Summary var1) {
+    public PkgCfgArgsBuilder(PkgCfgArgs var1) {
         super(var1);
     }
 
@@ -40,31 +38,31 @@ public class SummaryBuilder extends Builder<Summary> {
             case 0:
                 return;
             case 8:
-                ((Summary)this.data).putSerializationFieldTag(1);
-                ((Summary)this.data).setType(var1.readInt32());
+                ((PkgCfgArgs)this.data).putSerializationFieldTag(1);
+                ((PkgCfgArgs)this.data).setPkgId(var1.readInt64());
                 break;
             case 16:
-                ((Summary)this.data).putSerializationFieldTag(2);
-                ((Summary)this.data).setId(var1.readInt64());
+                ((PkgCfgArgs)this.data).putSerializationFieldTag(2);
+                ((PkgCfgArgs)this.data).setCfgId(var1.readInt64());
                 break;
             case 26:
-                ((Summary)this.data).putSerializationFieldTag(3);
-                Object var3 = ((Summary)this.data).getPkgCfgArgsList();
+                ((PkgCfgArgs)this.data).putSerializationFieldTag(3);
+                Object var3 = ((PkgCfgArgs)this.data).getTestCaseCfgArgs();
                 if (var3 == null) {
                     var3 = new ArrayList();
-                    ((Summary)this.data).setPkgCfgArgsList((List)var3);
+                    ((PkgCfgArgs)this.data).setTestCaseCfgArgs((List)var3);
                 }
 
-                PkgCfgArgs var4 = null;
-                var4 = new PkgCfgArgs();
-                PkgCfgArgsBuilder var5 = new PkgCfgArgsBuilder(var4);
+                TestCaseCfgArgs var4 = null;
+                var4 = new TestCaseCfgArgs();
+                TestCaseCfgArgsBuilder var5 = new TestCaseCfgArgsBuilder(var4);
                 var1.readMessage(var5);
                 if (var4 != null) {
                     ((List)var3).add(var4);
                 }
                 break;
             default:
-                ((Summary)this.data).getUnknownFields().parseUnknownField(var2, var1);
+                ((PkgCfgArgs)this.data).getUnknownFields().parseUnknownField(var2, var1);
             }
         }
     }
@@ -74,26 +72,26 @@ public class SummaryBuilder extends Builder<Summary> {
             throw new RuntimeException("required field is null,so stop write.");
         } else {
             this.getSerializedSize();
-            if (((Summary)this.data).getType() != 0 || ((Summary)this.data).hasValue(1)) {
-                var1.writeInt32(1, ((Summary)this.data).getType());
+            if (((PkgCfgArgs)this.data).getPkgId() != 0L || ((PkgCfgArgs)this.data).hasValue(1)) {
+                var1.writeInt64(1, ((PkgCfgArgs)this.data).getPkgId());
             }
 
-            if (((Summary)this.data).getId() != 0L || ((Summary)this.data).hasValue(2)) {
-                var1.writeInt64(2, ((Summary)this.data).getId());
+            if (((PkgCfgArgs)this.data).getCfgId() != 0L || ((PkgCfgArgs)this.data).hasValue(2)) {
+                var1.writeInt64(2, ((PkgCfgArgs)this.data).getCfgId());
             }
 
-            if (((Summary)this.data).getPkgCfgArgsList() != null) {
-                Iterator var2 = ((Summary)this.data).getPkgCfgArgsList().iterator();
+            if (((PkgCfgArgs)this.data).getTestCaseCfgArgs() != null) {
+                Iterator var2 = ((PkgCfgArgs)this.data).getTestCaseCfgArgs().iterator();
 
                 while(var2.hasNext()) {
-                    PkgCfgArgs var3 = (PkgCfgArgs)var2.next();
+                    TestCaseCfgArgs var3 = (TestCaseCfgArgs)var2.next();
                     if (var3 != null) {
-                        var1.writeMessage(3, new PkgCfgArgsBuilder(var3));
+                        var1.writeMessage(3, new TestCaseCfgArgsBuilder(var3));
                     }
                 }
             }
 
-            ((Summary)this.data).getUnknownFields().writeUnknownField(var1);
+            ((PkgCfgArgs)this.data).getUnknownFields().writeUnknownField(var1);
         }
     }
 
@@ -103,26 +101,26 @@ public class SummaryBuilder extends Builder<Summary> {
             return var1;
         } else {
             var1 = 0;
-            if (((Summary)this.data).getType() != 0 || ((Summary)this.data).hasValue(1)) {
-                var1 += CodedOutputStream.computeInt32Size(1, ((Summary)this.data).getType());
+            if (((PkgCfgArgs)this.data).getPkgId() != 0L || ((PkgCfgArgs)this.data).hasValue(1)) {
+                var1 += CodedOutputStream.computeInt64Size(1, ((PkgCfgArgs)this.data).getPkgId());
             }
 
-            if (((Summary)this.data).getId() != 0L || ((Summary)this.data).hasValue(2)) {
-                var1 += CodedOutputStream.computeInt64Size(2, ((Summary)this.data).getId());
+            if (((PkgCfgArgs)this.data).getCfgId() != 0L || ((PkgCfgArgs)this.data).hasValue(2)) {
+                var1 += CodedOutputStream.computeInt64Size(2, ((PkgCfgArgs)this.data).getCfgId());
             }
 
-            if (((Summary)this.data).getPkgCfgArgsList() != null) {
-                Iterator var2 = ((Summary)this.data).getPkgCfgArgsList().iterator();
+            if (((PkgCfgArgs)this.data).getTestCaseCfgArgs() != null) {
+                Iterator var2 = ((PkgCfgArgs)this.data).getTestCaseCfgArgs().iterator();
 
                 while(var2.hasNext()) {
-                    PkgCfgArgs var3 = (PkgCfgArgs)var2.next();
+                    TestCaseCfgArgs var3 = (TestCaseCfgArgs)var2.next();
                     if (var3 != null) {
-                        var1 += CodedOutputStream.computeMessageSize(3, new PkgCfgArgsBuilder(var3));
+                        var1 += CodedOutputStream.computeMessageSize(3, new TestCaseCfgArgsBuilder(var3));
                     }
                 }
             }
 
-            var1 = (int)((long)var1 + ((Summary)this.data).getUnknownFields().getSerializedSize());
+            var1 = (int)((long)var1 + ((PkgCfgArgs)this.data).getUnknownFields().getSerializedSize());
             this.memoizedSerializedSize = var1;
             return var1;
         }
@@ -130,25 +128,25 @@ public class SummaryBuilder extends Builder<Summary> {
 
     public JsonObject toJsonObject() {
         JsonObject var1 = new JsonObject();
-        var1.addProperty("type", ((Summary)this.data).getType());
-        var1.addProperty("id", ((Summary)this.data).getId());
+        var1.addProperty("pkgId", ((PkgCfgArgs)this.data).getPkgId());
+        var1.addProperty("cfgId", ((PkgCfgArgs)this.data).getCfgId());
         Iterator var3;
-        if (((Summary)this.data).getPkgCfgArgsList() != null) {
+        if (((PkgCfgArgs)this.data).getTestCaseCfgArgs() != null) {
             JsonArray var2 = new JsonArray();
-            var3 = ((Summary)this.data).getPkgCfgArgsList().iterator();
+            var3 = ((PkgCfgArgs)this.data).getTestCaseCfgArgs().iterator();
 
             while(var3.hasNext()) {
-                PkgCfgArgs var4 = (PkgCfgArgs)var3.next();
+                TestCaseCfgArgs var4 = (TestCaseCfgArgs)var3.next();
                 if (var4 != null) {
                     var2.add(var4.toJsonObject());
                 }
             }
 
-            var1.add("pkgCfgArgsList", var2);
+            var1.add("testCaseCfgArgs", var2);
         }
 
-        if (this.getData() != null && ((Summary)this.getData()).getUnknownFields() != null && ((Summary)this.getData()).getUnknownFields().getNumbers() != null) {
-            UnknownFieldSet var10 = ((Summary)this.getData()).getUnknownFields();
+        if (this.getData() != null && ((PkgCfgArgs)this.getData()).getUnknownFields() != null && ((PkgCfgArgs)this.getData()).getUnknownFields().getNumbers() != null) {
+            UnknownFieldSet var10 = ((PkgCfgArgs)this.getData()).getUnknownFields();
             var3 = var10.getNumbers();
             JsonObject var11 = new JsonObject();
 
@@ -185,7 +183,7 @@ public class SummaryBuilder extends Builder<Summary> {
     }
 
     public void parseJsonFrom(JsonInputStream var1) {
-        this.data = var1.read(((Summary)this.getData()).getClass());
+        this.data = var1.read(((PkgCfgArgs)this.getData()).getClass());
     }
 
     public boolean isInitialized() {
@@ -193,18 +191,18 @@ public class SummaryBuilder extends Builder<Summary> {
     }
 
     public void writeXmlTo(XmlOutputStream var1) throws XMLStreamException {
-//        var1.writeStartRoot("summary");
-//        var1.writeAttribute("type", ((Summary)this.data).getType());
-//        var1.writeAttribute("id", ((Summary)this.data).getId());
-//        if (((Summary)this.data).getPkgCfgArgsList() != null) {
-//            Iterator var2 = ((Summary)this.data).getPkgCfgArgsList().iterator();
+//        var1.writeStartRoot("package");
+//        var1.writeAttribute("id", ((PkgCfgArgs)this.data).getPkgId());
+//        var1.writeAttribute("config", ((PkgCfgArgs)this.data).getCfgId());
+//        if (((PkgCfgArgs)this.data).getTestCaseCfgArgs() != null) {
+//            Iterator var2 = ((PkgCfgArgs)this.data).getTestCaseCfgArgs().iterator();
 //
 //            while(var2.hasNext()) {
-//                PkgCfgArgs var3 = (PkgCfgArgs)var2.next();
+//                TestCaseCfgArgs var3 = (TestCaseCfgArgs)var2.next();
 //                if (var3 != null) {
-//                    var1.writeStartElement("package");
+//                    var1.writeStartElement("testCase");
 //                    var1.write(var3);
-//                    var1.writeEndElement("package");
+//                    var1.writeEndElement("testCase");
 //                }
 //            }
 //        }
@@ -222,7 +220,7 @@ public class SummaryBuilder extends Builder<Summary> {
 
     public void parseXmlFrom(XmlInputStream var1) throws XMLStreamException {
         String var2 = "";
-        var1.moveStartRoot("summary");
+        var1.moveStartRoot("package");
         int var3 = var1.getCurrentSeq();
 
         String var4;
@@ -233,19 +231,20 @@ public class SummaryBuilder extends Builder<Summary> {
                 break;
             }
 
-            if (var4.equals("type")) {
-                Integer var5 = var1.readInt();
+            Long var5;
+            if (var4.equals("id")) {
+                var5 = var1.readLong();
                 if (var5 != null) {
-                    ((Summary)this.data).setType(var5.intValue());
+                    ((PkgCfgArgs)this.data).setPkgId(var5.longValue());
                 }
-            } else if (var4.equals("id")) {
-                Long var7 = var1.readLong();
-                if (var7 != null) {
-                    ((Summary)this.data).setId(var7.longValue());
+            } else if (var4.equals("config")) {
+                var5 = var1.readLong();
+                if (var5 != null) {
+                    ((PkgCfgArgs)this.data).setCfgId(var5.longValue());
                 }
             } else {
-                String var8 = var1.readString();
-                System.err.println(String.format("Not found [%s] attribute.skip value [%s]", var4, var8));
+                String var7 = var1.readString();
+                System.err.println(String.format("Not found [%s] attribute.skip value [%s]", var4, var7));
             }
         }
 
@@ -253,7 +252,7 @@ public class SummaryBuilder extends Builder<Summary> {
             var1.nextEvent();
             if (var1.getCurrentEvent().isCharacters()) {
                 var4 = var1.getCurrentEvent().asCharacters().getData();
-                ((Summary)this.data).getUnknownFields().putStringAnyNode(var4);
+                ((PkgCfgArgs)this.data).getUnknownFields().putStringAnyNode(var4);
             }
 
             var4 = var1.readName(var3);
@@ -261,23 +260,23 @@ public class SummaryBuilder extends Builder<Summary> {
                 break;
             }
 
-            if (var4.equals("package")) {
-                Object var9 = ((Summary)this.data).getPkgCfgArgsList();
-                if (var9 == null) {
-                    var9 = new ArrayList();
-                    ((Summary)this.data).setPkgCfgArgsList((List)var9);
+            if (var4.equals("testCase")) {
+                Object var8 = ((PkgCfgArgs)this.data).getTestCaseCfgArgs();
+                if (var8 == null) {
+                    var8 = new ArrayList();
+                    ((PkgCfgArgs)this.data).setTestCaseCfgArgs((List)var8);
                 }
 
-                PkgCfgArgs var6 = null;
-                PkgCfgArgs pkgCfgArgs = new PkgCfgArgs();
-                PkgCfgArgsBuilder pkgCfgArgsBuilder = new PkgCfgArgsBuilder(pkgCfgArgs);
-                pkgCfgArgsBuilder.parseXmlFrom(var1);
-                var6 = pkgCfgArgsBuilder.getData();
+                TestCaseCfgArgs var6 = null;
+                TestCaseCfgArgs testCaseCfgArgs = new TestCaseCfgArgs();
+                TestCaseCfgArgsBuilder testCaseCfgArgsBuilder = new TestCaseCfgArgsBuilder(testCaseCfgArgs);
+                testCaseCfgArgsBuilder.parseXmlFrom(var1);
+                var6 = testCaseCfgArgsBuilder.getData();
                 if (var6 != null) {
-                    ((List)var9).add(var6);
+                    ((List)var8).add(var6);
                 }
             } else {
-                ((Summary)this.data).getUnknownFields().parseAnyNode(var4, var1);
+                ((PkgCfgArgs)this.data).getUnknownFields().parseAnyNode(var4, var1);
                 System.err.println(String.format("Not found [%s] node.", var4));
             }
         }

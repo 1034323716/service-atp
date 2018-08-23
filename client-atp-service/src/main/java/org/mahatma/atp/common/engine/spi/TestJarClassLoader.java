@@ -36,8 +36,8 @@ public class TestJarClassLoader {
             for (int i = 0; i < paths.length; i++) {
                 String path = paths[i];
                 File file = new File(path);
-
-                URL url = file.toURI().toURL();//将File类型转为URL类型，file为jar包路径
+                // 将File类型转为URL类型，file为jar包路径
+                URL url = file.toURI().toURL();
 
                 urls[i] = url;
             }
