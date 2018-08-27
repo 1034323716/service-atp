@@ -176,7 +176,6 @@ public class ClassHelper {
                 clazz = classLoader.loadClass(clazzName);
                 LOGGER.debug("add Class:" + clazz.getName());
             } catch (Throwable e) {
-                LOGGER.error("addClassName", e);
             }
             if (clazz != null) {
                 clazzList.add(clazz);
