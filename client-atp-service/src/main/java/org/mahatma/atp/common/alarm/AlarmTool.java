@@ -48,6 +48,7 @@ public class AlarmTool {
                 emailMessageSubject.append("第" + time + "次测试报错");
 
                 StringBuffer content = new StringBuffer();
+                content.append("测试结果ID：" + taskResultDetail.getTaskResultId());
                 content.append("\n第" + time + "次测试报错");
                 content.append("\n测试开始时间：" + format.format(taskResultDetail.getCreateTime()));
                 content.append("\n用例信息：\n");
@@ -91,6 +92,7 @@ public class AlarmTool {
                 emailMessageSubject.append("第" + time + "次测试恢复");
 
                 StringBuffer content = new StringBuffer();
+                content.append("测试结果ID：" + taskResultDetail.getTaskResultId());
                 content.append("\n第" + time + "次测试恢复");
                 content.append("\n测试开始时间：" + format.format(taskResultDetail.getCreateTime()));
                 content.append("\n用例信息：\n");
