@@ -25,7 +25,7 @@ import java.util.List;
 public class AlarmTool {
     private static final Logger LOGGER = LoggerFactory.getLogger(AutoTestEngine.class);
     private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private static final List<String> ALARM_TOKENS = Arrays.asList("失败", "fail", "error", "exception");
+    private static final List<String> ALARM_TOKENS = Arrays.asList("失败", "fail", "error", "exception", "异常");
 
     public static void sendErrorEmail(Database atpDatabase, Result result, Tc tc, Task task,
                                       TaskResultDetail taskResultDetail, int time, int runType, Plan plan) {
