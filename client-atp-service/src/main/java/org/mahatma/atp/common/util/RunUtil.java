@@ -131,6 +131,11 @@ public class RunUtil {
                 List<Summary> summaryList = summarys.getSummary();
                 for (Summary summary : summaryList) {
                     startSummarys(summary);
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             } else {
                 isSuccess = false;
@@ -193,6 +198,11 @@ public class RunUtil {
         if (pkgCfgArgsList != null) {
             for (PkgCfgArgs pkgCfgArgs : pkgCfgArgsList) {
                 startSummary(pkgCfgArgs, taskResultDetail);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         } else {
             LOGGER.error("summary not hava <package>, summary : " + summary.toXmlString());
@@ -212,6 +222,11 @@ public class RunUtil {
         if (testCaseCfgArgs != null) {
             for (PkgCfgArgs.TestCaseCfgArgs testCaseCfgArg : testCaseCfgArgs) {
                 testTCWrap(testCaseCfgArg, taskResultDetail, cfgId);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
