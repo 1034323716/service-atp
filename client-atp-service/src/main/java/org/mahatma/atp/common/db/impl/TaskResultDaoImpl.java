@@ -74,4 +74,14 @@ public class TaskResultDaoImpl implements TaskResultDao {
         }
         return i != 0;
     }
+
+    @Override
+    public void clearByDay(Date date) {
+        String sql = "DELETE FROM ATP_taskResult WHERE createTime<?";
+        try {
+            atpDatabase.executeUpdate(sql, date);
+        } catch (SQLException e) {
+            LOGGER.error("ATP_taskResult clearByDay", e);
+        }
+    }
 }

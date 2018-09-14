@@ -2,10 +2,11 @@ package org.mahatma.atp.common.db.dao;
 
 import org.mahatma.atp.common.db.bean.TaskResult;
 
+import java.util.Date;
+
 /**
  * Created by lyfx on 17-10-11.
  */
-
 public interface TaskResultDao {
     /**
      * 用例运行开始时创建一条记录
@@ -25,4 +26,9 @@ public interface TaskResultDao {
     void updateTaskResultState(long taskResultId, int state);
 
     boolean isExisted(long taskResultId);
+
+    /**
+     * @param date 删除date之前的时间创建的记录
+     */
+    void clearByDay(Date date);
 }

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.Date;
 
 /**
  * Created by lyfx on 17-10-11.
@@ -78,6 +79,16 @@ public class TaskResultDetailDaoImpl implements TaskResultDetailDao {
             atpDatabase.executeUpdate(sql, tcId);
         } catch (SQLException e) {
             LOGGER.error("pkgId : " + tcId + ",delete tc error!", e);
+        }
+    }
+
+    @Override
+    public void clearByDay(Date date) {
+        String sql = "DELETE FROM ATP_taskResultDetail WHERE createTime<?";
+        try {
+            atpDatabase.executeUpdate(sql, date);
+        } catch (SQLException e) {
+            LOGGER.error("TaskResultDetailDaoImpl clearByDay", e);
         }
     }
 }
