@@ -8,6 +8,7 @@
         <bean class="org.mahatma.atp.service.impl.ControlTestImpl"/>
         <bean class="org.mahatma.atp.server.AtpControlServer"/>
         <bean class="org.mahatma.atp.task.MonitoringClientTask"/>
+        <bean class="org.mahatma.atp.task.SlimmingDbTask"/>
 
         <bean class="org.mahatma.atp.impl.TaskLogStoreImpl"/>
         <bean class="org.mahatma.atp.impl.TaskStoreImpl"/>

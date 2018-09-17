@@ -31,6 +31,7 @@ public class SlimmingDbTask implements ScheduledTask {
 
     @Override
     public void processTask(Object lock) {
+        // 删除7天前的结果记录
         Date date = DateUtil.getDateByday(-7);
 
         TaskResultDetailDao taskResultDetailDao = new TaskResultDetailDaoImpl(atpDB);
