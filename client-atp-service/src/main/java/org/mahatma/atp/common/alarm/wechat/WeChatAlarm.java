@@ -37,9 +37,9 @@ public class WeChatAlarm {
         send("wechat alarm test." + new Random().nextInt());
     }
 
-    public static void send(String content) throws IOException {
+    public static boolean send(String content) throws IOException {
         String token = weChatAlarm.getToken();
-        weChatAlarm.sendMessage(token, content);
+        return weChatAlarm.sendMessage(token, content);
     }
 
     public String getToken() throws IOException {
@@ -68,10 +68,10 @@ public class WeChatAlarm {
         return access_token;
     }
 
-    public void sendMessage(String token, String msgStr) throws IOException {
+    public boolean sendMessage(String token, String msgStr) throws IOException {
         if (token == null) {
             LOGGER.error("ErrorWeiXin sendMessage() token is null");
-            return;
+            return false;
         }
         // \"toparty\" : \"PartyID1|PartyID2\",\"totag\" : \"TagID1 | TagID2\",
         String body = "{\"touser\":\"@all\",\"msgtype\":\"text\",\"agentid\":" + agentId + ",\"text\":{\"content\":\"" + msgStr + "\"},\"safe\":0}";
@@ -81,6 +81,7 @@ public class WeChatAlarm {
         if (res) {
             LOGGER.info("send message success.");
         }
+        return res;
     }
 
     public void getAgentList(String token, String agentName) throws IOException {

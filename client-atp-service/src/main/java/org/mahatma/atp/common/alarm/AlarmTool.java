@@ -60,9 +60,11 @@ public class AlarmTool {
                 content.append("      结果描述：" + result.getDesc() + "\n");
                 content.append("      错误步骤：\n" + getFailStep(result));
 
-                ErrorEMail.send(receives.toString(), emailMessageSubject.toString(), content.toString());
                 try {
-                    WeChatAlarm.send(content.toString());
+                    boolean send = WeChatAlarm.send(content.toString());
+                    if (!send) {
+                        ErrorEMail.send(receives.toString(), emailMessageSubject.toString(), content.toString());
+                    }
                 } catch (IOException e) {
                     LOGGER.error("WeChatAlarm Send Exception", e);
                 }
