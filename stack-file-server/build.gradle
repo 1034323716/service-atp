@@ -1,3 +1,4 @@
 dependencies {
-    compile project(':service-atp-service-api')
+    compile 'io.netty:netty-all:5.0.0.Alpha2'
+    compile group: 'com.feinno', name: 'urcs-framework', version: urcs_framework_version
 }
