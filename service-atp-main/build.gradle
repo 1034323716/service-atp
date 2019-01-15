@@ -1,4 +1,5 @@
 dependencies {
+    compile project(':stack-file-server')
     compile project(':service-atp-servlet')
     compile group: 'org.helium', name: 'helium-dashboard', version: helium_version
 }

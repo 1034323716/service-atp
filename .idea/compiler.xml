@@ -18,6 +18,8 @@
       <module name="service-atp-servlet_test" target="1.8" />
       <module name="service-atp_main" target="1.8" />
       <module name="service-atp_test" target="1.8" />
+      <module name="stack-file-server_main" target="1.8" />
+      <module name="stack-file-server_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -22,5 +22,7 @@
         <bean class="org.mahatma.atp.servlet.RunPlanServlet" stacks="${HTTP_STACK}"/>
         <bean class="org.mahatma.atp.servlet.VerifyCronServlet" stacks="${HTTP_STACK}"/>
 
+        <!--FileServer-->
+        <bean class="com.feinno.fileserver.service.ProcessServiceImpl"/>
     </beans>
 </bundle>

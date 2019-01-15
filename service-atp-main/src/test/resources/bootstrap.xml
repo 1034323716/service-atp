@@ -3,6 +3,7 @@
         <variable key="PRIVATE_IP" value="0.0.0.0"/>
         <variable key="HTTP_PORT" value="8301"/>
         <variable key="HTTP_STACK" value="http"/>
+        <variable key="FILE_SERVER_PORT" value="8888"/>
     </environments>
     <!-- 需要启动的ServletStack -->
     <stacks>

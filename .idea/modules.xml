@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client-atp-service/client-atp-service.iml" filepath="$PROJECT_DIR$/.idea/modules/client-atp-service/client-atp-service.iml" group="client-atp-service" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client-atp-service/client-atp-service_main.iml" filepath="$PROJECT_DIR$/.idea/modules/client-atp-service/client-atp-service_main.iml" group="client-atp-service" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/client-atp-service/client-atp-service_test.iml" filepath="$PROJECT_DIR$/.idea/modules/client-atp-service/client-atp-service_test.iml" group="client-atp-service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.feinno.stack-file-server.iml" filepath="$PROJECT_DIR$/.idea/modules/com.feinno.stack-file-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-main/service-atp-main.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-main/service-atp-main.iml" group="service-atp-main" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-main/service-atp-main_main.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-main/service-atp-main_main.iml" group="service-atp-main" />
@@ -21,6 +22,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-servlet/service-atp-servlet.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-servlet/service-atp-servlet.iml" group="service-atp-servlet" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-servlet/service-atp-servlet_main.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-servlet/service-atp-servlet_main.iml" group="service-atp-servlet" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/service-atp-servlet/service-atp-servlet_test.iml" filepath="$PROJECT_DIR$/.idea/modules/service-atp-servlet/service-atp-servlet_test.iml" group="service-atp-servlet" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stack-file-server/stack-file-server.iml" filepath="$PROJECT_DIR$/.idea/modules/stack-file-server/stack-file-server.iml" group="stack-file-server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stack-file-server/stack-file-server_main.iml" filepath="$PROJECT_DIR$/.idea/modules/stack-file-server/stack-file-server_main.iml" group="stack-file-server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/stack-file-server/stack-file-server_test.iml" filepath="$PROJECT_DIR$/.idea/modules/stack-file-server/stack-file-server_test.iml" group="stack-file-server" />
     </modules>
   </component>
 </project>

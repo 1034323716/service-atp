@@ -5,6 +5,7 @@
       <variable key="HTTP_DASH_STACK" value="dash_http"/>
       <variable key="HTTP_DASH_PORT" value="{{ port.http_dash }}"/>
       <variable key="HTTP_PORT" value="{{ port.http }}"/>
+      <variable key="FILE_SERVER_PORT" value="{{ port.file_server_port }}"/>
     </environments>
     <stacks>
         <stack id="${HTTP_STACK}" class="org.helium.http.servlet.HttpServletStack">
