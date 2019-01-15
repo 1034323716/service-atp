@@ -6,6 +6,7 @@ import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.stream.ChunkedFile;
 import io.netty.util.CharsetUtil;
+import org.mortbay.jetty.HttpHeaderValues;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
@@ -22,18 +23,18 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
     }
 
     @Override
-    protected void messageReceived(ChannelHandlerContext ctx,
+    protected void channelRead0(ChannelHandlerContext ctx,
                                    FullHttpRequest request) throws Exception {
-        if (!request.decoderResult().isSuccess()) {
+        if (!request.getDecoderResult().isSuccess()) {
             sendError(ctx, HttpResponseStatus.BAD_REQUEST);
             return;
         }
-        if (request.method() != HttpMethod.GET) {
+        if (request.getMethod() != HttpMethod.GET) {
             sendError(ctx, HttpResponseStatus.METHOD_NOT_ALLOWED);
             return;
         }
 
-        final String uri = request.uri();
+        final String uri = request.getUri();
         final String path = sanitizeUri(uri);
         if (path == null) {
             sendError(ctx, HttpResponseStatus.FORBIDDEN);
@@ -68,13 +69,13 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
 
         long fileLength = randomAccessFile.length();
         HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
-        HttpHeaderUtil.setContentLength(response, fileLength);
+        HttpHeaders.setContentLength(response, fileLength);
 //        setContentLength(response, fileLength);
         setContentTypeHeader(response, file);
 
 
-        if (HttpHeaderUtil.isKeepAlive(request)) {
-            response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
+        if (HttpHeaders.isKeepAlive(request)) {
+            response.headers().set("connection", HttpHeaderValues.KEEP_ALIVE);
         }
 
         ctx.write(response);
@@ -100,7 +101,7 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
         });
 
         ChannelFuture lastContentFuture = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
-        if (!HttpHeaderUtil.isKeepAlive(request))
+        if (!HttpHeaders.isKeepAlive(request))
             lastContentFuture.addListener(ChannelFutureListener.CLOSE);
 
     }
@@ -145,7 +146,7 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
     private static void sendListing(ChannelHandlerContext ctx, File dir) {
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
 //        response.headers().set("CONNECT_TYPE", "text/html;charset=UTF-8");
-        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html;charset=UTF-8");
+        response.headers().set("content-type", "text/html;charset=UTF-8");
 
         String dirPath = dir.getPath();
         StringBuilder buf = new StringBuilder();
@@ -189,19 +190,19 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
     private static void sendRedirect(ChannelHandlerContext ctx, String newUri) {
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.FOUND);
 //        response.headers().set("LOCATIN", newUri);
-        response.headers().set(HttpHeaderNames.LOCATION, newUri);
+        response.headers().set("location", newUri);
         ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 
     private static void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status,
                 Unpooled.copiedBuffer("Failure: " + status.toString() + "\r\n", CharsetUtil.UTF_8));
-        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html;charset=UTF-8");
+        response.headers().set("content-type", "text/html;charset=UTF-8");
         ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 
     private static void setContentTypeHeader(HttpResponse response, File file) {
         MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
-        response.headers().set(HttpHeaderNames.CONTENT_TYPE, mimetypesFileTypeMap.getContentType(file.getPath()));
+        response.headers().set("content-type", mimetypesFileTypeMap.getContentType(file.getPath()));
     }
 }
