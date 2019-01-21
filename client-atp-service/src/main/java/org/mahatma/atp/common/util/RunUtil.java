@@ -110,7 +110,7 @@ public class RunUtil {
     }
 
     /**
-     * 将ATP_task的summarys字段中的summary放到List中并便利，一次传到下个方法中
+     * 将ATP_task的summarys字段中的summary放到List中并遍历，依次传到下个方法中
      */
     public void startOnLine() {
         TaskDao taskDao = new TaskDaoImpl(database);
