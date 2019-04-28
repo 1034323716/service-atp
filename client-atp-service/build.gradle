@@ -8,8 +8,8 @@ dependencies {
     compile 'org.fusesource.hawtdispatch:hawtdispatch:1.22'
     compile 'org.fusesource.hawtbuf:hawtbuf:1.11'
     compile 'org.fusesource.hawtdispatch:hawtdispatch-transport:1.21'
-    compile 'org.autotest:mqtt-stack:1.0.0'
-    compile 'org.autotest:mqtt-proxy-service:1.0.0'
+//    compile 'org.autotest:mqtt-stack:1.0.0'
+//    compile 'org.autotest:mqtt-proxy-service:1.0.0'
 
 //    email
     compile 'javax.mail:javax.mail-api:1.5.3'
