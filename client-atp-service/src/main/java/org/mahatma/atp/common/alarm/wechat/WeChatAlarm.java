@@ -38,6 +38,9 @@ public class WeChatAlarm {
     }
 
     public static boolean send(String content) throws IOException {
+        // 消息内容如果带有 \" ，其后面的消息会被截断不显示，要转换成\\\"才会显示全
+        content = content.replaceAll("\\\"", "\\\\\\\"");
+
         String token = weChatAlarm.getToken();
         return weChatAlarm.sendMessage(token, content);
     }
